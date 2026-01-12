@@ -1,0 +1,72 @@
+---
+title: Getting Started with TestCLIX
+---
+
+import { LinkCard } from '@astrojs/starlight/components'
+
+## What is TestCLIX?
+
+**TestCLIX** is a code-less, SaaS platform designed to automate website testing and monitoring. It allows you to ensure your web applications are working correctly without writing a single line of code.
+
+Unlike traditional testing tools that run locally on your machine, our platform operates entirely in the **cloud**. We use a unique **[Codeless Recorder](../testclix-platform/codeless-recorder)** that streams a remote browser session to your screen. As you interact with your website-clicking buttons, filling forms, or navigating pages - we capture those events to create repeatable test scenarios.
+
+Once recorded, these tests can be scheduled to run automatically (monitoring) or manually (on demand) from various global locations. If a test fails, or if our **[Pixel Comparison](../website-scenario/pixel-comparison)** detects a graphical anomaly, you are notified immediately.
+
+## Who is it for?
+
+We designed the platform to bridge the gap between business requirements and technical reliability.
+
+* **Business Owners & Product Managers:** Verify that critical paths (like checkout flows or login screens) are operational 24/7 without waiting for QA resources.
+* **Marketing Teams:** Ensure landing pages and lead generation forms are functioning correctly after content updates.
+* **QA & Developers:** Offload repetitive regression testing. You can integrate our platform into your CI/CD pipelines via **webhooks**, ensuring every deployment is verified automatically.
+
+## How it Works
+
+The platform operates on a simple cycle: Define, Record, Execute, and Analyze.
+
+### 1. Choose Your Approach
+Decide what needs testing. You are not limited to one method:
+* **Website Scenarios:** Use these when you need to simulate complex, full user journeys (e.g., "Login Flow", "Checkout Process") with visual interactions.
+* **Website Availability:** Choose these for lightweight, fast checks designed to verify site availability and response codes without loading the full visual interface.
+
+<LinkCard
+  title="Testing Capabilities"
+  description="Learn more about the different types of tests you can create with TestCLIX."
+  href="/testclix-platform/testing-capabilities"
+/>
+
+### 2. Record Without Code
+This is how you define your Website Scenarios. Instead of writing code, you use our **Codeless Cloud Recorder**. When you start recording, we launch a browser in our cloud infrastructure and stream the view directly to you. As you interact with the page (clicking, typing, scrolling), the recorder automatically captures these actions as test steps.
+
+<LinkCard
+  title="Codeless Recorder"
+  description="Learn more about the Codeless Recorder and how to use it to define your Website Scenarios."
+  href="/testclix-platform/codeless-recorder"
+/>
+
+### 3. Execution & Monitoring
+Once your tests are running (either manually or on a schedule), the platform actively monitors your application using several advanced methods:
+* **Pixel Comparison:** Perform a strict, pixel-by-pixel analysis of your application's UI to catch even the smallest visual regressions.
+* **SSL Audit:** Receive alerts days before your security certificate expires, ensuring you never face unexpected security warnings.
+* **Performance Audit:** Monitor page loading times to catch speed regressions before they affect your users' experience.
+* **Page Structure Flexibility:** Make your tests resilient to background code updates. This ensures tests pass as long as the application works for the user, ignoring invisible technical changes.
+
+<LinkCard
+  title="Scheduling & Monitoring"
+  description="Learn more about the different ways to schedule and monitor your tests."
+  href="/testclix-platform/schedule-monitoring"
+/>
+
+### 4. Analyze with Session Player
+If a test fails (or if you just want to review a run), you don't have to guess what happened. You can open the **Session Player** to watch a high-quality video playback of the test execution. This allows you to see exactly what the user saw in the cloud browser at the moment the error occurred.
+
+<LinkCard
+  title="Session Player"
+  description="Learn more about the Session Player and how to use it to analyze your test results."
+  href="/testclix-platform/session-player"
+/>
+
+## For Developers
+:::note
+While the interface is code-less, the platform is developer-friendly. We provide **[Webhooks](../integration/webhooks)** and API access to trigger tests externally, making it easy to plug TestCLIX into your existing deployment pipelines (CI/CD).
+:::

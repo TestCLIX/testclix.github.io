@@ -1,0 +1,40 @@
+---
+title: 'Welcome to TestCLIX Documentation'
+description: Documentation for the TestCLIX codeless SaaS Platform.
+template: splash
+hero:
+  tagline: The codeless SaaS Platform for testing.
+  image:
+    file: ../../assets/testclix_logo.svg
+    alt: TestCLIX Logo
+  actions:
+    - text: Get Started
+      link: /testclix-platform/overview
+      icon: right-arrow
+      variant: primary
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <Card title="Getting Started" icon="open-book">
+    Learn what the platform is, who it's for, and the core concepts you'll use to create, run, and monitor tests.
+    
+    [Learn more](/testclix-platform/overview)
+  </Card>
+  <Card title="Quick Start" icon="rocket">
+    Pick a setup based on your goal and create your first website scenario or availability check in just a few steps.
+    
+    [Learn more](/quick-start/pick-setup)
+  </Card>
+  <Card title="Use Cases" icon="bars">
+    See practical examples of how teams use the platform to protect critical user journeys and monitor production reliability.
+    
+    [Learn more](/use-cases/use-case-library)
+  </Card>
+  <Card title="Support" icon="document">
+    Find troubleshooting guides, FAQs, and recommended practices for debugging failures and keeping tests stable.
+    
+    [Learn more](/support/faq)
+  </Card>
+</CardGrid>
