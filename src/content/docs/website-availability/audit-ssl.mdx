@@ -2,8 +2,79 @@
 title: Audit SSL
 ---
 
-:::caution
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import sslAuditConfig from '../../../assets/ssl_audit.png';
 
-`TODO` Audit SSL Page.
+## Introduction
 
+One of the most problematic aspects of website maintenance is managing SSL certificates.
+Because certificates usually have a long validity period, they are easy to forget about
+and often expire unnoticed. While some teams configure automatic renewal mechanisms,
+there is no absolute guarantee that these mechanisms will always work as expected.
+
+For this reason, SSL certificate monitoring is one of the most common and
+important website health checks.
+
+## How It Works
+
+In the **[Website Scenario](/website-scenario/overview)**, you can configure a threshold that defines when the test starts failing.
+The available options are:
+- 0 days
+- 7 days
+- 14 days
+- 21 days
+
+The selected value defines the minimum number of days remaining before the certificate expires.
+
+When the value is greater than _0 days_, the test fails if the remaining validity period is lower than the configured threshold.
+
+When the value is set to _0 days_, certificate expiration is not monitored.
+The test fails only when the certificate expires and becomes invalid.
+
+:::note
+In the **[Website availability](/website-availability/overview)**, the SSL certificate is verified only for the provided URL.
+Certificates for external resources or dependencies are not checked.
+If you are looking for a more robust and advanced solution, check the **[SSL Audit of Website Scenario](/website-scenario/audit-ssl)**.
 :::
+
+## Configuration
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Website Availability**.
+
+    4. Scroll down to the **Advanced options** section and set the **Audit SSL** field to choose the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit test properties**.
+
+    4. Scroll down to the **Advanced options** section and update the **Audit SSL** field to change the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Reporting
+
+When the certificate is expired or the threshold is reached, the test will be marked as failed.
+The error message for the test will be: **SSL certificate expires in under _XX_ days!**.
