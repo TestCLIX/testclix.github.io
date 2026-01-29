@@ -2,8 +2,126 @@
 title: Audit SSL
 ---
 
-:::caution
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import sslAuditConfig from '../../../assets/ssl_audit.png';
+import sslError from '../../../assets/ssl_error.png';
 
-`TODO` Audit SSL Page.
+## Introduction
 
+One of the most problematic aspects of website maintenance is managing SSL certificates.
+Because certificates usually have a long validity period, they are easy to forget about
+and often expire unnoticed. While some teams configure automatic renewal mechanisms,
+there is no absolute guarantee that these mechanisms will always work as expected.
+
+For this reason, SSL certificate monitoring is one of the most common and
+important website health checks.
+
+## How It Works
+
+In the **[Website Scenario](/website-scenario/overview)**, you can configure a threshold that defines when the test starts failing.
+The available options are:
+- 0 days
+- 7 days
+- 14 days
+- 21 days
+
+The selected value defines the minimum number of days remaining before the certificate expires.
+
+When the value is greater than _0 days_, the test fails if the remaining validity period is lower than the configured threshold.
+
+When the value is set to _0 days_, certificate expiration is not monitored.
+The test fails only when the certificate expires and becomes invalid.
+
+In the **[Website Scenario](/website-scenario/overview)**, SSL certificates are validated not only for the main website but also for all resources required by the scenario.
+As the scenario executes its steps and downloads resources from subdomains or external domains, certificates for all those resources are verified as well.
+
+This approach helps detect issues that were previously difficult to catch or that could go unnoticed for months, such as expired certificates on external dependencies.
+
+:::note
+In the **[Audit SSL in Website availability](/website-availability/audit-ssl)**, the SSL certificate is verified only for the provided URL.
+Certificates for external resources or dependencies are not checked.
 :::
+
+## Configuration
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Web Scenario**.
+
+    4. Scroll down to the **Advanced options** section and set the **Audit SSL** field to choose the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit scenario properties**.
+
+    4. Scroll down to the **Advanced options** section and update the **Audit SSL** field to change the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Reporting
+
+When an SSL certificate issue is detected, you can view the details in the Session Player.
+
+<Steps>
+
+1. Navigate to **Workspace** using the left sidebar menu.
+
+2. Locate the test with the SSL error.
+
+3. Open the Session Player using one of the following methods:
+   - Click the test thumbnail.
+   - Click the three-dot menu and select **View latest session**.
+
+4. In the Session Player, navigate to the event marked with an error to view the SSL certificate details.
+
+5. On the right side of the session view, you will see a list of all invalid SSL certificates.
+
+   <img src={sslError.src} alt="SSL certificate error view" />
+
+</Steps>
+
+:::tip
+When the session is in an error state, you can quickly jump to the player from the workspace view by clicking **Inspect session**.
+:::
+
+## Hands-on
+
+Sometimes seeing something is more important than reading.
+We invite you to watch a step-by-step introductory video that highlights this feature:
+
+<div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/ZBjR_ZCDn9E"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
