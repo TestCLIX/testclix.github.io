@@ -1,6 +1,7 @@
 # TestCLIX Docs
 
-Welcome to the **TestCLIX Docs** repository! This project hosts the documentation for TestCLIX, providing comprehensive guides, references, and tutorials for users and contributors.
+Welcome to the **TestCLIX Docs** repository! This project hosts the documentation for [TestCLIX](https://testclix.com) - the codeless SaaS Platform for testing.
+This documentation is providing comprehensive guides, references, and tutorials for users and contributors.
 
 ## About TestCLIX Docs
 
@@ -13,7 +14,7 @@ To run the documentation site locally on your machine, follow these steps:
 1. **Clone the repository** (if you haven't already):
 
     ```bash
-    git clone <repository-url>
+    git clone git@github.com:TestCLIX/testclix.github.io.git
     cd testclix-docs
     ```
 
@@ -26,12 +27,21 @@ To run the documentation site locally on your machine, follow these steps:
 3. **Start the development server**:
 
     ```bash
-    npm run dev
+    npm start
     ```
 
     The site will be available at `http://localhost:4321/`.
 
 ## How to Contribute
+
+### Through GitHub
+
+The editing process can be as simple as navigating to the right `.md` file
+in the GitHub repository and clicking ✏️ **Edit**.
+
+This will generate a pull request for us to review and merge.
+
+### Via Git source
 
 We welcome contributions to improve TestCLIX documentation!
 
@@ -43,24 +53,9 @@ We welcome contributions to improve TestCLIX documentation!
     - To edit an existing page, simply modify the markdown content.
 
 3. **Preview your changes**:
-    Run `npm run dev` to see your changes in real-time.
+    Run `npm start` to see your changes in real-time.
 
 4. **Submit a Pull Request**:
     Once you are happy with your changes, commit them and push to a new branch, then open a Pull Request.
 
-## Commands
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## ⚡ Powered By
-
-This documentation is proudly built with [Astro Starlight](https://starlight.astro.build).
