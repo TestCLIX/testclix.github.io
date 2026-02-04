@@ -2,8 +2,151 @@
 title: Webhooks
 ---
 
-:::caution
+import { Steps, Badge } from '@astrojs/starlight/components';
+import webhookConf from '../../../assets/webhook_configuration.png';
+import webhookTest from '../../../assets/webhook_test.png';
 
-`TODO` Webhooks Page.
+## Introduction
 
+Webhook allows **TestCLIX** to send real-time notifications to your system whenever a scenario run finishes.
+
+Instead of manually checking results, you can automatically trigger workflows such as:
+
+- CI/CD deployments  
+- Monitoring and alerting  
+- Reporting pipelines  
+- Custom integrations  
+
+Webhook is delivered as an HTTP `POST` request containing a JSON payload with execution details.
+
+Webhook events are triggered for all completion status:
+
+- <Badge text="Pass" variant="success"/>
+- <Badge text="Error" variant="danger"/>
+
+:::note
+Webhook is intended for server-to-server communication and should be handled by a publicly reachable backend endpoint.
 :::
+
+## Configuration
+
+You can enable and manage Webhook from the application **Settings**.
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu.
+
+2. Select **Webhook**.
+
+3. Turn **Webhook notifications** **ON**.
+
+4. Enter your **Webhook endpoint URL**.
+
+5. (Optional) Configure a **Webhook secret** for request verification.
+
+6. (Optional) Add up to **10 custom headers**.
+
+7. Click **Save** to apply your changes.
+   <img
+    src={webhookConf.src}
+    alt="Webhook configuration view"
+    />
+
+</Steps>
+
+## Webhook Request Format
+
+Webhook requests are sent as HTTP `POST` calls.
+
+### Request Example
+
+```http
+POST /webhooks/testclix HTTP/1.1
+Host: your-endpoint.com
+Content-Type: application/json
+X-TestCLIX-Signature: sha256=MEUCC...
+X-TestCLIX-Timestamp: 1696332892
+User-Agent: TestCLIX-Webhook/2.0
+```
+
+## Webhook Payload
+
+Webhook request contains a JSON payload describing the completed scenario run.
+
+### Payload Fields
+
+| Field        | Type     | Description                                                                             |
+|-------------|----------|------------------------------------------------------------------------------------------|
+| `test_id`    | string   | Unique identifier of the scenario run                                                   |
+| `status`     | string   | Result: <Badge text="Pass" variant="success"/> or <Badge text="Error" variant="danger"/>|
+| `timestamp`  | number   | Unix timestamp of the event                                                             |
+| `created_at` | string   | Scenario start time in ISO format                                                       |
+
+### Example Payload
+
+```json
+{
+  "timestamp": 1696332892,
+  "test_id": "TEST_ID_EXAMPLE",
+  "status": "pass",
+  "created_at": "2022-08-17T09:57:39Z"
+}
+```
+## Webhook Secret & Signature Verification
+
+To verify that Webhook requests originate from **TestCLIX**, you can configure a Webhook secret.
+
+When a secret is enabled, Webhook request includes the following header:
+
+```text
+X-TestCLIX-Signature
+```
+
+### How the Signature Works
+
+The signature is generated using:
+
+- **HMAC-SHA256**
+- Your configured Webhook secret
+- The raw JSON request payload
+
+This allows your server to confirm that the request was sent by **TestCLIX** and was not modified by a third party.
+
+:::note
+If no Webhook secret is configured, the `X-TestCLIX-Signature` header will not be included.
+We strongly recommend enabling signature verification in production environments.
+:::
+
+### Signature Format
+
+The signature is sent in the request header using the following format:
+
+```text
+X-TestCLIX-Signature: sha256=<signature>
+```
+
+:::note 
+- Always compute the signature using the raw request body (before JSON parsing).
+- Reject requests with missing or invalid signatures.
+- Keep your Webhook secret stored securely.
+:::
+
+## Test Your Webhook
+
+Send a test payload to validate configuration:
+
+<Steps>
+
+1. Click the **Test Webhook** button.
+
+2. Verify reception at your endpoint.
+
+3. Check signature validation.
+
+4. Confirm with **200 OK** response.
+  <img
+    src={webhookTest.src}
+    alt="Test Webhook view"
+    />
+
+</Steps>
