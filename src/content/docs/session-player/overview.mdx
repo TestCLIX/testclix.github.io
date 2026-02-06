@@ -1,0 +1,44 @@
+---
+title: Session Player Overview
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Key Features
+
+The Session Player includes the following features:
+
+- **Session Playback**: Visual reproduction of the recorded user session using application screenshots rendered on a canvas.
+- **Session Comparison**: Capabilities to compare the current session against other sessions (e.g., origin vs. error) to identify differences.
+- **User Event Simulation**: Visual reconstruction of user interactions, including mouse clicks and other input events.
+- **Event Navigation**: Chronological navigation through recorded events via the [Session Timeline](./session-timeline) to inspect specific application states.
+- **Combine Screens**: Allows merging the current session when in an error state, effectively marking the new version as valid. This is available only in [pixel comparison](../website-scenario/pixel-comparison.mdx). See [Combine Screens](./combine-screens).
+
+## Error Handling & Comparison
+
+When a session ends with an **error** status, the player facilitates efficient debugging. The failed session can be compared against the original baseline recording to visually identify changes.
+
+Two comparison modes are available:
+
+1. **[Side-by-Side Compare](./side-by-side-compare)**: Displays both sessions adjacent to each other.
+2. **[Parallel Compare](./parallel-compare)**: Overlays both sessions for precise visual alignment.
+
+## Accessing the Player
+
+The Session Player can be accessed from multiple locations within the application:
+
+<Tabs>
+  <TabItem label="Scenario Details">
+    By clicking on the screenshot thumbnail in the scenario details view (only for Scenario tests).
+    ![Session Player entry point in Scenario Details](../../../assets/session-player/player-trigger-details.png)
+  </TabItem>
+  <TabItem label="Scenario Dropdowns">
+    By selecting the player option from the dropdown menu assigned to a Scenario test.
+    ![Session Player entry point in Scenario Dropdowns](../../../assets/session-player/player-trigger-dropdown.png)
+  </TabItem>
+</Tabs>
+
+:::note[Automatic Mode Selection]
+- **Pass Status**: If the scenario passed, the player opens displaying only the original recording by default.
+- **Error Status**: If the latest run failed, the player automatically opens in **[Side-by-Side](./side-by-side-compare)** comparison mode.
+:::
