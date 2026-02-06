@@ -81,12 +81,12 @@ export default defineConfig({
 				{
 					label: 'Session Player',
 					badge: { text: 'Feature', variant: 'note' },
-					collapsed: true,
 					items: [
-						{ label: 'Combine Screens', link: '/session-player/combine-screens' },
-						{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
+						{ label: 'Overview', link: '/session-player/overview' },				
 						{ label: 'Session Timeline', link: '/session-player/session-timeline' },
 						{ label: 'Side-by-side Compare', link: '/session-player/side-by-side-compare' },
+						{ label: 'Combine Screens', link: '/session-player/combine-screens' },
+						{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
 					]
 				},
 				{
