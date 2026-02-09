@@ -2,7 +2,7 @@
 title: Audit SSL
 ---
 
-import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
 import sslAuditConfig from '../../../assets/ssl_audit.png';
 
 ## Introduction
@@ -26,10 +26,10 @@ The available options are:
 
 The selected value defines the minimum number of days remaining before the certificate expires.
 
-When the value is greater than _0 days_, the test fails if the remaining validity period is lower than the configured threshold.
+When the value is greater than _0 days_, the test is marked as <Badge text="Error" variant="danger"/> if the remaining validity period is lower than the configured threshold.
 
 When the value is set to _0 days_, certificate expiration is not monitored.
-The test fails only when the certificate expires and becomes invalid.
+The test is marked as <Badge text="Error" variant="danger"/> only when the certificate expires and becomes invalid.
 
 :::note
 In the **[Website availability](/website-availability/overview)**, the SSL certificate is verified only for the provided URL.
@@ -76,5 +76,5 @@ If you are looking for a more robust and advanced solution, check the **[SSL Aud
 
 ## Reporting
 
-When the certificate is expired or the threshold is reached, the test will be marked as failed.
+When the certificate is expired or the threshold is reached, the test will be marked as <Badge text="Error" variant="danger"/>.
 The error message for the test will be: **SSL certificate expires in under _XX_ days!**.

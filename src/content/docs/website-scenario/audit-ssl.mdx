@@ -2,7 +2,7 @@
 title: Audit SSL
 ---
 
-import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
 import sslAuditConfig from '../../../assets/ssl_audit.png';
 import sslError from '../../../assets/ssl_error.png';
 
@@ -27,10 +27,10 @@ The available options are:
 
 The selected value defines the minimum number of days remaining before the certificate expires.
 
-When the value is greater than _0 days_, the test fails if the remaining validity period is lower than the configured threshold.
+When the value is greater than _0 days_, the test is marked as <Badge text="Error" variant="danger"/> if the remaining validity period is lower than the configured threshold.
 
 When the value is set to _0 days_, certificate expiration is not monitored.
-The test fails only when the certificate expires and becomes invalid.
+The test is marked as <Badge text="Error" variant="danger"/> only when the certificate expires and becomes invalid.
 
 In the **[Website Scenario](/website-scenario/overview)**, SSL certificates are validated not only for the main website but also for all resources required by the scenario.
 As the scenario executes its steps and downloads resources from subdomains or external domains, certificates for all those resources are verified as well.

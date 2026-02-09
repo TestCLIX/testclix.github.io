@@ -2,7 +2,7 @@
 title: Getting Started with TestCLIX
 ---
 
-import { LinkCard } from '@astrojs/starlight/components'
+import { LinkCard, Badge } from '@astrojs/starlight/components'
 
 ## What is TestCLIX?
 
@@ -10,7 +10,7 @@ import { LinkCard } from '@astrojs/starlight/components'
 
 Unlike traditional testing tools that run locally on your machine, our platform operates entirely in the **cloud**. We use a unique **[Codeless Recorder](../testclix-platform/codeless-recorder)** that streams a remote browser session to your screen. As you interact with your website-clicking buttons, filling forms, or navigating pages - we capture those events to create repeatable test scenarios.
 
-Once recorded, these tests can be scheduled to run automatically (monitoring) or manually (on demand) from various global locations. If a test fails, or if our **[Pixel Comparison](../website-scenario/pixel-comparison)** detects a graphical anomaly, you are notified immediately.
+Once recorded, these tests can be scheduled to run automatically (monitoring) or manually (on demand) from various global locations. If a test is marked as <Badge text="Error" variant="danger"/>, or if our **[Pixel Comparison](../website-scenario/pixel-comparison)** detects a graphical anomaly, you are notified immediately.
 
 ## Who is it for?
 
@@ -58,7 +58,7 @@ Once your tests are running (either manually or on a schedule), the platform act
 />
 
 ### 4. Analyze with Session Player
-If a test fails (or if you just want to review a run), you don't have to guess what happened. You can open the **Session Player** to watch a high-quality video playback of the test execution. This allows you to see exactly what the user saw in the cloud browser at the moment the error occurred.
+If a test is marked as <Badge text="Error" variant="danger"/> (or if you just want to review a run), you don't have to guess what happened. You can open the **Session Player** to watch a high-quality video playback of the test execution. This allows you to see exactly what the user saw in the cloud browser at the moment the error occurred.
 
 <LinkCard
   title="Session Player"
