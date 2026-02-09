@@ -2,8 +2,148 @@
 title: Pixel Comparison
 ---
 
-:::caution
+import { Badge, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import fullScreenCmp from '../../../assets/pixel-comparison/full_screen_cmp.png';
+import ignoredZonesPreview from '../../../assets/pixel-comparison/ignored_zones_preview.png';
+import ignoredZonesAdd from '../../../assets/pixel-comparison/ignored_zones_add.png';
+import ignoredZonesResize from '../../../assets/pixel-comparison/ignored_zones_resize.png';
+import ignoredZonesLogo from '../../../assets/pixel-comparison/ignored_zones_logo.png';
+import pixelComparisonErrors from '../../../assets/pixel-comparison/pixel_comparison_errors.png';
 
-`TODO` Pixel Comparison Page.
+## Introduction
 
+One of the biggest challenges in e-business is the lack of tools that allow you to track visual changes on a website.
+Most utilities only check server response codes or verify that specific text appears on the page.
+While these checks are useful as early canaries, they do not cover all potential problems.
+
+One such problem is whether users see your website as it was intended.
+This is where the real power of **TestCLIX** comes in.
+**TestCLIX** allows you to monitor even slight changes on your website, detecting unintentional modifications during normal operation or after an update.
+Thanks to this, you can quickly identify when something is not working correctly - not only on the server side, but also on the client side.
+
+At **TestCLIX**, we provide a utility to verify that your users see exactly what they are supposed to see.
+
+:::note
+At **TestCLIX**, we want to provide you with a complete monitoring utility, and we believe that testing status codes is one of the stepping stones of monitoring as a fast, easy-to-configure check. We also provide such an option. You can learn more about this type of monitoring at **[Website Availability](/website-availability/overview)**.
 :::
+
+## How It Works
+
+In the **[Website Scenario](/website-scenario/overview)**, you can enable **Full Screen Comparison** on a test.
+During each test run, the platform compares the original session (the screenshot captured during test creation) with the current state of the website.
+To use this feature, you need to have a configured **[scheduler](/testclix-platform/schedule-monitoring)** or run the test manually.
+
+:::tip
+After each change to the scenario (via **Modify scenario steps** or after scenario creation), we always run the test automatically to verify that your configuration is valid, even if the **[scheduler](/testclix-platform/schedule-monitoring)** is not configured.
+However, single option changes (without modifying the recording steps) will not trigger an automatic test run.
+:::
+
+The utility detects changes on the website and reports them back.
+If a change is detected, the test is marked as <Badge text="Error" variant="danger"/>.
+
+However, some areas of a page might not be intended for monitoring.
+For example, a calendar widget, a news feed, rotating ad banners, or a live chat window may change dynamically between test runs.
+You might want to skip such zones and exclude them from the comparison.
+This is why we have introduced **[Ignored Zones](#configuring-ignored-zones)** - areas that are omitted during screen comparison, giving you full flexibility over what is monitored.
+
+## Configuration
+
+### Configuring Full Screen Comparison
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Web Scenario**.
+
+    4. Scroll down to the **Advanced options** section and enable the **Full Screen Comparison** toggle.
+
+       <img src={fullScreenCmp.src} alt="Full Screen Comparison configuration toggle" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit scenario properties**.
+
+    4. Scroll down to the **Advanced options** section and enable the **Full Screen Comparison** toggle.
+
+       <img src={fullScreenCmp.src} alt="Full Screen Comparison configuration toggle" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+### Configuring Ignored Zones
+
+To configure **Ignored Zones**, you need to start the session recorder.
+You can do this either by creating a new test, filling in the entire configuration and selecting **Save and record**, or by finding the test you want to modify and selecting **Modify scenario steps** on the top bar.
+
+:::note
+If the **Modify scenario steps** button is not available, click the three-dot menu in the top right corner to see all available options.
+:::
+
+To add **Ignored Zones**, you need to have some events on the scenario timeline.
+You can add **Ignored Zones** to any event, as all events are used in **Full Screen Comparison**.
+
+:::caution
+**Ignored Zones** can also be configured on scenarios that do not have **Full Screen Comparison** enabled. In that case, the configuration will have no effect.
+This is not blocked, because during scenario editing you may want to configure **Ignored Zones** first and then enable **Full Screen Comparison** afterwards.
+:::
+
+<Steps>
+
+1. Right-click on the event in the timeline where you want to add **Ignored Zones**.
+
+2. This will bring you into _preview mode_. The main window will show the state of the website at the given step.
+
+   <img src={ignoredZonesPreview.src} alt="Preview mode showing website state" />
+
+3. On the left side, the option to add **Ignored Zones** should appear.
+
+4. Click the **Ignore Zones** button.
+
+5. Click on the canvas to add rectangles indicating the zones that should be ignored.
+
+   <img src={ignoredZonesAdd.src} alt="Adding ignored zones on the canvas" />
+
+6. The configured zones are interactive. You can grab them and move them, or use the corners to resize them.
+
+   <img src={ignoredZonesResize.src} alt="Resizing an ignored zone" />
+
+7. On the left side, under **Ignore Zones**, you can remove zones that you no longer need.
+
+8. After creating zones, select **Save ignored zones** to close the preview and save your changes.
+
+9. Scenarios with configured **Ignored Zones** will display an additional indicator icon in the bottom right corner.
+
+   <img src={ignoredZonesLogo.src} alt="Ignored Zones indicator icon" style="max-width: 300px;" />
+
+</Steps>
+
+## Reporting
+
+If the test run ends in the <Badge text="Error" variant="danger"/> state, you can audit it in the **[Session Player](/session-player/session-timeline)**.
+**Full Screen Comparison** generates a special type of error that indicates which elements are different between the **original session** and the run under question.
+The elements that differ are additionally marked with a highlighted square.
+
+<img src={pixelComparisonErrors.src} alt="Pixel comparison error view showing differences between original and current session" />
+
+:::note
+If you do not see the squares, the **Toggle events replay overlay** option may be disabled.
+**Ignored Zones** can also be displayed on the session via **Toggle events details layer**.
+If you want to enable either of these, please refer to the **[Session Timeline](/session-player/session-timeline)** for instructions on how to bring them back.
+:::
+
+The <Badge text="Error" variant="danger"/> from the screen comparison is also indicated in the error message (in the history, timeline event, etc.) with the following text: **Step XXX: Unable to execute step: The image check failed**.
