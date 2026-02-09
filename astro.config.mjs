@@ -60,6 +60,15 @@ export default defineConfig({
 					]
 				},
 				{
+					label: 'Website Vitals',
+					items: [
+						{ label: 'Overview', link: '/website-vitals/overview' },
+						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
+						{ label: 'Location', link: '/website-vitals/location' },
+						{ label: 'Metrics', link: '/website-vitals/metrics' },
+					]
+				},
+				{
 					label: 'Codeless Recorder',
 					badge: { text: 'Feature', variant: 'note' },
 					collapsed: true,
@@ -88,15 +97,6 @@ export default defineConfig({
 						{ label: 'Use Case Library', link: '/use-cases/use-case-library' },
 						{ label: 'Ecommerce Login', link: '/use-cases/ecommerce-login' },
 						{ label: 'Ecommerce Shop', link: '/use-cases/ecommerce-shop' },
-					]
-				},
-				{
-					label: 'Website Vitals',
-					items: [
-						{ label: 'Overview', link: '/website-vitals/overview' },
-						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
-						{ label: 'Location', link: '/website-vitals/location' },
-						{ label: 'Metrics', link: '/website-vitals/metrics' },
 					]
 				},
 				{
