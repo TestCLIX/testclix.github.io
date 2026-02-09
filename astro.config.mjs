@@ -76,7 +76,7 @@ export default defineConfig({
 						{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
 						{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
 						{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },
-						{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },						
+						{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
 					]
 				},
 				{
@@ -104,6 +104,7 @@ export default defineConfig({
 					collapsed: true,
 					items: [
 						{ label: 'API', link: '/integration/API' },
+						{ label: 'Bot management (Cloudflare)', link: '/integration/bot-management' },
 						{ label: 'Emails', link: '/integration/emails' },
 						{ label: 'Webhooks', link: '/integration/webhooks' },
 					]
