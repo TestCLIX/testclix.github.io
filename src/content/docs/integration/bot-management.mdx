@@ -1,0 +1,139 @@
+---
+title: Bot Management (Cloudflare)
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import cfExtraHeaders from '../../../assets/cf_extra_headers.png';
+import cfSelectDomain from '../../../assets/cf_select_domain.png';
+import cfSecurityRules from '../../../assets/cf_security_rules.png';
+import cfRuleCriteria from '../../../assets/cf_rule_criteria.png';
+import cfRuleAction from '../../../assets/cf_rule_action.png';
+import cfRuleOrder from '../../../assets/cf_rule_order.png';
+
+## Introduction
+
+**TestCLIX** is a friendly bot designed to simulate user behavior on your site for monitoring purposes.
+However, many website-owners implement bot detection systems - such as Cloudflare - to protect against malicious bots lurking online.
+It is crucial to safeguard your site from harmful actions, and these systems play a key role.
+
+While **TestCLIX** is a helpful tool, it might be mistaken for a bot you would want to block.
+That is why you might need to configure exceptions in your bot protection system - avoiding a cat-and-mouse game that is not productive.
+**TestCLIX** operates entirely under your control and generates only the traffic you explicitly configure.
+
+In this guide, we show you how to configure **TestCLIX** using a custom header method.
+This approach is supported by **[Website Scenario](/website-scenario/overview)**, **[Website Availability](/website-availability/overview)**, and **[Website Vitals](/website-vitals/overview)**.
+
+We guide you step by step through integrating **TestCLIX** with bot management systems.
+We use Cloudflare as a reference implementation, but the same principles apply to most bot management solutions, even if their configuration layout differs.
+
+:::tip
+Historically, our [support team](/support/bug-reports/) may have suggested using IP-based filtering to bypass bot control for some regions.
+We now recommend migrating to the headers technique instead.
+:::
+
+## Integration
+
+### TestCLIX Configuration
+
+For all test types - **[Website Scenario](/website-scenario/overview)**, **[Website Availability](/website-availability/overview)**, and **[Website Vitals](/website-vitals/overview)** - the steps are the same:
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select required test type.
+
+    4. Click the **+** button next to the **Extra headers** field to add a new row for headers.
+
+    5. Provide the header **name** and **value**.
+
+       Both are arbitrary and can be chosen freely.
+       The only requirement is that they exactly match the configuration in your external bot management system (such as Cloudflare).
+       We recommend using a long, random, and hard-to-guess value for the header value.
+
+       <img src={cfExtraHeaders.src} alt="Extra headers configuration" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit scenario properties**.
+
+    4. Click the **+** button next to the **Extra headers** field to add a new row for headers.
+
+    5. Provide the header **name** and **value**.
+
+       Both are arbitrary and can be chosen freely.
+       The only requirement is that they exactly match the configuration in your external bot management system (such as Cloudflare).
+       We recommend using a long, random, and hard-to-guess value for the header value.
+
+       <img src={cfExtraHeaders.src} alt="Extra headers configuration" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+
+For more details, please refer to the headers documentation for each test type:
+- **[Website Scenario](/website-scenario/extra-headers)**
+- **[Website Availability](/website-availability/extra-headers)**
+- **[Website Vitals](/website-vitals/extra-headers)**
+
+### Cloudflare Configuration
+
+<Steps>
+
+1. Log in to the Cloudflare account.
+
+2. Select the domain for which HTTP traffic is being processed.
+
+   <img src={cfSelectDomain.src} alt="Cloudflare domain selection" />
+
+3. From the **Security** section in the navigation menu, open the list of security rules and start creating a new rule.
+
+   <img src={cfSecurityRules.src} alt="Cloudflare security rules list" />
+
+4. Assign a name to the new rule and define the criteria used to classify traffic.
+
+   <img src={cfRuleCriteria.src} alt="Cloudflare rule name and matching criteria" />
+
+   Example rule expression:
+
+   ```txt
+   (any(http.request.headers["testclix-header"][*] eq "magic-value"))
+   ```
+
+   In this example, the rule matches traffic that contains a specific header named `testclix-header` with a predefined value.
+   This value must be the same in both **TestCLIX** and Cloudflare.
+   We recommend using a random, long value for the header value.
+   The name of the header does not matter as long as it is the same in both **TestCLIX** and Cloudflare.
+   Both the header name and its value should be adapted to your own environment.
+
+5. Choose the action that the rule should perform.
+
+   <img src={cfRuleAction.src} alt="Cloudflare rule action and skip options" />
+
+   When selecting the **Skip** action, specify which modules should be skipped for this type of traffic.
+
+   To bypass traffic blocking by Bot Management and WAF rules, select the following options:
+   - All rate limiting rules
+   - All Managed rules
+   - All Super Bot Fight Mode Rules
+
+6. Place the rule in the correct order relative to other rules.
+   Incorrect rule ordering may result in unexpected behavior or interfere with other security rules.
+
+   <img src={cfRuleOrder.src} alt="Cloudflare rule ordering" />
+
+</Steps>
