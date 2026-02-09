@@ -42,19 +42,21 @@ export default defineConfig({
 					label: 'Website Scenario',
 					items: [
 						{ label: 'Overview', link: '/website-scenario/overview' },
-						{ label: 'Location', link: '/website-scenario/location' },
 						{ label: 'Audit SSL', link: '/website-scenario/audit-ssl' },
-						{ label: 'Pixel Comparison', link: '/website-scenario/pixel-comparison' },
+						{ label: 'Extra Headers', link: '/website-scenario/extra-headers' },
+						{ label: 'Location', link: '/website-scenario/location' },
 						{ label: 'Page Structure Flexibility', link: '/website-scenario/page-structure-flexibility' },
 						{ label: 'Performance Audit', link: '/website-scenario/performance-audit' },
+						{ label: 'Pixel Comparison', link: '/website-scenario/pixel-comparison' },
 					]
 				},
 				{
 					label: 'Website Availability',
 					items: [
 						{ label: 'Overview', link: '/website-availability/overview' },
-						{ label: 'Location', link: '/website-availability/location' },
 						{ label: 'Audit SSL', link: '/website-availability/audit-ssl' },
+						{ label: 'Extra Headers', link: '/website-availability/extra-headers' },
+						{ label: 'Location', link: '/website-availability/location' },
 					]
 				},
 				{
@@ -62,10 +64,10 @@ export default defineConfig({
 					badge: { text: 'Feature', variant: 'note' },
 					collapsed: true,
 					items: [
-						{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
-						{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
 						{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
-						{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },						
+						{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
+						{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },
+						{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },						
 					]
 				},
 				{
@@ -73,10 +75,10 @@ export default defineConfig({
 					badge: { text: 'Feature', variant: 'note' },
 					collapsed: true,
 					items: [
+						{ label: 'Combine Screens', link: '/session-player/combine-screens' },
+						{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
 						{ label: 'Session Timeline', link: '/session-player/session-timeline' },
 						{ label: 'Side-by-side Compare', link: '/session-player/side-by-side-compare' },
-						{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
-						{ label: 'Combine Screens', link: '/session-player/combine-screens' },
 					]
 				},
 				{
@@ -89,9 +91,20 @@ export default defineConfig({
 					]
 				},
 				{
+					label: 'Website Vitals',
+					items: [
+						{ label: 'Overview', link: '/website-vitals/overview' },
+						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
+						{ label: 'Location', link: '/website-vitals/location' },
+						{ label: 'Metrics', link: '/website-vitals/metrics' },
+					]
+				},
+				{
 					label: 'Integration',
 					collapsed: true,
 					items: [
+						{ label: 'API', link: '/integration/API' },
+						{ label: 'Emails', link: '/integration/emails' },
 						{ label: 'Webhooks', link: '/integration/webhooks' },
 					]
 				},
@@ -99,9 +112,9 @@ export default defineConfig({
 					label: 'Support',
 					collapsed: true,
 					items: [
-						{ label: 'Troubleshooting', link: '/support/troubleshooting' },
-						{ label: 'FAQ', link: '/support/faq' },
 						{ label: 'Bug Reports', link: '/support/bug-reports' },
+						{ label: 'FAQ', link: '/support/faq' },
+						{ label: 'Troubleshooting', link: '/support/troubleshooting' },
 					]
 				},
 				...(process.env.NODE_ENV !== 'production'

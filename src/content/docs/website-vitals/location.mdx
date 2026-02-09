@@ -1,0 +1,114 @@
+---
+title: Location
+---
+
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import locationConfig from '../../../assets/location-config.png';
+import europeMap from '../../../assets/europe.svg';
+import northAmericaMap from '../../../assets/north_america.svg';
+
+## Introduction
+
+TestCLIX website availability tests can be run from multiple locations around the world.
+Because websites can behave differently depending on where they are accessed from, choosing the right monitoring location is important.
+Running checks from locations close to your target audience provides more accurate and relevant results.
+
+Using multiple locations helps detect regional issues, reduces false alerts, and gives a clearer picture of how users experience your website globally.
+
+## Available zones
+
+At TestCLIX, we are continuously working to provide as many monitoring zones as possible.
+Some zones are publicly available, while others are currently available only upon request.
+Our goal is to make all zones publicly available over time.
+
+If you require access to a specific location that is not listed, please contact our [support team](/support/bug-reports/).
+
+Publicly available zones include:
+
+<Tabs>
+  <TabItem label="Europe">
+    <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 300px;">
+        <img src={europeMap.src} alt="Europe map" />
+      </div>
+      <div style="flex: 1; min-width: 200px;">
+
+| Country | City |
+|---------|------|
+| UK | London |
+| France | Paris |
+| Germany | Frankfurt |
+| Poland | Warsaw |
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem label="North America">
+    <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 300px;">
+        <img src={northAmericaMap.src} alt="North America map" />
+      </div>
+      <div style="flex: 1; min-width: 200px;">
+
+| Country | City |
+|---------|------|
+| USA | Ohio |
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+:::tip
+Historically, our [support team](/support/bug-reports/) may have suggested using IP-based filtering to bypass bot control for some regions.
+We now recommend migrating to the headers technique instead.
+:::
+
+## How It Works
+
+Each test execution runs from a single location.
+When you configure a website availability test, you select one monitoring zone, and all checks for that test will originate from that specific location.
+
+If you need to monitor your website from multiple regions, you can create separate tests for each location.
+This approach allows you to:
+
+- Compare performance across different geographic regions
+- Detect location-specific issues
+- Ensure consistent user experience worldwide
+
+## Configuration
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Website Availability**.
+
+    4. Set the **Location** field to choose which region the test will run from.
+
+       <img src={locationConfig.src} alt="Location configuration field" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit test properties**.
+
+    4. Update the **Location** field to change the region from which the test runs.
+
+       <img src={locationConfig.src} alt="Location configuration field" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
