@@ -2,8 +2,102 @@
 title: Performance Audit
 ---
 
-:::caution
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import performanceAuditConfig from '../../../assets/performance/performance_audit_configuration.png';
+import performanceTabView from '../../../assets/performance/performance_tab_view.png';
 
-`TODO` Performance Audit Page.
+## Introduction
 
+Performance Audit helps you monitor loading times and network activity for your website scenario runs.
+It gives you visibility into endpoint timings, response sizes, status codes, and waterfall execution.
+
+Performance Audit in **TestCLIX** is informational. It is designed for investigation and optimization, not for pass/fail enforcement.
+
+## How It Works
+
+When **Audit performance** is enabled, **TestCLIX** collects network request details during scenario execution and stores them as a HAR file.
+
+You can review this data in the **Performance** tab of a test and export the HAR file for deeper analysis.
+
+:::note
+Performance Audit does not mark the test as <Badge text="Error" variant="danger"/> and does not fail test execution when timings get worse.
+There is currently no threshold configuration for failing based on performance regressions.
 :::
+
+## Configuration
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Web Scenario**.
+
+    4. Scroll down to the **Advanced options** section and set **Audit performance** to **ON**.
+
+       <img src={performanceAuditConfig.src} alt="Performance Audit configuration field" />
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit scenario properties**.
+
+    4. Scroll down to the **Advanced options** section and set **Audit performance** to **ON**.
+
+       <img src={performanceAuditConfig.src} alt="Performance Audit configuration field" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Reporting
+
+To access performance data and HAR exports:
+
+<Steps>
+
+1. Navigate to **Workspace** using the left sidebar menu.
+
+2. Open the test session.
+
+3. At the top navigation in the test view, select **Performance**.
+
+4. Review performance insights such as endpoint, method, status, type, size, time, and waterfall.
+   <img src={performanceTabView.src} alt="Performance tab with HAR export" />
+
+5. Click **Export HAR File** to download the HAR file.
+
+</Steps>
+
+## HAR File Retention
+
+HAR files are automatically removed after **30 days**.
+
+## Inspect HAR in Browser
+
+After downloading a HAR file, you can inspect it in your browser.
+
+<Steps>
+
+1. Open your browser Developer Tools.
+
+2. Go to the **Network** tab.
+
+3. Import the HAR file:
+   - Drag and drop the `.har` file into the Network panel, or
+   - Use the import option available in your browser Network tools.
+
+4. Analyze requests, timing phases, payload sizes, and waterfall order.
+
+</Steps>
