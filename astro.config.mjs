@@ -73,6 +73,7 @@ export default defineConfig({
 					label: 'Website Availability',
 					items: [
 						{ label: 'Overview', link: '/website-availability/overview' },
+						{ label: 'Audit HTTP', link: '/website-availability/audit-http' },
 						{ label: 'Audit SSL', link: '/website-availability/audit-ssl' },
 						{ label: 'Extra Headers', link: '/website-availability/extra-headers' },
 						{ label: 'Location', link: '/website-availability/location' },
