@@ -4,6 +4,7 @@ title: Audit SSL
 
 import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
 import sslAuditConfig from '../../../assets/ssl/ssl_audit.png';
+import sslAuditHeadless from '../../../assets/ssl/audit_ssl_headless.png';
 
 ## Introduction
 
@@ -15,9 +16,13 @@ there is no absolute guarantee that these mechanisms will always work as expecte
 For this reason, SSL certificate monitoring is one of the most common and
 important website health checks.
 
+The **Website Availability** gives you multiple tools for inspecting SSL details.
+
 ## How It Works
 
-In the **[Website Scenario](/website-scenario/overview)**, you can configure a threshold that defines when the test starts failing.
+### SSL Expiry Threshold
+
+You can configure a threshold that defines when the test starts failing.
 The available options are:
 - 0 days
 - 7 days
@@ -37,6 +42,36 @@ Certificates for external resources or dependencies are not checked.
 If you are looking for a more robust and advanced solution, check the **[SSL Audit of Website Scenario](/website-scenario/audit-ssl)**.
 :::
 
+### TLS version (minimum)
+
+You can configure the minimum accepted TLS version.
+This option allows you to ensure that your website is using the expected security level.
+The available options are TLS 1.0, TLS 1.1, TLS 1.2, and TLS 1.3.
+
+When a minimum version is set, the test connects to your website and checks the TLS version
+negotiated during the handshake. If the server negotiates a version lower than the configured
+minimum, the test fails. For example, if the minimum is set to TLS 1.2 and the server
+negotiates TLS 1.1, the test will report an error.
+
+### Require full chain (TLS)
+
+This option enforces that the server presents a complete certificate chain, including intermediate
+certificates, to the browser. This is important because some servers are misconfigured and only
+send the leaf certificate without the intermediates. While most modern browsers can work around
+this by fetching missing intermediates on their own, not all clients support this behavior.
+API consumers, mobile apps, and older systems may fail to establish a connection if intermediates
+are missing. Enabling this check helps you catch such misconfigurations before they affect your users.
+
+### Allow wildcards (TLS)
+
+When disabled, this option enforces that the certificate does not contain wildcard entries
+(e.g., `*.example.com`) in the Subject Alternative Names (SAN) or Common Name (CN) fields.
+This is important because wildcard certificates, while convenient, carry a higher security risk.
+If a wildcard certificate is compromised, all subdomains covered by that certificate are affected.
+Some security policies and compliance standards require the use of individual certificates per
+domain to limit the blast radius in case of a key compromise. Disabling wildcards helps you
+enforce this policy automatically.
+
 ## Configuration
 
 <Tabs>
@@ -49,9 +84,19 @@ If you are looking for a more robust and advanced solution, check the **[SSL Aud
 
     3. Select **Website Availability**.
 
-    4. Scroll down to the **Advanced options** section and set the **Audit SSL** field to choose the certificate expiration threshold.
+    4. Scroll down to the **Advanced options** section.
 
-       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+    5. Expand the **Security & SSL / TLS** subsection.
+
+       <img src={sslAuditHeadless.src} alt="Security & SSL / TLS subsection" />
+
+    6. Configure the desired SSL/TLS audit options:
+       - **SSL Expiry Threshold** — choose the certificate expiration threshold.
+       - **TLS version (minimum)** — choose the minimum accepted TLS version.
+       - **Require full chain (TLS)** — enable to require a full TLS certificate chain.
+       - **Allow wildcards (TLS)** — enable to allow wildcards in the certificate chain.
+
+       <img src={sslAuditConfig.src} alt="Security & SSL / TLS configuration fields" />
 
     </Steps>
   </TabItem>
@@ -66,9 +111,19 @@ If you are looking for a more robust and advanced solution, check the **[SSL Aud
        - On the overview page, click **Edit** next to the **Options** section.
        - On any page, click the three-dot menu and select **Edit test properties**.
 
-    4. Scroll down to the **Advanced options** section and update the **Audit SSL** field to change the certificate expiration threshold.
+    4. Scroll down to the **Advanced options** section.
 
-       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+    5. Expand the **Security & SSL / TLS** subsection.
+
+       <img src={sslAuditHeadless.src} alt="Security & SSL / TLS subsection" />
+
+    6. Configure the desired SSL/TLS audit options:
+       - **SSL Expiry Threshold** — choose the certificate expiration threshold.
+       - **TLS version (minimum)** — choose the minimum accepted TLS version.
+       - **Require full chain (TLS)** — enable to require a full TLS certificate chain.
+       - **Allow wildcards (TLS)** — enable to allow wildcards in the certificate chain.
+
+       <img src={sslAuditConfig.src} alt="Security & SSL / TLS configuration fields" />
 
     </Steps>
   </TabItem>
@@ -76,5 +131,50 @@ If you are looking for a more robust and advanced solution, check the **[SSL Aud
 
 ## Reporting
 
-When the certificate is expired or the threshold is reached, the test will be marked as <Badge text="Error" variant="danger"/>.
-The error message for the test will be: **SSL certificate expires in under _XX_ days!**.
+When any enabled SSL/TLS audit check fails, the test is marked as <Badge text="Error" variant="danger"/>.
+
+The reported message depends on which check failed first:
+
+<details>
+<summary>**Certificate expiration threshold**</summary>
+
+- Triggered when `SSL Expiry Threshold` is set to more than `0` days and the certificate validity period is below the configured threshold.
+- Message format: **SSL certificate expires in under _XX_ days!**
+
+</details>
+
+<details>
+<summary>**Minimum TLS version**</summary>
+
+- Triggered when the server negotiates a TLS version lower than the configured minimum.
+- Message format: **TLS version _NEGOTIATED_ negotiated, minimum required _MIN_VERSION_**
+
+</details>
+
+<details>
+<summary>**Require full chain**</summary>
+
+- Triggered when the server does not provide a complete certificate chain.
+- Message format examples:
+  - **Incomplete certificate chain: missing intermediates**
+  - **Incomplete certificate chain: no certificate received**
+
+</details>
+
+<details>
+<summary>**Allow wildcards = disabled**</summary>
+
+- Triggered when the certificate contains a wildcard entry in SAN or CN while wildcard certificates are disallowed.
+- Message format: **Wildcard certificate detected but wildcards are not allowed**
+
+</details>
+
+<details>
+<summary>**Inspection runtime errors**</summary>
+
+- Returned when TLS/SSL inspection cannot complete due to a low-level error.
+- Message format examples:
+  - **TLS inspection failed: _ERROR_**
+  - **SSL inspection failed: _ERROR_**
+
+</details>
