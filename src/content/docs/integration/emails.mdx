@@ -2,8 +2,80 @@
 title: Emails 
 ---
 
-:::caution
+import { Steps, Badge } from '@astrojs/starlight/components';
+import failureNotification from '../../../assets/email/failure_notification.ong.png';
+import invoiceAddress from '../../../assets/email/invoice_address.png';
 
-`TODO` Emails Page.
+## Introduction
 
-:::
+Use **Notifications** settings to control whether **TestCLIX** sends email notifications about system events.
+
+You can manage two types of notifications:
+
+- **Failure notifications** – Sent when a scenario execution fails.
+- **Invoice notifications** – Sent when a new invoice is issued.
+
+## Failure Notifications
+
+Failure notifications inform you when a scenario execution ends with an <Badge text="Error" variant="danger"/>. 
+When they are enabled, the system automatically sends an email each time a scenario fails. The notification is sent from address: `test+<test_id>@portal.testclix.com`.  
+
+The notification is sent to the account registration email address (the email used when creating the account). This address is read-only in this section.
+
+#### Default Settings
+
+- **Failure notifications**: **ON**
+- **Email address**: Account registration email (read-only)
+
+### Configuration
+
+You can enable and manage Failure notifications from the application **Settings**.
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu.
+
+2. Select **Notifications**.
+
+3. In the **Failure notification** section, ensure **Failure notifications** are set to **ON** (enabled by default).
+
+4. Click **Update** to apply your changes.
+   <img
+    src={failureNotification.src}
+    alt="Failure notifications configuration view"
+    />
+
+</Steps>
+
+## Invoice Notifications
+
+Invoice notifications inform you when a new invoice is issued.
+
+By default, invoice notifications are sent to the account registration email address (the email used when creating the account). However, this address can be changed in this section if you want invoices to be delivered to a different email.
+
+#### Default Settings
+
+- **Invoice notifications**: **OFF**
+- **Email address**: Account registration email
+
+### Configuration
+
+You can enable and manage Invoice address from the application **Settings**.
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu.
+
+2. Select **Notifications**.
+
+3. In the **Invoice address** section, turn **Invoice notifications** **ON**.
+
+4. Enter the Email address where invoice notifications should be delivered.
+
+5. Click **Update** to apply your changes.
+   <img
+    src={invoiceAddress.src}
+    alt="nvoice notifications configuration view"
+    />
+
+</Steps>
