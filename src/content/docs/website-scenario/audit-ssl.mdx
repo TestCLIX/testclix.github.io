@@ -13,12 +13,17 @@ Because certificates usually have a long validity period, they are easy to forge
 and often expire unnoticed. While some teams configure automatic renewal mechanisms,
 there is no absolute guarantee that these mechanisms will always work as expected.
 
-For this reason, SSL certificate monitoring is one of the most common and
-important website health checks.
+In **[Website Scenario](/website-scenario/overview)**, the SSL Expiry Threshold allows you to monitor certificate expiration dates.
+When a certificate is approaching its expiry, the test is marked as failed, giving you time to renew before it becomes invalid.
+
+:::note
+The SSL Expiry Threshold in Website Scenario only monitors certificate expiration dates.
+If you need more detailed SSL insights, such as certificate chain validation or protocol analysis, refer to **[Audit SSL in Website Availability](/website-availability/audit-ssl)**.
+:::
 
 ## How It Works
 
-In the **[Website Scenario](/website-scenario/overview)**, you can configure a threshold that defines when the test starts failing.
+You can configure a threshold that defines when the test starts failing.
 The available options are:
 - 0 days
 - 7 days
@@ -32,15 +37,10 @@ When the value is greater than _0 days_, the test is marked as <Badge text="Erro
 When the value is set to _0 days_, certificate expiration is not monitored.
 The test is marked as <Badge text="Error" variant="danger"/> only when the certificate expires and becomes invalid.
 
-In the **[Website Scenario](/website-scenario/overview)**, SSL certificates are validated not only for the main website but also for all resources required by the scenario.
+SSL certificates are validated not only for the main website but also for all resources required by the scenario.
 As the scenario executes its steps and downloads resources from subdomains or external domains, certificates for all those resources are verified as well.
 
 This approach helps detect issues that were previously difficult to catch or that could go unnoticed for months, such as expired certificates on external dependencies.
-
-:::note
-In the **[Audit SSL in Website availability](/website-availability/audit-ssl)**, the SSL certificate is verified only for the provided URL.
-Certificates for external resources or dependencies are not checked.
-:::
 
 ## Configuration
 
@@ -54,9 +54,13 @@ Certificates for external resources or dependencies are not checked.
 
     3. Select **Web Scenario**.
 
-    4. Scroll down to the **Advanced options** section and set the **Audit SSL** field to choose the certificate expiration threshold.
+    4. Scroll down to the **Advanced options** section.
 
-       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+    5. Expand the **Security & SSL / TLS** subsection.
+
+    6. Set the **SSL Expiry Threshold** field to choose the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="SSL Expiry Threshold configuration field" />
 
     </Steps>
   </TabItem>
@@ -71,9 +75,13 @@ Certificates for external resources or dependencies are not checked.
        - On the overview page, click **Edit** next to the **Options** section.
        - On any page, click the three-dot menu and select **Edit scenario properties**.
 
-    4. Scroll down to the **Advanced options** section and update the **Audit SSL** field to change the certificate expiration threshold.
+    4. Scroll down to the **Advanced options** section.
 
-       <img src={sslAuditConfig.src} alt="Audit SSL configuration field" />
+    5. Expand the **Security & SSL / TLS** subsection.
+
+    6. Update the **SSL Expiry Threshold** field to change the certificate expiration threshold.
+
+       <img src={sslAuditConfig.src} alt="SSL Expiry Threshold configuration field" />
 
     </Steps>
   </TabItem>
