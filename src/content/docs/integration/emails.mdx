@@ -17,8 +17,8 @@ You can manage two types of notifications:
 
 ## Failure Notifications
 
-Failure notifications inform you when a scenario execution ends with an <Badge text="Error" variant="danger"/>. 
-When they are enabled, the system automatically sends an email each time a scenario fails. The notification is sent from address: `test+<test_id>@portal.testclix.com`.  
+Failure notifications inform you when a scenario execution status transitions to <Badge text="Error" variant="danger"/>.
+When they are enabled, the system automatically sends an email each time a scenario's status changes to error. If the scenario is already in an error state, no additional emails are sent — a notification is only triggered on the transition to error. The notification is sent from address: `test+<test_id>@portal.testclix.com`.  
 
 The notification is sent to the account registration email address (the email used when creating the account). This address is read-only in this section.
 
