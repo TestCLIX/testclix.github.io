@@ -10,13 +10,13 @@ This feature is available **only** when the **Pixel Compare** option is enabled 
 
 ## How It Works
 
-When a test fails due to visual differences between the **origin** and the **error** session, the **Combine Screens** functionality enables you to manually accept the new state as valid.
+When a test fails due to visual differences between the origin and the error session, there are two potential issues with the monitoring page.
 
-![Combine Screens](../../../assets/session-player/player-combine-screens.png)
+First, the page may have changed, which means the test needs to be updated. In this case, the Merge Sessions feature comes into play. With a single click, the Combine Screens functionality enables you to manually accept the new state as valid.
 
-:::note[Context]
-The screens differ. Use Combine screens to update the origin session with the compared screen and treat it as the new expected state, or Execute to re-run the origin session without changes.
-:::
+Second, there may have been an error on the page. Once the error is fixed, the test should be re-run.
+
+Both options are conveniently available directly from the player while you are auditing the test.
 
 ## Workflow
 

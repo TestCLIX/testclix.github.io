@@ -48,6 +48,25 @@ export default defineConfig({
 						{ label: 'Page Structure Flexibility', link: '/website-scenario/page-structure-flexibility' },
 						{ label: 'Performance Audit', link: '/website-scenario/performance-audit' },
 						{ label: 'Pixel Comparison', link: '/website-scenario/pixel-comparison' },
+						{ 
+							label: 'Session Player',
+							items: [
+								{ label: 'Overview', link: '/session-player/overview' },				
+								{ label: 'Session Timeline', link: '/session-player/session-timeline' },
+								{ label: 'Side-by-side Compare', link: '/session-player/side-by-side-compare' },
+								{ label: 'Combine Screens', link: '/session-player/combine-screens' },
+								{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
+							]
+						},
+						{ 
+							label: 'Codeless Recorder',
+							items: [
+								{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
+								{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
+								{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },
+								{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
+							]
+						},
 					]
 				},
 				{
@@ -65,28 +84,6 @@ export default defineConfig({
 						{ label: 'Overview', link: '/website-vitals/overview' },
 						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
 						{ label: 'Metrics', link: '/website-vitals/metrics' },
-					]
-				},
-				{
-					label: 'Codeless Recorder',
-					badge: { text: 'Feature', variant: 'note' },
-					collapsed: true,
-					items: [
-						{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
-						{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
-						{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },
-						{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
-					]
-				},
-				{
-					label: 'Session Player',
-					badge: { text: 'Feature', variant: 'note' },
-					items: [
-						{ label: 'Overview', link: '/session-player/overview' },				
-						{ label: 'Session Timeline', link: '/session-player/session-timeline' },
-						{ label: 'Side-by-side Compare', link: '/session-player/side-by-side-compare' },
-						{ label: 'Combine Screens', link: '/session-player/combine-screens' },
-						{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
 					]
 				},
 				{

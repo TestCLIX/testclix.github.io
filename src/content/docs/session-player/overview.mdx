@@ -2,7 +2,7 @@
 title: Session Player Overview
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
 ## Key Features
 
@@ -39,6 +39,6 @@ The Session Player can be accessed from multiple locations within the applicatio
 </Tabs>
 
 :::note[Automatic Mode Selection]
-- **Pass Status**: If the scenario passed, the player opens displaying only the original recording by default.
-- **Error Status**: If the latest run failed, the player automatically opens in **[Side-by-Side](./side-by-side-compare)** comparison mode.
+- <Badge text="Pass" variant="success"/> If the scenario passed, the player opens displaying only the original recording by default.
+- <Badge text="Error" variant="danger"/> If the latest run failed, the player automatically opens in **[Side-by-Side](./side-by-side-compare)** comparison mode.
 :::
