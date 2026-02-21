@@ -1,0 +1,157 @@
+---
+title: Network Monitoring Systems
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import yourApiKey from '../../../assets/network-monitoring/your_api_key.png';
+import httpAdvanced from '../../../assets/network-monitoring/http_advanced.png';
+import httpSpecificSettings from '../../../assets/network-monitoring/http_specific_settings.png';
+
+## Introduction
+
+**TestCLIX** provides an API that allows integration with network monitoring systems.
+This enables you to trigger test scenarios and retrieve their results directly from your monitoring dashboard, giving you a unified view of your infrastructure and website health.
+
+Network monitoring tools typically support HTTP-based sensors that can query external APIs on a schedule.
+By pointing such a sensor at the **TestCLIX** API, you can incorporate website testing results into your existing monitoring workflows - including alerting, reporting, and escalation.
+
+In this guide, we use **PRTG Network Monitor** as a reference implementation, but the same approach applies to any monitoring system that supports custom HTTP sensors (e.g., Zabbix, Nagios, Datadog, Checkmk, or similar).
+
+:::note
+This integration uses the **TestCLIX API**. Make sure you have access to the API before proceeding.
+:::
+
+## Integration
+
+### Step 1: Generate Your API Key
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu.
+
+2. Navigate to the **Your API Key** section.
+
+3. Click the **Generate API Key** button.
+
+4. Once the key appears, click **Save** to store it.
+
+   <img src={yourApiKey.src} alt="Your API Key panel showing the API URL and key" />
+
+</Steps>
+
+:::note
+You can read more about API key management in the [API](/integration/api) section.
+:::
+
+### Step 2: Identify the Test Scenario ID
+
+<Steps>
+
+1. Navigate to your **Workspace** using the left sidebar menu.
+
+2. Click on the specific test scenario you want to monitor.
+
+3. In the scenario details panel, locate and copy the **ID** field.
+
+</Steps>
+
+### Step 3: Configure the Sensor in Your Monitoring System
+
+The general approach is to create an HTTP sensor that queries the **TestCLIX** status API endpoint.
+
+**API Endpoint:**
+
+```text
+https://testapi.testclix.com/v1/api/status/{YOUR_SCENARIO_ID}
+```
+
+Replace `{YOUR_SCENARIO_ID}` with the ID you copied in Step 2.
+
+**Example:**
+
+```bash
+curl https://testapi.testclix.com/v1/api/status/{YOUR_SCENARIO_ID} -H "x-api-key: {YOUR_API_KEY}"
+```
+
+**Required HTTP configuration:**
+
+| Setting            | Value                                                        |
+|--------------------|--------------------------------------------------------------|
+| **Request Method** | `GET`                                                        |
+| **URL**            | `https://testapi.testclix.com/v1/api/status/{ID}`            |
+| **Custom Headers** | `x-api-key: {YOUR_API_KEY}` and `Content-Type: application/json` |
+
+Below is a reference walkthrough using **PRTG Network Monitor**. Adapt the steps to match the interface of your monitoring tool.
+
+<Tabs>
+  <TabItem label="PRTG Network Monitor" icon="setting">
+    <Steps>
+
+    1. In your **PRTG** dashboard, click **Add Sensor** under the desired device.
+
+    2. Search for **HTTP** and select the **HTTP Advanced** sensor type.
+
+       <img src={httpAdvanced.src} alt="PRTG Add Sensor search showing HTTP Advanced sensor type" />
+
+    3. In the sensor settings, paste the **TestCLIX API endpoint URL** into the **URL** field:
+       ```text
+       https://testapi.testclix.com/v1/api/status/{YOUR_SCENARIO_ID}
+       ```
+
+    4. Scroll down to the **HTTP Specific** settings:
+       - Set the **Request Method** to `GET`.
+       - In the **HTTP Headers** section, select **Use custom HTTP headers**.
+       - Add `x-api-key: {YOUR_API_KEY}` and set `Content-Type` to `application/json`.
+
+       <img src={httpSpecificSettings.src} alt="PRTG HTTP Specific settings showing URL and custom HTTP headers" />
+
+    5. **Save** the sensor settings to begin monitoring.
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Other Monitoring Tools" icon="information">
+
+    For other monitoring systems, the general steps are:
+
+    <Steps>
+
+    1. Create a new **HTTP** or **REST API** sensor/check in your monitoring tool.
+
+    2. Configure it to send a `GET` request to:
+       ```text
+       https://testapi.testclix.com/v1/api/status/{YOUR_SCENARIO_ID}
+       ```
+
+    3. Add custom HTTP headers: `x-api-key: {YOUR_API_KEY}` and `Content-Type: application/json`.
+
+    4. Configure your monitoring tool to interpret the API response and map the test status to your alerting rules.
+
+    5. Save and activate the sensor.
+
+    </Steps>
+
+  </TabItem>
+</Tabs>
+
+Once configured, your monitoring system will query **TestCLIX** on its regular polling schedule and report the pass/fail status of your test scenarios alongside the rest of your infrastructure monitoring.
+
+## Hands-on
+
+Sometimes seeing something is more important than reading.
+We invite you to watch a step-by-step introductory video that highlights this integration:
+
+<div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+  <iframe
+    src="https://www.youtube.com/embed/ZagdDn74i2c"
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
