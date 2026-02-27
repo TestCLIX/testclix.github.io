@@ -100,7 +100,7 @@ export default defineConfig({
 					label: 'Integration',
 					collapsed: true,
 					items: [
-						{ label: 'API', link: '/integration/API' },
+						{ label: 'API', link: '/integration/api' },
 						{ label: 'Bot management (Cloudflare)', link: '/integration/bot-management' },
 						{ label: 'Emails', link: '/integration/emails' },
 						{ label: 'Slack', link: '/integration/slack' },
