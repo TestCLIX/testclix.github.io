@@ -103,8 +103,8 @@ export default defineConfig({
 						{ label: 'API', link: '/integration/API' },
 						{ label: 'Bot management (Cloudflare)', link: '/integration/bot-management' },
 						{ label: 'Emails', link: '/integration/emails' },
-						{ label: 'Webhooks', link: '/integration/webhooks' },
 						{ label: 'Slack', link: '/integration/slack' },
+						{ label: 'Webhooks', link: '/integration/webhooks' },
 					]
 				},
 				{
