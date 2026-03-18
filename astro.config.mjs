@@ -84,6 +84,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/website-vitals/overview' },
 						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
+						{ label: 'Location', link: '/website-vitals/location' },
 						{ label: 'Metrics', link: '/website-vitals/metrics' },
 					]
 				},
