@@ -105,6 +105,7 @@ export default defineConfig({
 						{ label: 'API', link: '/integration/api' },
 						{ label: 'Bot management (Cloudflare)', link: '/integration/bot-management' },
 						{ label: 'Emails', link: '/integration/emails' },
+						{ label: 'Jira', link: '/integration/jira' },
 						{ label: 'Slack', link: '/integration/slack' },
 						{ label: 'Network Monitoring (PRTG)', link: '/integration/network-monitoring' },
 						{ label: 'Webhooks', link: '/integration/webhooks' },
