@@ -115,8 +115,6 @@ export default defineConfig({
 					collapsed: true,
 					items: [
 						{ label: 'Bug Reports', link: '/support/bug-reports' },
-						{ label: 'FAQ', link: '/support/faq' },
-						{ label: 'Troubleshooting', link: '/support/troubleshooting' },
 					]
 				},
 				...(process.env.NODE_ENV !== 'production'
