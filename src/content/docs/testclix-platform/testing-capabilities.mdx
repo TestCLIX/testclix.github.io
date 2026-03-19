@@ -6,6 +6,7 @@ description: Explore the types of tests you can run and how they help you valida
 import { LinkCard } from '@astrojs/starlight/components'
 
 The platform supports multiple test types to cover different needs - from lightweight availability checks to full end-to-end user journeys.
+Each test can also be executed from different locations, which helps you verify how your website behaves for users in different regions.
 
 At the moment, **only web testing** is available, with more capabilities planned over time.
 
@@ -14,7 +15,7 @@ At the moment, **only web testing** is available, with more capabilities planned
 Use the test type that matches the question you want answered:
 
 - Choose **Website Scenario** when you need to validate a full user journey such as login, checkout, or form submission.
-- Choose **Website Availability** when you want a fast signal that a page is reachable and the basic startup flow still works.
+- Choose **Website Availability** when you want a fast signal that the website is reachable, returns the expected HTTP status, and passes technical checks such as SSL validation.
 - Choose **Website Vitals** when you want to track performance quality over time using thresholds for Web Vitals and Lighthouse scores.
 
 ## Comparison at a Glance
@@ -22,7 +23,7 @@ Use the test type that matches the question you want answered:
 | Test Type | Best for | Speed | Main signal | Typical alert reason |
 | --- | --- | --- | --- | --- |
 | **Website Scenario** | End-to-end user flows | Slowest | Functional and visual behavior | A user step fails, content is wrong, or the UI changes unexpectedly |
-| **Website Availability** | Fast health checks | Fastest | Reachability and basic page load | The website is down, slow to start, or returns an unexpected result |
+| **Website Availability** | Fast technical health checks | Fastest | Reachability, HTTP status, and SSL checks | The website is down, returns an unexpected status, or has an SSL problem |
 | **Website Vitals** | Performance monitoring | Medium | Web Vitals and Lighthouse thresholds | LCP, CLS, TBT, TTI, or score thresholds regress |
 
 ## Common Monitoring Setups
@@ -34,11 +35,14 @@ Most teams get the best coverage by combining test types instead of relying on o
 - Run **Website Availability** frequently for a fast canary signal.
 - Run **Website Scenario** for critical business paths such as sign-in, checkout, lead capture, or account creation.
 - Run **Website Vitals** daily or after releases to catch performance regressions before they affect users.
+- Use multiple **locations** when geography matters, such as regional outages, CDN issues, or location-specific performance differences.
 
 ### Example Use Cases
 
 - A deployment breaks the login flow: use **Website Scenario**.
 - A landing page stops loading from a public location: use **Website Availability**.
+- An SSL certificate is close to expiry or misconfigured: use **Website Availability**.
+- A page works in one region but fails or slows down in another: run the test from multiple **locations**.
 - A release causes slower rendering or layout instability: use **Website Vitals**.
 
 ## Website Tests
@@ -51,7 +55,7 @@ Most teams get the best coverage by combining test types instead of relying on o
 
 <LinkCard
   title="Website Availability"
-  description="Run lightweight checks to verify your website is reachable and working correctly during startup or basic page load."
+  description="Run lightweight technical checks to verify reachability, HTTP status, and SSL certificate health."
   href="/website-availability/overview"
 />
 
@@ -76,7 +80,7 @@ Today, this page covers **web testing capabilities only**.
 
 That means TestCLIX is currently designed for:
 
-- website uptime and startup checks,
+- website uptime, HTTP status, and SSL checks,
 - browser-based end-to-end journeys,
 - visual regression detection,
 - and web performance monitoring.
