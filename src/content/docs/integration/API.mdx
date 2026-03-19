@@ -117,16 +117,16 @@ Available endpoints.
 
 | Method        | Endpoint                   | Description               |Params          |	Codes        |
 |---------------|----------------------------|---------------------------|----------------|--------------|
-| `GET`         | `/v1/api/status`           | Get scenario status       | None           | 200          |
-| `GET`         | `/v1/api/status/details`   | Get scenario details      | None           | 200          |
-| `GET`         | `/v1/api/status/{test_id}` | Get scenario status by ID | test_id(string)| 200, 404     |
-| `POST`        | `/v1/api/execute/{test_id}`| Execute scenario by ID    | test_id(string)| 200, 403, 404|
+| `GET`         | `/v1/api/status`           | Get test status       | None           | 200          |
+| `GET`         | `/v1/api/status/details`   | Get test details      | None           | 200          |
+| `GET`         | `/v1/api/status/{test_id}` | Get test status by ID | test_id(string)| 200, 404     |
+| `POST`        | `/v1/api/execute/{test_id}`| Execute test by ID    | test_id(string)| 200, 403, 404|
 
-### Get Scenario Status
+### Get Test Status
 
 `GET /v1/api/status`
 
-Returns overall scenario status.
+Returns overall test status.
 
 #### Example Request
 
@@ -142,11 +142,11 @@ curl https://api.testclix.com/v1/api/status -H "x-api-key: {YOUR_API_KEY}"
 }
 ```
 
-### Get Scenario Details
+### Get Test Details
 
 `GET /v1/api/status/details`
 
-Returns detailed scenario results.
+Returns detailed test results.
 
 #### Example Request
 
@@ -167,18 +167,18 @@ curl https://api.testclix.com/v1/api/status/details -H "x-api-key: {YOUR_API_KEY
   }
 }
 ```
-### Get Scenario Status by ID
+### Get Test Status by ID
 
 `GET /v1/api/status/{test_id}`
 
-Returns status of a specific scenario.
+Returns status of a specific test.
 
 #### Path Parameter
 
 | Name        | Type       | Description  |
 |-------------|------------|--------------|
-| test_id     | string     | Scenario ID  |
-                                                        
+| test_id     | string     | Test ID  |
+
 #### Example Request
 
 ```bash
@@ -202,13 +202,12 @@ curl https://api.testclix.com/v1/api/status/{test_id} -H "x-api-key: {YOUR_API_K
 }
 ```
 
-### Execute Scenario
+### Execute Test
 
 `POST /v1/api/execute/{test_id}`
 
-Triggers execution of **[Website Scenario](/website-scenario/overview)**. The limit of executions is defined by your Website Scenario Execution package.
-
-**[Website Availability](/website-availability/overview)**, and **[Website Vitals](/website-vitals/overview)** cannot be run using API yet.
+Triggers execution of a **[Website Scenario](/website-scenario/overview)**, **[Website Availability](/website-availability/overview)**, or **[Website Vitals](/website-vitals/overview)** test.
+The limit of executions is defined by your Website Scenario Execution package.
 
 
 #### Path Parameter
@@ -216,8 +215,8 @@ Triggers execution of **[Website Scenario](/website-scenario/overview)**. The li
 
 | Name        | Type       | Description  |
 |-------------|------------|--------------|
-| test_id     | string     | Scenario ID  |
-                                                        
+| test_id     | string     | Test ID  |
+
 
 
 #### Example Request
@@ -257,5 +256,5 @@ curl -X POST https://api.testclix.com/v1/api/execute/{test_id} -H "x-api-key: {Y
 |--------------------------------------|---------------------------|
 | <Badge text="200" variant="success"/>| Success                   | 
 | <Badge text="403" variant="danger"/> | Execution limit exceeded  |
-| <Badge text="404" variant="danger"/> | Scenario doesn't exists   |
+| <Badge text="404" variant="danger"/> | Test doesn't exist        |
 
