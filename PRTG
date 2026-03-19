@@ -1,0 +1,34 @@
+To integrate TestCLIX with PRTG for automated 24/7 website monitoring, follow these detailed steps based on the video:
+Step 1: Generate and Save Your API Key
+
+    Navigate to Workspace Settings: Open your TestCLIX dashboard and click on the Workspace icon in the sidebar, then select the Settings gear icon at the bottom [00:04].
+
+    Access API Key Section: In the Account menu, click on Your API Key [00:10].
+
+    Create the Key: Click the yellow Generate API Key button. Once it appears, ensure you Save the changes [00:13].
+
+Step 2: Identify the Test Scenario ID
+
+    Select Your Scenario: Go to your scenario list and click on the specific test you want to monitor (e.g., "My Test Scenario") [00:20].
+
+    Copy the ID: In the Scenario details panel on the right, locate the string of characters labeled ID and copy it to your clipboard [00:24].
+
+Step 3: Configure the Sensor in PRTG
+
+    Add Sensor: Within your PRTG Network Monitor dashboard, click the Add Sensor button under your desired device [00:27].
+
+    Choose Sensor Type: Search for "HTTP" and select the HTTP Advanced sensor type [00:32].
+
+    Set the API URL: In the sensor settings, paste the TestCLIX API endpoint URL into the URL field. The format shown is: https://api.testclix.com/v1/api/status/[YOUR_SCENARIO_ID] [00:39].
+
+    Configure Authentication:
+
+        Scroll down to HTTP Specific settings [00:44].
+
+        Set the Request Method to GET [00:44].
+
+        In the HTTP Headers section, select "Use custom HTTP headers" and input your API Key followed by the content type (e.g., application/json) [00:47].
+
+    Finalize: Save the sensor settings to start monitoring [00:50].
+
+This integration allows PRTG to trigger your TestCLIX scenarios and report their pass/fail status directly within your monitoring dashboard [00:52].
