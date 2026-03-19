@@ -4,15 +4,30 @@ title: Session Player
 
 import { LinkCard } from '@astrojs/starlight/components'
 
-The **Session Player** is a core functionality that enables the replay of user sessions recorded via the recorder.
+## See What Broke
+
+The **Session Player** is one of the biggest advantages of **[Website Scenario](../website-scenario/overview)** testing.
+Instead of leaving you with raw error codes, logs, or a generic failure status, it shows you what the browser actually displayed during the run.
+
+When a scenario breaks, you can open the failed session and visually inspect what changed - missing content, broken layout, blocked buttons, incorrect redirects, or unexpected popups.
+
+The **Session Player** enables the replay of user sessions recorded via the recorder.
 It is exclusively available for **[Website Scenario](../website-scenario/overview)** tests.
 
 Unlike traditional video players, the Session Player is not time-based but rather **event-based**.
 It navigates through the chronological history of events registered during the recording process.
 
+This makes it much easier to answer practical questions such as:
+
+- What exactly did the user see?
+- At which step did the flow stop working?
+- Was the problem functional, visual, or caused by an unexpected page state?
+
+## Explore the Player
+
 <LinkCard
   title="Session Player Overview"
-  description="Replay and debug runs with rich reports and session comparison."
+  description="Replay failed runs with a visual, browser-level view of what actually broke."
   href="/session-player/overview"
 />
 

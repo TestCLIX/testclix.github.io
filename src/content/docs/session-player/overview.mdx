@@ -4,6 +4,22 @@ title: Session Player Overview
 
 import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
+## Why It Matters
+
+Most monitoring tools tell you that something failed.
+The Session Player shows you how it failed.
+
+With **[Website Scenario](/website-scenario/overview)** tests, you do not need to rely only on status codes, logs, or a generic <Badge text="Error" variant="danger"/> state.
+You can inspect the browser view from the actual run and see what the user would have seen on screen.
+
+This helps you quickly understand whether the issue was caused by:
+
+- a broken user flow,
+- a missing or shifted UI element,
+- an unexpected redirect or popup,
+- incorrect content on the page,
+- or a visual regression that still returned a technically valid response.
+
 ## Key Features
 
 The Session Player includes the following features:
@@ -16,7 +32,7 @@ The Session Player includes the following features:
 
 ## Error Handling & Comparison
 
-When a session ends with an **error** status, the player facilitates efficient debugging. The failed session can be compared against the original baseline recording to visually identify changes.
+When a session ends with an **error** status, the player facilitates efficient debugging. The failed session can be compared against the original baseline recording to visually identify what changed on the website, not just that the run failed.
 
 Two comparison modes are available:
 
