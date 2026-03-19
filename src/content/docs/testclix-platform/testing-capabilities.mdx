@@ -9,6 +9,38 @@ The platform supports multiple test types to cover different needs - from lightw
 
 At the moment, **only web testing** is available, with more capabilities planned over time.
 
+## Choose the Right Test Type
+
+Use the test type that matches the question you want answered:
+
+- Choose **Website Scenario** when you need to validate a full user journey such as login, checkout, or form submission.
+- Choose **Website Availability** when you want a fast signal that a page is reachable and the basic startup flow still works.
+- Choose **Website Vitals** when you want to track performance quality over time using thresholds for Web Vitals and Lighthouse scores.
+
+## Comparison at a Glance
+
+| Test Type | Best for | Speed | Main signal | Typical alert reason |
+| --- | --- | --- | --- | --- |
+| **Website Scenario** | End-to-end user flows | Slowest | Functional and visual behavior | A user step fails, content is wrong, or the UI changes unexpectedly |
+| **Website Availability** | Fast health checks | Fastest | Reachability and basic page load | The website is down, slow to start, or returns an unexpected result |
+| **Website Vitals** | Performance monitoring | Medium | Web Vitals and Lighthouse thresholds | LCP, CLS, TBT, TTI, or score thresholds regress |
+
+## Common Monitoring Setups
+
+Most teams get the best coverage by combining test types instead of relying on only one.
+
+### Recommended Baseline
+
+- Run **Website Availability** frequently for a fast canary signal.
+- Run **Website Scenario** for critical business paths such as sign-in, checkout, lead capture, or account creation.
+- Run **Website Vitals** daily or after releases to catch performance regressions before they affect users.
+
+### Example Use Cases
+
+- A deployment breaks the login flow: use **Website Scenario**.
+- A landing page stops loading from a public location: use **Website Availability**.
+- A release causes slower rendering or layout instability: use **Website Vitals**.
+
 ## Website Tests
 
 <LinkCard
@@ -28,3 +60,25 @@ At the moment, **only web testing** is available, with more capabilities planned
   description="Monitor Core Web Vitals performance metrics for your website on a daily basis."
   href="/website-vitals/overview"
 />
+
+## Related Analysis Tools
+
+These features help you investigate failures, reduce false positives, and understand what changed during a run:
+
+- **[Pixel Comparison](/website-scenario/pixel-comparison)** detects visual regressions that code-level checks can miss.
+- **[Performance Audit](/website-scenario/performance-audit)** captures request timing and HAR data for deeper investigation.
+- **[Page Structure Flexibility](/website-scenario/page-structure-flexibility)** helps keep scenario tests resilient on dynamic frontends.
+- **[Session Player](/testclix-platform/session-player)** lets you replay and compare runs when a scenario fails.
+
+## Current Scope
+
+Today, this page covers **web testing capabilities only**.
+
+That means TestCLIX is currently designed for:
+
+- website uptime and startup checks,
+- browser-based end-to-end journeys,
+- visual regression detection,
+- and web performance monitoring.
+
+If your goal is complete coverage, a practical starting point is one fast availability check, one or two critical scenarios, and a scheduled vitals test for your most important pages.
