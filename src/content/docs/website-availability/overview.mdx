@@ -2,8 +2,71 @@
 title: Overview
 ---
 
-:::caution
+import { LinkCard } from '@astrojs/starlight/components'
 
-`TODO` Overview Page.
+## Fast Technical Health Checks
 
-:::
+**Website Availability** is the fastest way to monitor whether a website is reachable and responding as expected.
+
+It is designed for technical health checks such as:
+
+- website uptime,
+- expected HTTP status codes,
+- redirect behavior,
+- request timeout limits,
+- and SSL or TLS certificate validation.
+
+## When to Use Website Availability
+
+Choose this test type when you want a lightweight signal that your website is technically healthy without running a full browser journey.
+
+This is a strong fit for:
+
+- homepage uptime monitoring,
+- landing page reachability,
+- redirect validation,
+- SSL certificate expiry checks,
+- and regional health checks from different locations.
+
+## What It Does Well
+
+Website Availability is optimized for speed and frequent execution.
+
+- It gives you a fast canary check for outages and infrastructure issues.
+- It helps detect unexpected HTTP responses before users report them.
+- It can validate SSL and TLS configuration details, not just page reachability.
+- It can be run from different locations to catch region-specific problems.
+
+## What It Does Not Replace
+
+Website Availability checks technical health, but it does not replace browser-level functional testing.
+
+If you need to verify that a user can log in, complete checkout, submit a form, or see the correct UI state, use **[Website Scenario](/website-scenario/overview)**.
+
+If you need to monitor performance quality over time, use **[Website Vitals](/website-vitals/overview)**.
+
+## Explore Website Availability
+
+<LinkCard
+  title="Audit HTTP"
+  description="Control request method, timeouts, redirects, HTTP version, and expected status codes."
+  href="/website-availability/audit-http"
+/>
+
+<LinkCard
+  title="Audit SSL"
+  description="Monitor certificate expiry, TLS version, full chain validation, and wildcard usage."
+  href="/website-availability/audit-ssl"
+/>
+
+<LinkCard
+  title="Extra Headers"
+  description="Attach custom headers for routing rules, bot management, or authenticated checks."
+  href="/website-availability/extra-headers"
+/>
+
+<LinkCard
+  title="Location"
+  description="Run availability checks from different regions to detect geography-specific issues."
+  href="/website-availability/location"
+/>
