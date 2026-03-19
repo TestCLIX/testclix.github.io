@@ -24,8 +24,8 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/testclix-platform/overview' },
 						{ label: 'Testing Capabilities', link: '/testclix-platform/testing-capabilities' },
-						{ label: 'Codeless Recorder', link: '/testclix-platform/codeless-recorder' },
 						{ label: 'Schedule Monitoring', link: '/testclix-platform/schedule-monitoring' },
+						{ label: 'Codeless Recorder', link: '/testclix-platform/codeless-recorder' },
 						{ label: 'Session Player', link: '/testclix-platform/session-player' },
 					]
 				},
@@ -36,6 +36,7 @@ export default defineConfig({
 						{ label: 'Pick a Setup', link: '/quick-start/pick-setup' },
 						{ label: 'Setup Website Scenario', link: '/quick-start/setup-website-scenario' },
 						{ label: 'Setup Website Availability', link: '/quick-start/setup-website-availability' },
+						{ label: 'Setup Website Vitals', link: '/quick-start/setup-website-vitals' },
 					]
 				},
 				{
