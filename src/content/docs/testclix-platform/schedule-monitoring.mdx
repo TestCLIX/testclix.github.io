@@ -2,8 +2,97 @@
 title: Schedule Monitoring
 ---
 
-:::caution
+import { LinkCard } from '@astrojs/starlight/components';
+import packetUsage from '../../../assets/schedule-monitoring/packet_usage.png';
 
-`TODO` Schedule Monitoring Page.
+## Why Schedule Monitoring?
 
-:::
+Issues on your website do not wait for business hours.
+A broken checkout flow, an expired SSL certificate, or a slow-loading page can go unnoticed for hours - costing revenue, trust, and search rankings.
+
+Scheduled monitoring ensures your tests run continuously, around the clock, without anyone having to trigger them manually.
+Problems are caught the moment they appear, and your team is notified immediately so they can respond before users are affected.
+
+Whether you need to verify availability every 5 minutes or run a full end-to-end scenario once a day, scheduling turns your tests into an always-on safety net for your application.
+
+## How It Works
+
+Every test in **TestCLIX** can run on a recurring schedule or be executed manually on demand.
+When a schedule is active, the platform automatically triggers the test at the configured interval and reports results.
+
+Scheduling is managed per test.
+You choose a frequency when you create the test, and you can change it at any time.
+
+## Schedule Slots
+
+Each schedule frequency consumes a **slot** from your subscription plan.
+The number of available slots depends on your package.
+
+To check how many slots are in use and how many remain, open **Packet usage** in the right sidebar menu.
+<img src={packetUsage.src} alt="Packet usage view" width="50%" />
+
+When you change a test's schedule, the old slot is released and a new one is consumed.
+Setting a test to **Do not schedule** frees the slot entirely.
+
+## Manual Execution
+
+Any test can be executed on demand regardless of its schedule setting.
+Manual executions are subject to a separate execution limit defined by your subscription.
+
+You can trigger manual runs from the **TestCLIX** dashboard or via the API.
+
+<LinkCard
+  title="API"
+  description="Trigger test execution programmatically using the TestCLIX API."
+  href="/integration/API"
+/>
+
+## Exceeded Subscription Limits
+
+The platform may automatically **disable** a scheduled test if the number of scheduled tests exceeds your available slots.
+This can happen when a subscription expires or is canceled.
+
+All affected tests will remain disabled until a new plan is purchased to cover the missing slots or the number of scheduled tests is reduced to fit the current plan.
+
+## Execution Location
+
+Each test runs from a configured **execution location** (region).
+The default location is **Frankfurt**.
+
+You can change the execution location per test to monitor your application from different geographic regions.
+
+<LinkCard
+  title="Website Scenario Location"
+  description="Learn how to configure the execution location for Website Scenario tests."
+  href="/website-scenario/location"
+/>
+
+## Available Frequencies
+
+The frequencies available depend on the test type.
+
+### Website Scenario
+
+| Frequency   | Interval          |
+|-------------|--------------------|
+| Every 5 min | Runs every 5 minutes |
+| Every 10 min | Runs every 10 minutes |
+| Every 15 min | Runs every 15 minutes |
+| Every 1 hour | Runs every 60 minutes |
+| Every 6 hours | Runs every 6 hours |
+| Daily | Runs once per day at 08:00 UTC |
+| Do not schedule | No automatic execution |
+
+### Website Availability
+
+| Frequency   | Interval          |
+|-------------|--------------------|
+| Every 5 min | Runs every 5 minutes |
+| Do not schedule | No automatic execution |
+
+### Website Vitals
+
+| Frequency   | Interval          |
+|-------------|--------------------|
+| Daily | Runs once per day at 11:00 UTC |
+| Do not schedule | No automatic execution |
