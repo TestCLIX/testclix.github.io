@@ -1,0 +1,58 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import "@astrojs/starlight/style/markdown.css";
+---
+
+<div class="sl-markdown-content">
+  <slot />
+</div>
+
+<script>
+  function initZoom() {
+    const images = document.querySelectorAll<HTMLImageElement>(
+      ".sl-markdown-content img"
+    );
+    images.forEach((img) => {
+      if (img.dataset.zoomInit) return;
+      img.dataset.zoomInit = "true";
+      img.addEventListener("click", openLightbox);
+    });
+  }
+
+  function openLightbox(this: HTMLImageElement) {
+    const src = this.currentSrc || this.src;
+
+    const overlay = document.createElement("div");
+    overlay.className = "clix-lightbox-overlay";
+
+    const zoomedImg = document.createElement("img");
+    zoomedImg.src = src;
+    zoomedImg.alt = this.alt;
+    zoomedImg.className = "clix-lightbox-image";
+
+    overlay.appendChild(zoomedImg);
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() =>
+      overlay.classList.add("clix-lightbox-overlay--open")
+    );
+
+    function close() {
+      overlay.classList.remove("clix-lightbox-overlay--open");
+      overlay.addEventListener("transitionend", () => overlay.remove(), {
+        once: true,
+      });
+      document.removeEventListener("keydown", handleEsc);
+    }
+
+    function handleEsc(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+    }
+
+    overlay.addEventListener("click", close);
+    document.addEventListener("keydown", handleEsc);
+  }
+
+  initZoom();
+  document.addEventListener("astro:page-load", initZoom);
+</script>
