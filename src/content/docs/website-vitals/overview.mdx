@@ -2,8 +2,70 @@
 title: Overview
 ---
 
-:::caution
+import { LinkCard } from '@astrojs/starlight/components'
 
-`TODO` Overview Page.
+## Monitor Performance Quality Over Time
 
-:::
+**Website Vitals** helps you measure how your website performs in a real browser running in the cloud.
+
+It is designed to track performance regressions that can hurt user experience, conversion, and search visibility.
+
+## When to Use Website Vitals
+
+Choose this test type when you want to know whether a page is getting slower, less stable, or weaker in Lighthouse-based quality signals.
+
+This is a strong fit for:
+
+- homepage and landing page performance monitoring,
+- release validation after frontend changes,
+- SEO-sensitive page checks,
+- Core Web Vitals trend tracking,
+- and ongoing Lighthouse score monitoring.
+
+## What It Measures
+
+Website Vitals can evaluate threshold-based metrics such as:
+
+- **LCP** for loading speed,
+- **CLS** for layout stability,
+- **TBT** and **TTI** for responsiveness,
+- and Lighthouse scores for **Performance**, **Accessibility**, **Best Practices**, and **SEO**.
+
+When a configured threshold is missed, the test fails.
+
+## What It Does Well
+
+Website Vitals is built for teams that care about performance as an ongoing quality signal.
+
+- It helps catch regressions after releases.
+- It gives repeatable browser-based measurements from selected locations.
+- It turns performance expectations into pass or fail thresholds.
+- It complements uptime and scenario monitoring instead of replacing them.
+
+## What It Does Not Replace
+
+Website Vitals does not replace technical uptime checks or full browser journey validation.
+
+If you need to verify that a page is reachable and returns the correct technical response, use **[Website Availability](/website-availability/overview)**.
+
+If you need to confirm that a user flow still works visually and functionally, use **[Website Scenario](/website-scenario/overview)**.
+
+## Explore Website Vitals
+
+<LinkCard
+  title="Metrics"
+  description="Understand which Web Vitals and Lighthouse metrics are measured and how thresholds work."
+  href="/website-vitals/metrics"
+/>
+
+<LinkCard
+  title="Extra Headers"
+  description="Attach custom headers for bot management, routing rules, or controlled test traffic."
+  href="/website-vitals/extra-headers"
+/>
+
+<LinkCard
+  title="Location"
+  description="Run vitals checks from different regions to compare user experience across locations."
+  href="/website-vitals/location"
+/>
