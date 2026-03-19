@@ -421,6 +421,12 @@
    * Markdown
    */
   .sl-markdown-content {
+    img:not(:where(.not-content *)) {
+      cursor: zoom-in;
+      max-width: 100%;
+      height: auto;
+    }
+
     a:not(:where(.not-content *)) {
       color: var(--sl-color-white);
       text-underline-offset: 0.25em;
@@ -536,6 +542,43 @@
 
   .highlight {
     color: #000000 !important;
+  }
+
+  /**
+   * Image lightbox
+   */
+  .clix-lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: transparent;
+    cursor: zoom-out;
+    transition: background 200ms ease;
+  }
+
+  .clix-lightbox-overlay--open {
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .clix-lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+      opacity 200ms ease,
+      transform 200ms ease;
+  }
+
+  .clix-lightbox-overlay--open .clix-lightbox-image {
+    opacity: 1;
+    transform: scale(1);
   }
 
   /**

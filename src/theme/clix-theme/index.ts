@@ -15,6 +15,8 @@ export default function starlightClixThemePlugin(): StarlightPlugin {
             ThemeSelect: "./src/theme/clix-theme/components/ThemeSelect.astro",
             LanguageSelect:
               "./src/theme/clix-theme/components/LanguageSelect.astro",
+            MarkdownContent:
+              "./src/theme/clix-theme/components/MarkdownContent.astro",
           },
           customCss: [
             ...(config.customCss ?? []),
