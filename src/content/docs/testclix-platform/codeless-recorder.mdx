@@ -2,8 +2,81 @@
 title: Codeless Recorder
 ---
 
-:::caution
+import { LinkCard } from '@astrojs/starlight/components'
 
-`TODO` Codeless Recorder Page.
+## Record Tests Without Code
 
-:::
+The **Codeless Recorder** lets you create **[Website Scenario](/website-scenario/overview)** tests by interacting with your website in a real browser streamed from the cloud.
+You do not need to install anything on your computer, prepare a local environment, or add a browser plugin to start recording.
+
+Instead of writing automation scripts, maintaining selectors by hand, or building a QA framework from scratch, you simply perform the actions you want to test - click, type, navigate, submit - and TestCLIX records them as repeatable test steps.
+Because the recorder runs remotely, teams can start using it immediately without desktop tools, browser extensions, or automation plugins.
+
+## Why It Matters
+
+The recorder is designed to reduce the cost of testing while making monitoring accessible to non-developers.
+
+- **Lower QA cost:** business teams can define and maintain important monitoring flows without relying on engineering time for every test.
+- **Faster feedback:** critical journeys can be recorded once and then replayed automatically after every release or on a schedule.
+- **Shared visibility:** business owners and product teams can independently verify whether promised flows actually work in production.
+- **Automates manual checks:** teams can turn repetitive browser checks that were previously hard to automate and often done by hand into repeatable monitoring flows.
+- **Less code maintenance:** you avoid the ongoing overhead of building and maintaining traditional browser automation scripts for many common checks.
+
+## Who Benefits Most
+
+The recorder is especially useful when the people who know the business flow best are not the people writing code.
+
+- **Business owners:** validate checkout, signup, lead generation, or account flows without learning test automation.
+- **Product managers:** confirm that releases support the expected user journey before or after deployment.
+- **Marketing teams:** monitor landing pages, forms, and conversion paths after content or campaign changes.
+- **QA teams:** cover more regression scenarios faster and spend less time on repetitive manual verification.
+
+## How Recording Works
+
+When you start a recording session, TestCLIX launches a browser in the cloud and streams it to your screen.
+
+As you interact with the page, the recorder captures actions such as:
+
+- clicks,
+- typing,
+- navigation,
+- and changes in page state.
+
+Those actions become a reusable scenario that you can run manually or on a schedule from different locations.
+
+## What You Get After Recording
+
+Once a scenario is recorded, it becomes much more than a one-time QA exercise.
+
+- You can schedule it for continuous monitoring.
+- You can replay failures in the **[Session Player](/testclix-platform/session-player)**.
+- You can compare visual output with **[Pixel Comparison](/website-scenario/pixel-comparison)**.
+- You can add resilience features such as **[Page Structure Flexibility](/website-scenario/page-structure-flexibility)**.
+
+This means the recorder is not just a test creation tool - it is the starting point for ongoing production monitoring.
+
+## Best Use Cases
+
+Use the Codeless Recorder when you want to protect flows such as:
+
+- user login,
+- checkout and payment steps,
+- account registration,
+- lead forms,
+- and admin or dashboard workflows.
+
+These are the paths where a silent breakage can directly affect revenue, support load, or customer trust.
+
+## Explore Related Features
+
+<LinkCard
+  title="Session Player"
+  description="See what users actually saw during a failed scenario run, instead of relying only on error states."
+  href="/testclix-platform/session-player"
+/>
+
+<LinkCard
+  title="Scheduling & Monitoring"
+  description="Run recorded scenarios manually or on a schedule from different locations."
+  href="/testclix-platform/schedule-monitoring"
+/>
