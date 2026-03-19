@@ -2,7 +2,7 @@
 title: Network Monitoring Systems
 ---
 
-import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
 import yourApiKey from '../../../assets/network-monitoring/your_api_key.png';
 import httpAdvanced from '../../../assets/network-monitoring/http_advanced.png';
 import httpSpecificSettings from '../../../assets/network-monitoring/http_specific_settings.png';
@@ -39,9 +39,11 @@ This integration uses the **TestCLIX API**. Make sure you have access to the API
 
 </Steps>
 
-:::note
-You can read more about API key management in the [API](/integration/api) section.
-:::
+<LinkCard
+  title="API"
+  description="Learn more about API key management and available endpoints."
+  href="/integration/API"
+/>
 
 ### Step 2: Identify the Test Scenario ID
 

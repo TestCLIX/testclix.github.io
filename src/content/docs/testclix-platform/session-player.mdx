@@ -4,12 +4,38 @@ title: Session Player
 
 import { LinkCard } from '@astrojs/starlight/components'
 
-The **Session Player** is a core functionality that enables the replay of user sessions recorded via the recorder. It is exclusively available for **[Scenario](../website-scenario//overview.mdx)** type tests.
+The **Session Player** is a core functionality that enables the replay of user sessions recorded via the recorder.
+It is exclusively available for **[Website Scenario](../website-scenario/overview)** tests.
 
-Unlike traditional video players, the Session Player is not time-based but rather **event-based**. It navigates through the chronological history of events registered during the recording process.
+Unlike traditional video players, the Session Player is not time-based but rather **event-based**.
+It navigates through the chronological history of events registered during the recording process.
 
 <LinkCard
-  title="Session Player"
+  title="Session Player Overview"
   description="Replay and debug runs with rich reports and session comparison."
   href="/session-player/overview"
+/>
+
+<LinkCard
+  title="Session Timeline"
+  description="Navigate through the chronological history of events captured during a test run."
+  href="/session-player/session-timeline"
+/>
+
+<LinkCard
+  title="Side-by-Side Compare"
+  description="Compare two test sessions side by side to identify visual differences."
+  href="/session-player/side-by-side-compare"
+/>
+
+<LinkCard
+  title="Parallel Compare"
+  description="Run parallel comparisons across multiple test sessions."
+  href="/session-player/parallel-compare"
+/>
+
+<LinkCard
+  title="Combine Screens"
+  description="Combine multiple screen captures into a single view for analysis."
+  href="/session-player/combine-screens"
 />
