@@ -45,6 +45,7 @@ export default defineConfig({
 						{ label: 'Overview', link: '/website-scenario/overview' },
 						{ label: 'Audit SSL', link: '/website-scenario/audit-ssl' },
 						{ label: 'Extra Headers', link: '/website-scenario/extra-headers' },
+						{ label: 'Alarm and Notifications', link: '/website-scenario/alarm-notifications' },
 						{ label: 'Location', link: '/website-scenario/location' },
 						{ label: 'Page Structure Flexibility', link: '/website-scenario/page-structure-flexibility' },
 						{ label: 'Performance Audit', link: '/website-scenario/performance-audit' },
@@ -77,6 +78,7 @@ export default defineConfig({
 						{ label: 'Audit HTTP', link: '/website-availability/audit-http' },
 						{ label: 'Audit SSL', link: '/website-availability/audit-ssl' },
 						{ label: 'Extra Headers', link: '/website-availability/extra-headers' },
+						{ label: 'Alarm and Notifications', link: '/website-availability/alarm-notifications' },
 						{ label: 'Location', link: '/website-availability/location' },
 					]
 				},
@@ -85,6 +87,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/website-vitals/overview' },
 						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
+						{ label: 'Alarm and Notifications', link: '/website-vitals/alarm-notifications' },
 						{ label: 'Location', link: '/website-vitals/location' },
 						{ label: 'Metrics', link: '/website-vitals/metrics' },
 					]
