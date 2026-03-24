@@ -1,0 +1,114 @@
+---
+title: Alarm and Notifications
+---
+
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import cfErrorNotifications from '../../../assets/error-notifications/cf_error_notifications.png';
+
+## Introduction
+
+TestCLIX lets you configure **Error evaluation and notifications** per test. 
+These settings determine both:
+
+- when a test’s status changes to <Badge text="Error" variant="danger"/>  
+- when notifications are sent
+
+
+This helps you:
+
+  - quickly detect failing tests 
+  - monitor long-term reliability trends
+  - receive alerts before failures impact users
+
+## How It Works
+
+Each test can have independent error evaluation parameters and notification preferences.
+
+When the number of failed executions reaches your defined threshold, TestCLIX:
+
+  1. marks the scenario’s status as <Badge text="Error" variant="danger"/>, and  
+  2. sends notifications (if enabled) via your configured channels (for example, email or Slack).
+
+
+Two main parameters control error evaluation:
+
+  - **Evaluation period** — defines how many recent executions are taken into account (from 1 to 50 runs).
+
+  - **Failures to alarm** — defines how many failed runs must occur before triggering a notification (from 1 to 50).
+
+#### Example
+
+If the evaluation period is set to 10 and failures to alarm is 3, an alert will be sent only if 3 errors occur within the last 10 runs.
+
+This approach helps reduce false alarms caused by temporary issues such as network instability or third-party dependencies.
+
+:::tip
+Setting **Failures to alarm** too low (for example, 1) may generate excessive alerts, especially in unstable environments.
+Use higher thresholds for tests that depend on external services or dynamic content to avoid alert fatigue.
+:::
+
+## Configuration
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Web Scenario**.
+
+    4. Scroll down to the **Advanced options** section.
+
+    5. Expand the **Alarm & Notifications** subsection.
+    
+    6. Enable **Error notifications**.
+
+       :::caution
+       Disable this if you only want the test status to update without receiving notifications.
+       :::
+
+    7. Set the following parameters:
+       - **Evaluation period** — number of runs used to assess failure trends (1–50).
+       - **Failures to alarm** — number of failures required to mark status as <Badge text="Error" variant="danger"/> and trigger notifications (1–50).
+
+    8. Save your configuration.
+       <img src={cfErrorNotifications.src} alt="Error notification configuration" />
+
+    </Steps>
+  After saving, TestCLIX will begin evaluating test results and send alerts according to your thresholds.
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the scenario you want to modify.
+
+    3. Open the scenario settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit scenario properties**.
+
+    4. Scroll down to the **Advanced options** section.
+
+    5. Expand the **Alarm & Notifications** subsection.
+
+    6. Enable **Error notifications**.
+
+       :::caution
+       Disable this if you only want the test status to update without receiving notifications.
+       :::
+
+    7. Set the following parameters:
+       - **Evaluation period** — number of runs used to assess failure trends (1–50).
+       - **Failures to alarm** — number of failures required to mark status as <Badge text="Error" variant="danger"/> and trigger notifications (1–50).
+
+    8. Save your configuration.
+
+       <img src={cfErrorNotifications.src} alt="Error notification configuration" />
+
+    </Steps>
+  The scenario’s error status and notifications will update according to the thresholds you define.
+  </TabItem>
+</Tabs>
