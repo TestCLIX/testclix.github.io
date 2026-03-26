@@ -1,0 +1,109 @@
+---
+title: Codeless Recorder
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components'
+
+The Codeless Recorder is how you build Website Scenarios in TestCLIX. Instead of writing test scripts, you interact with a real browser streamed from the cloud and the recorder captures every action — clicks, typing, scrolling, navigation — as replayable steps in a timeline.
+
+The recorder runs entirely in the browser. When you start a recording session, TestCLIX launches a remote browser, streams the view to your screen, and records your interactions in real time. The result is a scenario that can be scheduled for automatic monitoring or run on demand.
+
+## Recording a scenario
+
+When the session starts, the recorder opens your target URL and enters [Live mode](/codeless-recorder/recorder-modes#live-focused). From there, you interact with the page as a real user would. Each interaction becomes a step in the [Session Timeline](/codeless-recorder/session-timeline).
+
+The recorder captures the following actions automatically:
+
+<CardGrid>
+  <LinkCard
+    title="Mouse Left Click"
+    description="Stored with both an XPath selector and screen coordinates for resilience."
+    href="/codeless-recorder/mouse-click"
+  />
+  <LinkCard
+    title="Typing and Special Keys"
+    description="Regular text input and functional keys like Enter, Tab, and arrow keys."
+    href="/codeless-recorder/typing-and-special-keys"
+  />
+  <LinkCard
+    title="Scrolling"
+    description="Both relative scrolling and absolute jumps, with consecutive scrolls merged into a single step."
+    href="/codeless-recorder/scroll"
+  />
+  <LinkCard
+    title="History Navigation"
+    description="Browser back navigation."
+    href="/codeless-recorder/history-navigation"
+  />
+</CardGrid>
+
+## Verification steps
+
+Beyond recording interactions, you can add verification steps that check the page during monitoring:
+
+<CardGrid>
+  <LinkCard
+    title="Compare Screen Fragment"
+    description="Select a region and verify it looks the same on every run using structural similarity."
+    href="/codeless-recorder/image-checker"
+  />
+  <LinkCard
+    title="AI Assistant"
+    description="Describe what should be true about a screen region in plain language and let an LLM evaluate it."
+    href="/codeless-recorder/ai-assistant"
+  />
+  <LinkCard
+    title="Movie Checker"
+    description="Verify that video or animated content is actively playing in a selected region."
+    href="/codeless-recorder/movie-checker"
+  />
+  <LinkCard
+    title="Screenshots"
+    description="Capture the page state at key moments for review and optional pixel comparison."
+    href="/codeless-recorder/screenshots"
+  />
+</CardGrid>
+
+## Additional tools
+
+The recorder also provides tools for handling common challenges:
+
+<CardGrid>
+  <LinkCard
+    title="Text Paste"
+    description="Paste values into the remote browser session from your local clipboard."
+    href="/codeless-recorder/text-paste"
+  />
+  <LinkCard
+    title="Authentication (OATH)"
+    description="Automate TOTP multi-factor authentication steps."
+    href="/codeless-recorder/session-oath"
+  />
+  <LinkCard
+    title="Masked Fields"
+    description="Handle partial input challenges where different fields are enabled on each run."
+    href="/codeless-recorder/masked-fields"
+  />
+  <LinkCard
+    title="Ignored Zones"
+    description="Mask dynamic content in screenshots to prevent false failures during verification."
+    href="/codeless-recorder/ignored-zones"
+  />
+</CardGrid>
+
+## Reviewing and maintaining scenarios
+
+The recorder is not just for creating scenarios — it also helps you maintain them over time:
+
+<CardGrid>
+  <LinkCard
+    title="Replay and Regenerate"
+    description="Replay steps to verify they still work, or regenerate the timeline to capture fresh screenshots and auto-correct XPath selectors."
+    href="/codeless-recorder/replay-and-regenerate"
+  />
+  <LinkCard
+    title="Combine Screens"
+    description="Resolve visual discrepancies directly from the Session Player by combining reference and current screens."
+    href="/session-player/combine-screens"
+  />
+</CardGrid>

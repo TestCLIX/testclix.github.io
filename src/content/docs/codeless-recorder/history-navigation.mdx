@@ -1,0 +1,46 @@
+---
+title: History Navigation
+---
+
+import historyBackImg from '../../../assets/codeless-recorder/history_back.png';
+
+<img src={historyBackImg.src} alt="History back event in the recorder timeline" />
+
+TestCLIX supports navigating back through the browser history. Use this when your scenario depends on returning to a previous page.
+
+:::note
+Only backward navigation is currently supported. Forward navigation is not available.
+:::
+
+## How to navigate back
+
+Click the **&larr;** (back arrow) button in the toolbox below the recording zone. The recorder inserts a history-back step into the timeline.
+
+During playback, TestCLIX triggers the browser's built-in back navigation, just as a real user would press the back button.
+
+Before executing, TestCLIX checks whether there is a previous page in the history. If the history is empty (e.g., the scenario just started or a new tab was opened), the step fails.
+
+## Best used for
+
+- Returning to a search results page after viewing a detail page
+- Multi-step flows where the user navigates back to correct input
+- Scenarios that follow the natural browser back-and-forth pattern
+
+## When browser back is not available
+
+Browser back requires at least one previous page in the navigation history. It will not work when:
+
+- The current page is the first page in the scenario - there is nothing to go back to.
+- A click opened the page in a **new tab** (e.g., `target="_blank"` link). The new tab starts with an empty history, so there is no previous page. See [Mouse Click - New tabs](/codeless-recorder/mouse-click#new-tabs) for details on how the recorder handles new tabs.
+- The application replaced the history entry instead of pushing a new one (e.g., using `location.replace()` or `history.replaceState()`).
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **Internal error** | There is no previous page in the browser history, or the back navigation failed. | Remove the back step, or add a navigation step before it so the history is not empty. |
+
+## Caveats
+
+- Single-page applications that manage routing internally may not respond to browser back the same way a traditional multi-page site does. Test the behaviour in the recorder before relying on it.
+- If the previous page needs time to reload, add a [pause](/codeless-recorder/pauses) after the back step.

@@ -1,0 +1,35 @@
+---
+title: Navigation Errors
+---
+
+Navigation errors occur when the browser cannot reach the initial URL of a scenario. These errors are reported only for the first step — the page load that opens the starting URL. If the page cannot be reached, the recorder displays a warning dialog with a description of the problem. During monitoring the step is marked as failed and the error message is included in the report.
+
+## Invalid URL
+
+Before the browser attempts to load the page, TestCLIX validates that the URL starts with `http://` or `https://`. If it does not, the step fails with **Invalid URL**.
+
+## Connectivity errors
+
+| Error | Cause | Resolution |
+|-------|-------|------------|
+| **DNS lookup failed for the URL** | The domain name could not be resolved. The browser error code is `net::ERR_NAME_NOT_RESOLVED`. | Check that the URL is correct and the domain is accessible from the test location. |
+| **Connection was refused** | The server actively rejected the connection (`net::ERR_CONNECTION_REFUSED`). | Verify the server is running and the port is correct. |
+| **Connection timed out** | The network request did not receive a response in time (`net::ERR_CONNECTION_TIMED_OUT`). | Check network connectivity and server availability. |
+
+If the browser returns a different `net::ERR_*` code that is not listed above, TestCLIX reports it as **page could not be reached** followed by the original browser error string.
+
+## SSL / TLS errors
+
+| Error | Cause | Resolution |
+|-------|-------|------------|
+| **SSL certificate has expired or is not yet valid** | The certificate is outside its valid date range (`net::ERR_CERT_DATE_INVALID`). | Renew the certificate or adjust the test if the environment uses self-signed certificates. |
+| **SSL certificate authority is not trusted** | The certificate was issued by an untrusted CA (`net::ERR_CERT_AUTHORITY_INVALID`). | Install the CA certificate or use a publicly trusted certificate. |
+| **SSL certificate hostname mismatch** | The certificate common name does not match the domain (`net::ERR_CERT_COMMON_NAME_INVALID`). | Ensure the certificate covers the domain being tested. |
+
+When an SSL date error is detected, TestCLIX attempts to read the certificate details from the browser and records them alongside the error. The recorded information includes the certificate subject, issuer, and validity period (NotBefore / NotAfter dates). This data appears in the monitoring report so you can identify which certificate needs attention without inspecting the server manually.
+
+### SSL deadline checking
+
+TestCLIX can proactively check whether certificates encountered during a scenario will expire within a configurable number of days. When this feature is enabled and a certificate's expiration date falls before the deadline, the step fails with **The certificate will expire, before \<date\>**.
+
+This lets you catch certificates that are technically still valid but close to expiring, so you can renew them before they cause monitoring failures. See [Audit SSL](/website-scenario/audit-ssl) for configuration details.

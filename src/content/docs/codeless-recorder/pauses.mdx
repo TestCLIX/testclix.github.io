@@ -1,0 +1,40 @@
+---
+title: Pauses
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import addPauseImg from '../../../assets/codeless-recorder/add_pause.png';
+
+<img src={addPauseImg.src} alt="Add pause dialog in the recorder" />
+
+A pause inserts an explicit wait into the scenario. Use it when the application needs time to update before the next step runs - for example, waiting for an animation to finish, an API response to arrive, or lazy-loaded content to appear.
+
+Without pauses, the next step may execute before the page is ready, causing it to fail even though the application is working correctly.
+
+## How to add a pause
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Right-click** anywhere on the recorded browser window. A context menu with available actions will appear.
+3. Select **Add pause**.
+4. Choose the duration (1 to 15 seconds).
+5. Click **Submit** to confirm.
+
+</Steps>
+
+The pause is added to the timeline as a dedicated step. During monitoring, TestCLIX waits for the specified duration before moving to the next action.
+
+## Best used for
+
+- Waiting for animations or transitions to finish
+- Allowing delayed API responses to update the UI
+- Giving lazy-loaded content time to appear
+- Stabilizing the page after a navigation or a complex interaction
+- Waiting for a video to start before adding a [Movie Checker](/codeless-recorder/movie-checker)
+
+## Caveats
+
+- Pauses should be short and purposeful. The maximum duration is 15 seconds.
+- Adding consecutive pauses on the same step will replace the previous value rather than adding to it.
+- Prefer adding a pause only where the UI truly needs time to settle. Unnecessary pauses slow down the scenario without adding value.

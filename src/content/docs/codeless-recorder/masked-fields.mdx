@@ -1,0 +1,58 @@
+---
+title: Masked Fields
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+:::note
+Masked Fields is an advanced feature. For most password and secret inputs, regular [typing](/codeless-recorder/typing-and-special-keys) or [Text Paste](/codeless-recorder/text-paste) is sufficient.
+:::
+
+Masked Fields let you associate multiple input fields with values that should be typed into them during monitoring. The key difference from regular typing is that Masked Fields are **focus-aware** - during replay, TestCLIX clicks each field and only types the value if the field actually became active. Fields that are inactive or disabled at that moment are silently skipped.
+
+This makes Masked Fields ideal for partial input challenges where only some fields are enabled at a time.
+
+## When to use Masked Fields
+
+The classic use case is **partial secret entry** used by banks and other security-sensitive services. Instead of asking for the full password, the application asks the user to enter specific characters - for example, the 1st, 3rd, 5th, and last letter of a security phrase or social security number. Each letter goes into a separate input field, but which fields are active changes on every login attempt.
+
+With Masked Fields you define all the possible fields and their corresponding values once during recording. During monitoring, TestCLIX clicks each field in order - if the field becomes active (focus changes), the value is typed. If the field stays inactive, it is skipped and the next one is tried. This way the same recorded step works regardless of which combination the application asks for.
+
+Other use cases include:
+
+- Multi-field authentication forms where fields are conditionally enabled
+- CAPTCHA-like challenges that activate different input positions each time
+- Any form where you need to fill multiple sensitive fields in a single atomic step
+
+## How to add Masked Fields
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Right-click** on the recorded browser window and select **Add masked fields**.
+3. The recorder enters inspection mode - click on each input field you want to include.
+4. For each selected field, provide the value that should be typed into it.
+5. Click **Submit** to confirm.
+
+</Steps>
+
+The recorder stores the click coordinates and XPath of each field together with its value as a single event in the timeline.
+
+## How replay works
+
+During monitoring, for each field in the masked fields event:
+
+1. TestCLIX checks which element currently has focus.
+2. It clicks the field using the stored coordinates and XPath.
+3. It checks whether focus actually changed to a new element.
+4. **If focus changed** - the value is typed into the field.
+5. **If focus did not change** (the field is disabled or not present) - the field is skipped and the next one is tried.
+
+This focus-checking behaviour is what makes Masked Fields work with partial input challenges - you don't need to know in advance which fields will be active.
+
+## Caveats
+
+- Masked Fields depend on selecting the correct input targets during recording. Make sure you click on each field accurately.
+- The values are stored inside the recording. Treat scenarios that contain Masked Fields as sensitive.
+- If the fields appear dynamically (e.g., after an animation or API call), add a [pause](/codeless-recorder/pauses) before the Masked Fields step.
+- If a click on a field fails entirely (e.g., the element is gone), it is silently skipped. Check the monitoring report if fewer fields than expected were filled.

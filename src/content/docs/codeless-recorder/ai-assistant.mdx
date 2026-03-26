@@ -1,0 +1,63 @@
+---
+title: AI Assistant
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import aiAssistantImg from '../../../assets/codeless-recorder/ai_assistant.png';
+
+<img src={aiAssistantImg.src} alt="AI Assistant selection mode in the recorder" />
+
+The AI Assistant lets you add verification steps written in plain human language instead of code or complex expressions. You describe what should be true about a part of the page, and an LLM evaluates whether the statement is met during playback.
+
+No programming knowledge is required - anyone can create meaningful verification steps in seconds by describing the expected outcome in plain words.
+
+## How to add an AI Assistant check
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Right-click** anywhere on the recorded browser window. A context menu with available actions will appear.
+3. Select **AI Assistant**.
+4. Draw a rectangle around the region you want to verify.
+5. Write a prompt - a statement that should be true about that region.
+6. Click **Submit** to confirm.
+
+</Steps>
+
+## How it works
+
+During playback, TestCLIX captures the selected area and asks an LLM to determine whether the statement is satisfied or not.
+
+The check works on both **text and visual content**. The LLM sees a screenshot of the selected region, so it can evaluate text, images, charts, colours, layout, and anything else visible on the screen.
+
+## Writing good prompts
+
+The best prompts are statements that clearly evaluate to a positive or negative outcome. For example:
+
+- **"The price is between 10 and 20"** - if the displayed price is 15, the LLM confirms the statement is met. If the price is 30, the LLM reports it as false.
+- **"The shopping cart icon shows 3 items"** - the LLM checks the visual indicator in the selected region.
+- **"The status badge is green"** - works because the LLM can see colours in the screenshot.
+- **"The chart shows an upward trend"** - works on visual content, not just text.
+
+Avoid vague or open-ended prompts like "Does the page look correct?" - these give the LLM too little to work with.
+
+## Best used for
+
+- Verifying dynamic values that change between runs (e.g., "The total is greater than 0")
+- Checking visual states that are hard to capture with pixel comparison (e.g., "The button is red")
+- Creating meaningful checks without writing code or learning a query language
+- Validating content in images, charts, or non-text elements
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **AI Assistant concluded that assumption in prompt isn't met** | The LLM determined the statement is not satisfied. | Review the prompt and the current page state. The content may have changed since recording. |
+
+## Caveats
+
+- Keep the prompt short and specific - the maximum prompt length is 128 characters.
+- Choose a stable screen region. If the region captures the wrong part of the page after a layout change, the check may fail or produce misleading results.
+- LLMs are not fully deterministic. If you notice a test is flaky on an AI Assistant step, try refining the prompt to be more specific and unambiguous.
+
+For exact visual matching instead of language-based checks, see [Compare Screen Fragment](/codeless-recorder/image-checker). To verify that video or animated content is playing, see [Movie Checker](/codeless-recorder/movie-checker).

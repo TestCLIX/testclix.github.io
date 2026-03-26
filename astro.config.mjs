@@ -60,13 +60,34 @@ export default defineConfig({
 								{ label: 'Parallel Compare', link: '/session-player/parallel-compare' },
 							]
 						},
-						{ 
+						{
 							label: 'Codeless Recorder',
 							items: [
-								{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
+								{ label: 'Overview', link: '/codeless-recorder/overview' },
+								{ label: 'Ignored Zones', link: '/codeless-recorder/ignored-zones' },
 								{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
-								{ label: 'Session OATH', link: '/codeless-recorder/session-oath' },
+								{ label: 'Navigation Errors', link: '/codeless-recorder/navigation-errors' },
+								{ label: 'Recorder Modes', link: '/codeless-recorder/recorder-modes' },
+								{ label: 'Replay and Regenerate', link: '/codeless-recorder/replay-and-regenerate' },
 								{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
+								{
+									label: 'Recorder Actions',
+									collapsed: true,
+									items: [
+										{ label: 'AI Assistant', link: '/codeless-recorder/ai-assistant' },
+										{ label: 'Authentication (OATH)', link: '/codeless-recorder/session-oath' },
+										{ label: 'Text Paste', link: '/codeless-recorder/text-paste' },
+										{ label: 'Compare Screen Fragment', link: '/codeless-recorder/image-checker' },
+										{ label: 'History Navigation', link: '/codeless-recorder/history-navigation' },
+										{ label: 'Masked Fields', link: '/codeless-recorder/masked-fields' },
+										{ label: 'Mouse Left Click', link: '/codeless-recorder/mouse-click' },
+										{ label: 'Movie Checker', link: '/codeless-recorder/movie-checker' },
+										{ label: 'Pauses', link: '/codeless-recorder/pauses' },
+										{ label: 'Screenshots', link: '/codeless-recorder/screenshots' },
+										{ label: 'Scroll', link: '/codeless-recorder/scroll' },
+										{ label: 'Typing and Special Keys', link: '/codeless-recorder/typing-and-special-keys' },
+									]
+								},
 							]
 						},
 					]
