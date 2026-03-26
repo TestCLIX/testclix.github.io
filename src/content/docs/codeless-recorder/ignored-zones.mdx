@@ -1,0 +1,56 @@
+---
+title: Ignored Zones
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import ignoredZonesImg from '../../../assets/codeless-recorder/ignored_zones.png';
+
+<img src={ignoredZonesImg.src} alt="Ignored zones drawn on a screenshot in Preview mode" />
+
+Ignored Zones let you exclude parts of the screen from comparison during monitoring. Think of them as the inverse of [Compare Screen Fragment](/codeless-recorder/image-checker) - instead of selecting what to check, you select what to **skip**.
+
+:::note
+Ignored Zones only take effect when [Pixel Comparison](/website-scenario/pixel-comparison) is enabled for the test. Without Pixel Comparison, ignored zones have no impact on the monitoring result.
+:::
+
+## How it works
+
+When you add an ignored zone to an event, you draw a rectangular area on the screenshot. This tells TestCLIX that this zone should not be checked - any content inside it is excluded from the comparison and cannot trigger a mismatch.
+
+You can add **multiple** ignored zones to the same event. Zones can **overlap** - overlapping zones are merged into a single excluded area.
+
+## When to use ignored zones
+
+Ignored zones are useful when a page contains a mix of stable and dynamic content. For example:
+
+- A dashboard with a fixed layout but a **last-updated timestamp** or **live visitor counter** that changes on every load.
+- A product page with stable images and prices but a **rotating promotional banner** or **dynamic ad**.
+- A checkout page where the **order total** or **delivery date** changes between runs.
+- A page with an **animated element** (spinner, carousel) that differs frame-to-frame.
+
+Without ignored zones, any change in the dynamic part would fail the Pixel Comparison even though the rest of the page is correct.
+
+## How to add ignored zones
+
+Ignored zones can be added to **any** event on the timeline — not just screenshots or verification steps. Every event has an associated screenshot, so you can define exclusion areas on any step in the scenario.
+
+<Steps>
+
+1. Click any event in the [Session Timeline](/codeless-recorder/session-timeline) to jump directly to it in [Preview mode](/codeless-recorder/recorder-modes#preview). You do not need to replay the scenario to that step — Preview mode lets you access any recorded step instantly.
+2. Click **Add ignored zones**.
+3. Draw rectangles on the screenshot to mark areas that should be excluded from comparison. To add more zones, simply draw additional rectangles.
+4. Click **Save ignored zones** to confirm.
+
+</Steps>
+
+The ignored zones are stored with the event and applied automatically during monitoring.
+
+## Modifying ignored zones
+
+To change or remove ignored zones, go back to [Preview mode](/codeless-recorder/recorder-modes#preview) on the same event. You can adjust the position and size of each zone, select and delete individual zones, or draw new ones. Click **Save ignored zones** when done.
+
+## Caveats
+
+- Ignored zones hide content from comparison completely. If the dynamic area grows beyond the masked region, the overflow may still cause a mismatch.
+- Use the smallest zone that covers the dynamic content. Masking large areas reduces the value of the Pixel Comparison check.
+- Ignored zones apply to both the recorded reference and the current screenshot, so the comparison is fair even if the dynamic content changes.

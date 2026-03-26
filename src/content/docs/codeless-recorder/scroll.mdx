@@ -1,0 +1,54 @@
+---
+title: Scroll
+---
+
+import scrollImg from '../../../assets/codeless-recorder/scroll.png';
+
+<img src={scrollImg.src} alt="Recorder right-click menu with scroll options" />
+
+Scroll actions let you move through a long page during recording. This is important when elements you need to interact with are below the fold, or when the page lazy-loads content as you scroll down.
+
+## How to scroll
+
+There are two ways to scroll in the recorder:
+
+- **Scroll bar** - on the right side of the recorder window, a scroll bar appears when the page can be scrolled. Drag it to scroll to any position on the page.
+- **Right-click menu** - right-click on the recorded browser window and select **Scroll to top** or **Scroll to bottom** to jump to the start or end of the page.
+
+Both methods are recorded as timeline events and replayed during monitoring.
+
+## How it works
+
+The recorder supports two types of scroll events:
+
+- **Scroll by** - scrolls a relative distance from the current position (e.g., scroll down 300 pixels). This is what happens when you use the scroll bar.
+- **Scroll to** - scrolls to an absolute position on the page (e.g., jump to the top or bottom). This is what happens when you use the right-click menu options.
+
+During replay, TestCLIX executes the same scroll action and waits for the page to stabilize before continuing to the next step.
+
+## Event merging
+
+Consecutive scroll events in the same direction are automatically merged into a single event. For example, if you scroll down 100 pixels and then scroll down another 50 pixels without performing any other action in between, the recorder merges them into a single scroll-by event of 150 pixels.
+
+If you change direction (scroll down then scroll up), the events are not merged - they stay as separate steps.
+
+This keeps the timeline clean and avoids cluttering it with many small scroll increments.
+
+How merging behaves depends on the scroll type:
+
+- **Scroll by** events merge based on direction only. If you scroll down 100 pixels, new content loads and makes the page taller, then you scroll down another 50 pixels, the two events are still merged into a single 150-pixel scroll.
+- **Scroll to** events are smarter. If the page height or scroll direction changes between two scroll-to actions (e.g., because new content was loaded and the bottom of the page moved), they are kept as separate steps. If the page stays the same, consecutive scroll-to events merge into one.
+
+If you need the scenario to treat two consecutive scrolls as separate steps (e.g., to wait for content to load between them), add a [pause](/codeless-recorder/pauses) or a [screenshot](/codeless-recorder/screenshots) between the scrolls. Any other action in between prevents the merge.
+
+## Best used for
+
+- Reaching elements below the fold
+- Triggering lazy-loaded sections
+- Loading more content in infinite-scroll pages
+- Moving to content before the next click or hover
+
+## Caveats
+
+- If content loads dynamically after scrolling (e.g., lazy-loaded images or infinite scroll), add a [pause](/codeless-recorder/pauses) before the next action to give the page time to update.
+- Large layout shifts after scrolling can change what is visible. If a subsequent step fails, check whether the target element moved due to new content appearing.

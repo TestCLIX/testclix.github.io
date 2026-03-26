@@ -1,9 +1,59 @@
 ---
-title: Session OATH
+title: Authentication (OATH)
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+import oathImg from '../../../assets/codeless-recorder/oath.png';
+
+<img src={oathImg.src} alt="OATH authentication dialog in the recorder" />
+
+The OATH action lets your scenario pass a time-based one-time password (TOTP) step. Many services use TOTP as a multi-factor authentication (MFA) method during login - apps like Google Authenticator, Authy, or Microsoft Authenticator generate a short-lived code that the user must enter to prove their identity. The OATH action automates this step so you can monitor MFA-protected login flows without manual intervention.
+
+## How to add an OATH step
+
+The generated code is pasted into whichever input field is currently active on the page. Before adding the OATH step, click on the MFA code input field to make sure it has focus.
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Click on the TOTP input field** on the page so it receives focus.
+3. In the toolbox below the recording zone, click the **...** menu.
+4. Select **OATH**.
+5. Enter the TOTP secret key (the Base32-encoded key from your authentication provider).
+6. Click **Submit**.
+
+</Steps>
+
+The recorder generates a fresh code from the secret, types it into the active input field, and stores the secret in the timeline.
+
+## How it works
+
+During monitoring, TestCLIX regenerates a new TOTP code using the stored secret and the current time. Because TOTP codes are time-based and deterministic, this produces a valid code for the current time window without any manual input.
+
+Only the secret is stored - never the generated code itself. Each run produces a fresh code valid for that moment.
+
 :::caution
-
-`TODO` Session OATH Page.
-
+The TOTP secret is stored inside the recording. Treat recorded scenarios that include OATH steps as sensitive, just as you would treat the secret itself.
 :::
+
+## Best used for
+
+- Logging into accounts protected by TOTP two-factor authentication
+- Passing MFA challenges during automated monitoring of login flows
+- Monitoring admin panels, banking portals, or any service that requires a one-time code at sign-in
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **Error generating token** | The secret is invalid or incorrectly formatted. | Verify the TOTP secret is a valid Base32-encoded key from your authentication provider. |
+
+## Caveats
+
+:::note
+Only time-based one-time passwords (TOTP) are supported. Event-based one-time passwords (HOTP) are not available.
+:::
+
+- Make sure the target input field is focused before adding the OATH step. The generated code is typed into whichever field currently has focus.
+- The system clock on the playback environment must be accurate. TOTP codes are valid only within a short time window (typically 30 seconds), so clock drift can cause codes to be rejected.
+- If the application rejects a code that was already used within the same time window, playback may fail. This can happen when a scenario is replayed very quickly after a previous run.

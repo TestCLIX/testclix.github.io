@@ -1,0 +1,51 @@
+---
+title: Movie Checker
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import movieCheckerImg from '../../../assets/codeless-recorder/movie_checker.png';
+
+<img src={movieCheckerImg.src} alt="Movie checker selection mode in the recorder" />
+
+The Movie Checker verifies that video or animated content is actively playing inside a selected screen region. It is the simplest way to confirm that a video embed, animation, or any moving visual element is working as expected.
+
+This is particularly useful for pages where video playback is a core part of the user experience - a product demo, a tutorial, a live stream, or an animated hero banner. Without the Movie Checker, a broken video player could go unnoticed because the rest of the page still loads correctly.
+
+## How to add a movie checker
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Right-click** anywhere on the recorded browser window. A context menu with available actions will appear.
+3. Select **Add movie checker**.
+4. Draw a rectangle around the region that contains the video or animation.
+5. Click **Submit** to confirm.
+
+</Steps>
+
+## How it works
+
+During monitoring, TestCLIX captures several screenshots of the selected region over a short period (approximately 1.25 seconds). It then compares consecutive frames to detect visual changes. If any two frames differ, the check passes - motion was detected. If all frames look the same, the check fails because nothing is moving.
+
+The comparison uses the same structural similarity (SSIM) algorithm as [Compare Screen Fragment](/codeless-recorder/image-checker), but the logic is inverted - here TestCLIX expects the frames to be **different** rather than identical.
+
+## Best used for
+
+- Confirming that an embedded video is playing after clicking play
+- Verifying that an animation, carousel, or slideshow is active
+- Checking that a live feed or streaming content is running
+- Detecting broken video players that show a static poster frame instead of playing
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **It seems that movie doesn't play** | No motion was detected in the selected region within the observation window. | The video may be paused, buffering, or the region may not cover the active area. Make sure the video is playing at the time of the check and that the selected region covers an area with visible movement. |
+| **Invalid image checker coordinates** | The selected region extends beyond the browser window. | Resize the region so it fits within the screen boundaries. |
+
+## Caveats
+
+- The checker monitors the region for approximately 1.25 seconds. If the video or animation changes too slowly (e.g., a slideshow with long intervals), it may not detect motion within that window.
+- A paused or buffering video will be reported as not playing.
+- Choose a region that covers an area with clear visual movement. Avoid selecting only static parts of the player such as the controls bar or a fixed title overlay.
+- If the video has not started by the time the check runs, add a [pause](/codeless-recorder/pauses) before the movie checker step.

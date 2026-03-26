@@ -1,0 +1,42 @@
+---
+title: Text Paste
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import pasteImg from '../../../assets/codeless-recorder/paste.png';
+
+<img src={pasteImg.src} alt="Text Paste dialog in the recorder" />
+
+Text Paste lets you paste a value into the currently focused field in the recorded browser. Since the recorder streams a remote browser session, your local clipboard is not directly accessible inside the recording. Text Paste bridges this gap - you provide the value and TestCLIX types it into the active field on the remote page.
+
+This is useful for pasting long strings, URLs, pre-formatted data, or any content that would be tedious to type character by character.
+
+## How to use Text Paste
+
+<Steps>
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. **Click on the input field** on the page where you want the value to go.
+3. **Right-click** on the recorded browser window and select **Paste**, or use the keyboard shortcut **Ctrl+V** on the recorder view.
+4. Enter or paste the value into the **Clipboard value** field (up to 1024 characters).
+5. Click **Submit**.
+
+</Steps>
+
+The value is typed into the active field on the page, just as if the user had typed it manually.
+
+## How it differs from regular typing
+
+When you use Text Paste, the value is entered in one step rather than being recorded as individual keystrokes. This keeps the timeline cleaner for long text inputs. For character-by-character input, see [Typing and Special Keys](/codeless-recorder/typing-and-special-keys).
+
+## Best used for
+
+- Pasting long URLs, email addresses, or pre-formatted strings
+- Entering content from your local clipboard into the remote browser session
+- Filling fields with values that are easier to copy-paste than type manually
+
+## Caveats
+
+- Make sure the target input field is focused before opening Text Paste. The value is typed into whichever field currently has focus.
+- The maximum value length is 1024 characters.
+- If the field has not appeared yet (e.g., after a click that opens a modal), add a [pause](/codeless-recorder/pauses) before pasting.

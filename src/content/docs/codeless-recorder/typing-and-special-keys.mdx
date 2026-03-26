@@ -1,0 +1,64 @@
+---
+title: Typing and Special Keys
+---
+
+import keyboardEventImg from '../../../assets/codeless-recorder/keyboard_event.png';
+
+<img src={keyboardEventImg.src} alt="Keyboard events in the recorder timeline" />
+
+Typing is recorded automatically whenever you press keys in the recorder. However, the recorder must be in **Live** mode and your mouse focus must be on the recorded browser window. If the focus is elsewhere, keystrokes are sent to the TestCLIX application itself instead of the recorded scenario.
+
+Each keystroke is sent to the recorded page  - no element selection or XPath is involved. If a specific element has focus (e.g., a text field), the keystrokes go to that element. If no element is focused, the keystrokes are still delivered to the page and the application can react to them however it chooses  - for example, a browser game may respond to arrow keys without requiring a specific element to be selected first.
+
+The recorder captures two kinds of keyboard input:
+
+- **Regular typing**  - any text characters, including Unicode and international characters (e.g., ą, ć, ü).
+- **Special keys**  - functional keys such as `Enter`, `Tab`, or the arrow keys.
+
+Consecutive keystrokes of the same kind are merged into a single event. For example, typing "hello" produces one event with the full text, and pressing `Backspace` three times produces one event with a count of 3.
+
+## How it works
+
+When you type in the recorder, each character is dispatched to the browser and a keyboard event is added to the timeline. If the previous event is also a regular typing event, the new characters are appended to the existing event instead of creating a new one.
+
+Special keys work the same way  - consecutive presses of the same key are merged into a single event with an incremented count. Pressing a different special key starts a new event.
+
+## Supported special keys
+
+| Key | Description |
+|-----|-------------|
+| `Backspace` | Delete character before cursor |
+| `Tab` | Move focus or indent |
+| `Enter` | Submit or new line |
+| `Escape` | Cancel or close |
+| `Delete` | Delete character at cursor |
+| `ArrowUp` | Navigate up |
+| `ArrowDown` | Navigate down |
+| `ArrowLeft` | Navigate left |
+| `ArrowRight` | Navigate right |
+| `Home` | Jump to start of line or field |
+| `End` | Jump to end of line or field |
+| `PageUp` | Scroll up |
+| `PageDown` | Scroll down |
+
+## Best used for
+
+- Email and password fields
+- Search boxes
+- Autocomplete inputs
+- Keyboard-driven navigation (e.g., selecting items with arrow keys)
+- Form submission with `Enter`
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **Unknown key** | The special key name is not in the supported list. | Use one of the supported special keys listed above. |
+| **Step timed out** | The keystroke could not be dispatched within the allowed time. | The page may still be loading. Add a [pause](/codeless-recorder/pauses) before the typing step. |
+
+## Caveats
+
+- Make sure the intended field is focused before typing. If no element has focus, the keystrokes may be lost or sent to an unexpected target.
+- If a field appears after another action (e.g., a modal opening), add a [pause](/codeless-recorder/pauses) before typing to give the UI time to settle.
+- Special key behaviour depends on how the target application handles keyboard input. For example, `Enter` may submit a form in one application and insert a new line in another.
+- To paste a longer value in one step instead of typing it character by character, use [Text Paste](/codeless-recorder/text-paste).

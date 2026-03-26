@@ -1,0 +1,60 @@
+---
+title: Replay and Regenerate Timeline
+---
+
+Replay and Regenerate re-execute the recorded steps in the browser. Both are available only while the recorder is in [Live mode](/codeless-recorder/recorder-modes#live-focused) and all user interactions are blocked until the process finishes.
+
+## Replay
+
+Replay re-executes recorded actions without modifying the timeline. Screenshots and event data are left untouched — the purpose is to quickly verify that the recorded steps still work.
+
+You can trigger a replay in three ways:
+
+- **Full replay** — click the replay button (forward icon) in the toolbar. This replays the entire session from the beginning.
+- **Replay to a step** — right-click an event in the [Session Timeline](/codeless-recorder/session-timeline) and choose **Replay the session to step N**.
+- **Drag the step indicator** — drag the position indicator bar in the timeline to the step you want to replay to.
+
+### Forward and backward replay
+
+If the target step is **ahead** of the current position, replay continues from where it left off without resetting the session.
+
+If the target step is **behind** the current position, the session must start from scratch — cookies, cache, and local storage are cleared and all steps are replayed from the beginning up to the target step. This is necessary because the browser state at an earlier step cannot be restored directly. For example, if the scenario includes logging into a portal, simply jumping back to a step before the login would leave the user logged in, which could cause subsequent steps to behave differently or fail. Replaying from the beginning guarantees the browser is in the exact state it was when the step was originally recorded.
+
+## Regenerate
+
+Regenerate re-executes **all** actions from the beginning and captures **fresh screenshots** for every step. Cookies, cache, and stored variables are always cleared first.
+
+Before regeneration starts, a confirmation dialog appears:
+
+> *This action will recreate all referral screens in timeline events. This is beneficial if your website has undergone changes and you wish to update the test view. Do you want to proceed with regenerating the timeline?*
+
+During regeneration:
+
+- Each step is re-executed and a new screenshot is captured afterward.
+- [Compare Screen Fragment](/codeless-recorder/image-checker) and [AI Assistant](/codeless-recorder/ai-assistant) events are handled specially — TestCLIX captures a fresh screenshot but does not run the verification logic. This updates the reference image without comparing against the old one.
+
+### Self-healing for mouse click events
+
+When re-executing a [mouse click](/codeless-recorder/mouse-click) event, TestCLIX follows this sequence:
+
+1. **Locate by XPath** — tries the stored XPath to find the target element.
+2. **Auto-correct** — if the exact XPath no longer matches, TestCLIX generates a new one from the stored coordinates and compares it structurally with the original. Minor index changes (e.g., `div[1]` → `div[3]`) are tolerated as long as the overall path structure is the same.
+3. **Coordinate fallback** — if XPath validation is disabled (either globally via [Page Structure Flexibility](/website-scenario/page-structure-flexibility) or per event), the click falls back to pure screen coordinates (X, Y).
+
+### When to use regenerate
+
+- The page visuals have changed and you want to update the stored screenshots.
+- The page structure has changed slightly and you want TestCLIX to attempt XPath auto-correction.
+- You need current reference images for verification steps such as [Compare Screen Fragment](/codeless-recorder/image-checker).
+
+Regenerate takes longer than replay because it captures a new screenshot after each action.
+
+## Common errors
+
+| Error | Meaning | What to do |
+|-------|---------|------------|
+| **Unable to execute step** | The action could not be completed. | Check that the target element is still present and the page loads correctly. |
+| **Page didn't load correctly** | The page did not reach a ready state within the timeout. | The page may still be loading. Add a [pause](/codeless-recorder/pauses) before the step or check that the target URL is reachable. |
+| **Unable to find element on website** | The stored XPath no longer matches any element and auto-correction also failed. | Re-record the step, or disable XPath validation for dynamic pages (see [Mouse Click – Disabling XPath](/codeless-recorder/mouse-click#disabling-xpath-validation)). |
+
+For navigation and connectivity errors (DNS, SSL, connection failures), see [Navigation Errors](/codeless-recorder/navigation-errors).
