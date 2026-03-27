@@ -130,8 +130,10 @@ export default defineConfig({
 						{ label: 'Bot management (Cloudflare)', link: '/integration/bot-management' },
 						{ label: 'Emails', link: '/integration/emails' },
 						{ label: 'Jira', link: '/integration/jira' },
-						{ label: 'Slack', link: '/integration/slack' },
 						{ label: 'Network Monitoring (PRTG)', link: '/integration/network-monitoring' },
+						{ label: 'Slack', link: '/integration/slack' },
+						{ label: 'Slack', link: '/integration/slack' },
+						{ label: 'Telegram', link: '/integration/telegram' },
 						{ label: 'Webhooks', link: '/integration/webhooks' },
 					]
 				},
