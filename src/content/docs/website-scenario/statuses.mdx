@@ -1,0 +1,165 @@
+---
+title: Statuses
+---
+
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import scenarioAllHistory from '../../../assets/statuses/scenario_all_history.png';
+import runsEvaluationPeriod from '../../../assets/statuses/runs_evaluation_period.png';
+import runsStatus from '../../../assets/statuses/runs_status.png';
+import statusChange from '../../../assets/statuses/status_change.png';
+import statusView from '../../../assets/statuses/status_view.png';
+import triggerAckIcon from '../../../assets/statuses/trigger_ack_icon.png';
+import triggerAckThreeDot from '../../../assets/statuses/trigger_ack_three_dot.png';
+import bolt from '../../../assets/statuses/bolt.svg';
+import clock from '../../../assets/statuses/clock.svg';
+import commandLine from '../../../assets/statuses/command_line.svg';
+
+## Introduction
+
+Scenario statuses help you quickly understand the current state of a **Website scenario**.
+
+## Scenario statuses
+
+| Status       |Description                                                                                                                                                                               |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Not recorded | No steps have been recorded for this scenario yet.                                                                                                                                       |
+| Recorded     | Scenario steps have been recorded and are ready for execution.                                                                                                                           |
+| Valid        | The scenario configuration is valid and ready, but the scheduler is not set.                                                                                                             |
+| Queued       | Manual execution has been triggered. The scenario is queued until the current scenario execution completes.                                                                              |
+| Processing   | The scenario is currently being processed, such as during execution or while generating related assets (for example, thumbnails).                                                        |
+| Pass         | The scenario ran successfully and all steps passed. Next runs are scheduled.                                                                                                             |
+| Error        | Scenario execution failed due to errors in one or more steps. The configured Failures to alarm threshold was reached, triggering the Error status.                                       |
+| Acknowledged | The scenario was in an <Badge text="Error" variant="danger"/> state, but the issue has been acknowledged.                                                                                |
+
+## Where statuses appear
+
+Scenario statuses are visible in several places in TestCLIX:
+
+- **Workspace** – in the workspace tree, each scenario displays a colored status indicator (dot) showing its current state. In workspace grid and table views, the current scenario status is displayed as a status badge, such as **Pass**, **Error**, or **Acknowledged**.
+
+- **Scenario overview** – the **Overview** tab displays the current scenario status together with execution and evaluation details.
+
+- **History** – the **History** tab shows how the scenario status changed over time and how individual runs affected it.
+
+<img src={statusView.src} alt="Statuses view" />
+
+## History
+
+The History tab combines two types of information:
+
+1. **Run history** – individual scenario executions
+2. **Status changes** – transitions between scenario statuses
+
+This helps track both execution failures and the resulting status updates.
+
+<img src={scenarioAllHistory.src} alt="Scenario all history view" />
+
+### Runs in evaluation period
+
+The **Runs in evaluation period** section displays scenario executions included in the current evaluation window.
+
+It also shows:
+
+- **Scenario status** – the current overall scenario state.
+- **Evaluation period** – the time range used for evaluation.
+- **Failures to alarm** – the number of failed runs required before the scenario enters the <Badge text="Error" variant="danger"/> status.
+
+When the configured failure threshold is reached, TestCLIX changes the scenario status to <Badge text="Error" variant="danger"/>.
+
+:::note
+When **Evaluation period** and/or **Failures to alarm** settings are changed, the scenario status is not recalculated immediately. The updated configuration is applied on the next scenario run.
+:::
+
+<img src={runsEvaluationPeriod.src} alt="Runs in evaluation period" />
+
+For more information, see [Alarm and Notifications](/website-scenario/alarm-notifications).
+
+### Run status
+
+Run status represents the result of a single scenario execution. This is the default filter in the **Scenario history** section.
+
+Each run entry includes:
+
+- **Trigger** – how the run started
+- **Executed at** – execution timestamp
+- **Message** – execution details or failure reason
+- **Run status** – execution result, such as <Badge text="Error" variant="danger"/> or <Badge text="Pass" variant="success"/>
+- **Revision** – scenario revision used during execution
+
+#### Trigger types
+
+| Trigger                                                                                              | Description                                                                                                                          |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| <img src={bolt.src} alt="Manual trigger" class="status-trigger-icon" style="max-width: 24px"/>       | Started manually by a user.                                                                                                          |
+| <img src={clock.src} alt="Scheduled trigger" class="status-trigger-icon" style="max-width: 24px"/>   | Started automatically by the configured scheduler at a defined interval or time.                                                     |                                                                
+| <img src={commandLine.src} alt="System trigger" class="status-trigger-icon" style="max-width: 24px"/>| Started automatically by TestCLIX as part of an internal system action, such as thumbnail generation or other background processing. |                   
+
+
+
+<img src={runsStatus.src} alt="Runs status" />
+
+### Status change 
+
+Status changes describe transitions between scenario states. This is another filter in Scenario history.
+
+Examples:
+
+- **Error** → **Acknowledged**
+- **Acknowledged** → **Error**
+- **Error** → **Pass**
+
+Each record contains:
+
+- **Info** – additional context
+- **Executed at** – when the change happened
+- **Message** – transition reason
+- **Status change** – previous and current status
+
+Common messages include:
+
+- **Manually acknowledged**
+- **Test recovered**
+- **Test failed**
+
+<img src={statusChange.src} alt="Status change" />
+
+## Manual acknowledgement
+
+When a scenario enters the <Badge text="Error" variant="danger"/> status, you can acknowledge the error to indicate that the issue is known and is being handled.
+You can acknowledge an error in one of the following ways:
+
+<Tabs>
+  <TabItem label="Three-dot menu">
+    <Steps>
+
+    1. Locate the scenario you want to update.
+
+    2. Open the three-dot menu.
+
+    3. Select **Mark error as acknowledged**.
+         <img src={triggerAckThreeDot.src} alt="Trigger acknowledged from the three-dot menu" />
+
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Top action panel">
+    <Steps>
+
+    1. Open the scenario details page.
+
+    2. In the top action panel, click the **Mark error as acknowledged** icon.
+         <img src={triggerAckIcon.src} alt="Trigger acknowledged by icon" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+:::caution
+Acknowledging an error resets the current **Evaluation period**.
+
+All runs in the active evaluation window are cleared, including both <Badge text="Error" variant="danger"/> and <Badge text="Pass" variant="success"/> results. Evaluation restarts with the next scenario execution.
+:::
+
+The acknowledgement is recorded in **History** as a status change entry with the message **Manually acknowledged**.
+
+If a later run succeeds, TestCLIX automatically updates the scenario status and adds an entry such as **Test recovered**.

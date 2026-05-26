@@ -43,6 +43,7 @@ export default defineConfig({
 					label: 'Website Scenario',
 					items: [
 						{ label: 'Overview', link: '/website-scenario/overview' },
+						{ label: 'Statuses', link: '/website-scenario/statuses' },
 						{ label: 'Audit SSL', link: '/website-scenario/audit-ssl' },
 						{ label: 'Extra Headers', link: '/website-scenario/extra-headers' },
 						{ label: 'Alarm and Notifications', link: '/website-scenario/alarm-notifications' },
@@ -90,6 +91,7 @@ export default defineConfig({
 								},
 							]
 						},
+		
 					]
 				},
 				{
