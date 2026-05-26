@@ -1,0 +1,159 @@
+---
+title: Statuses
+---
+
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import availabilityAllHistory from '../../../assets/statuses/availability_all_history.png';
+import runsEvaluationPeriod from '../../../assets/statuses/availability_runs_evaluation_period.png';
+import runsStatus from '../../../assets/statuses/availability_runs_status.png';
+import statusChange from '../../../assets/statuses/availability_status_change.png';
+import statusView from '../../../assets/statuses/availability_status_view.png';
+import triggerAckIcon from '../../../assets/statuses/availability_trigger_ack_icon.png';
+import triggerAckThreeDot from '../../../assets/statuses/availability_trigger_ack_three_dot.png';
+import bolt from '../../../assets/statuses/bolt.svg';
+import clock from '../../../assets/statuses/clock.svg';
+import commandLine from '../../../assets/statuses/command_line.svg';
+
+## Introduction
+
+Website Availability statuses help you quickly understand the current state of a **Website Availability** check.
+
+## Website Availability statuses
+
+| Status       |Description                                                                                                                                                          |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Not executed | The availability check has been configured but not executed, and no results exist yet.                                                                              |
+| Valid        | The availability check configuration is valid and ready, but the scheduler is not set.                                                                              |
+| Queued       | Manual execution has been triggered. The availability check is queued until the current check completes.                                                            |
+| Pass         | The availability check executed successfully. The website is reachable and responding as expected.                                                                  |
+| Error        | The availability check failed due to an issue such as a timeout, DNS resolution problem, or unexpected HTTP response. The website may be unavailable or unreachable.|
+| Acknowledged | The availability check failed, but the issue has been acknowledged.                                                                                                 |
+
+## Where statuses appear
+
+Website Availability statuses are visible in several places in TestCLIX:
+
+- **Workspace** – in the workspace tree, each availability check displays a colored status indicator (dot) showing its current state. In workspace grid and table views, the current status is displayed as a status badge, such as **Pass**, **Error**, or **Acknowledged**.
+
+- **Website Availability overview** – the **Overview** tab displays the current availability status together with execution and evaluation details.
+
+- **History** – the **History** tab shows how the availability check status changed over time and how individual run affected it.
+
+<img src={statusView.src} alt="Website Availability statuses" />
+
+## History
+
+The History tab combines two types of information:
+
+1. **Run history** – individual availability check executions.
+2. **Status changes** – transitions between availability statuses.
+
+This helps track both execution failures and the resulting status updates.
+
+<img src={availabilityAllHistory.src} alt="Website Availability all history view" />
+
+### Runs in evaluation period
+
+The **Runs in evaluation period** section displays Website Availability executions included in the current evaluation window.
+
+It also shows:
+
+- **Website Availability status** – the current overall Website Availability state.
+- **Evaluation period** – the time range used for evaluation.
+- **Failures to alarm** – the number of failed runs required before the Website Availability enters the <Badge text="Error" variant="danger"/> status.
+
+When the configured failure threshold is reached, TestCLIX changes the test status to <Badge text="Error" variant="danger"/>.
+
+:::note
+When **Evaluation period** and/or **Failures to alarm** settings are changed, the availability status is not recalculated immediately. The updated configuration is applied on the next availability check execution.
+:::
+
+<img src={runsEvaluationPeriod.src} alt="Runs in evaluation period" />
+
+For more information, see [Alarm and Notifications](/website-availability/alarm-notifications).
+
+### Run status
+
+Run status represents the result of a single availability check execution. This is the default filter in the **Website Availability history** section.
+
+Each run entry includes:
+
+- **Trigger** – how the run started
+- **Executed at** – execution timestamp
+- **Message** – execution details or failure reason
+- **Run status** – execution result, such as <Badge text="Error" variant="danger"/> or <Badge text="Pass" variant="success"/>
+
+#### Trigger types
+
+| Trigger                                                                                              | Description                                                                                                                          |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| <img src={bolt.src} alt="Manual trigger" class="status-trigger-icon" style="max-width: 24px"/>       | Started manually by a user.                                                                                                          |
+| <img src={clock.src} alt="Scheduled trigger" class="status-trigger-icon" style="max-width: 24px"/>   | Started automatically by the configured scheduler at a defined interval or time.                                                     |                                                                
+| <img src={commandLine.src} alt="System trigger" class="status-trigger-icon" style="max-width: 24px"/>| Started automatically by TestCLIX as part of an internal system action, such as thumbnail generation or other background processing. |                   
+
+<img src={runsStatus.src} alt="Runs status" />
+
+### Status change 
+
+Status changes describe transitions between availability states. This is another filter in Website Availability history.
+
+Examples:
+
+- **Error** → **Acknowledged**
+- **Acknowledged** → **Error**
+- **Error** → **Pass**
+
+Each record contains:
+
+- **Info** – additional context
+- **Executed at** – when the change happened
+- **Message** – transition reason
+- **Status change** – previous and current status
+
+Common messages include:
+
+- **Manually acknowledged**
+- **Test recovered**
+- **Test failed**
+
+<img src={statusChange.src} alt="Status change" />
+
+## Manual acknowledgement
+
+When an Website Availability check enters the <Badge text="Error" variant="danger"/> status, you can acknowledge the error to indicate that the issue is known and is being handled.
+
+<Tabs>
+  <TabItem label="Three-dot menu">
+    <Steps>
+
+    1. Locate the Website Availability you want to update.
+
+    2. Open the three-dot menu.
+
+    3. Select **Mark error as acknowledged**.
+         <img src={triggerAckThreeDot.src} alt="Trigger acknowledged from the three-dot menu" />
+
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Top action panel">
+    <Steps>
+
+    1. Open the scenario details page.
+
+    2. In the top action panel, click the **Mark error as acknowledged** icon.
+         <img src={triggerAckIcon.src} alt="Trigger acknowledged by icon" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+:::caution
+Acknowledging an error resets the current **Evaluation period**.
+
+All runs in the active evaluation window are cleared, including both <Badge text="Error" variant="danger"/> and <Badge text="Pass" variant="success"/> results. Evaluation restarts with the next test execution.
+:::
+
+The acknowledgement is recorded in **History** as a status change entry with the message **Manually acknowledged**.
+
+If a later run succeeds, TestCLIX automatically updates the scenario status and adds an entry such as **Test recovered**.
