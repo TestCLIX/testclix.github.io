@@ -610,4 +610,16 @@
   *::-webkit-scrollbar-corner {
     background-color: transparent;
   }
+
+  /**
+   * Status trigger icons (monochrome SVGs)
+   */
+  .status-trigger-icon {
+    max-width: 24px;
+    vertical-align: middle;
+  }
+
+  :root[data-theme="light"] .status-trigger-icon {
+    filter: invert(1);
+  }
 }
