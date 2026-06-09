@@ -110,6 +110,7 @@ export default defineConfig({
 					label: 'Website Vitals',
 					items: [
 						{ label: 'Overview', link: '/website-vitals/overview' },
+						{ label: 'Statuses', link: '/website-vitals/statuses' },
 						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
 						{ label: 'Alarm and Notifications', link: '/website-vitals/alarm-notifications' },
 						{ label: 'Location', link: '/website-vitals/location' },
