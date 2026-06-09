@@ -1,0 +1,160 @@
+---
+title: Statuses
+---
+
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import VitalsAllHistory from '../../../assets/statuses/vitals_all_history.png';
+import runsEvaluationPeriod from '../../../assets/statuses/vitals_runs_evaluation_period.png';
+import runsStatus from '../../../assets/statuses/vitals_runs_status.png';
+import statusChange from '../../../assets/statuses/vitals_status_change.png';
+import statusView from '../../../assets/statuses/vitals_status_view.png';
+import triggerAckIcon from '../../../assets/statuses/vitals_trigger_ack_icon.png';
+import triggerAckThreeDot from '../../../assets/statuses/vitals_status_trigger_ack_three_dot.png';
+import bolt from '../../../assets/statuses/bolt.svg';
+import clock from '../../../assets/statuses/clock.svg';
+import commandLine from '../../../assets/statuses/command_line.svg';
+
+## Introduction
+
+Website Vitals statuses help you quickly understand the current state of a **Website Vitals** test.
+
+## Website Vitals statuses
+
+| Status       |Description                                                                                                                |
+|--------------|---------------------------------------------------------------------------------------------------------------------------|
+| Queued       | The vitals test configuration is valid and queued for execution, for example after a manual trigger or scheduler event.   |
+| Pass         | The vitals test executed successfully. All configured thresholds were met and performance insights are available.         |
+| Error        | The vitals test execution failed due to an error in one or more metrics or due to a technical failure during the run.     |
+| Acknowledged | The vitals test execution failed, but the error has been acknowledged and is being handled.                               |
+
+## Where statuses appear
+
+Website Vitals statuses are visible in several places in TestCLIX:
+
+- **Workspace** – in the workspace tree, each Website Vitals test displays a colored status indicator (dot) showing its current state. In workspace grid and table views, the current scenario status is displayed as a status badge, such as **Pass**, **Error**, or **Acknowledged**.
+
+- **Website Vitals overview** – the **Overview** tab displays the current Website Vitals status together with the latest Lighthouse results and threshold configuration.
+
+- **History** – the **History** tab shows how the Website Vitals status changed over time and how individual runs contributed to these changes.
+
+<img src={statusView.src} alt="Statuses view" />
+
+## History
+
+The History tab combines two types of information:
+
+1. **Run history** – individual Website Vitals executions
+2. **Status changes** – transitions between Website Vitals statuses
+
+This helps track both metric-level regressions (for example, LCP above threshold) and the resulting status updates.
+
+<img src={VitalsAllHistory.src} alt="Website Vitals all history view" />
+
+### Runs in evaluation period
+
+The **Runs in evaluation period** section displays Website Vitals executions included in the current evaluation window.
+
+It also shows:
+
+- **Website Vitals status** – the current overall Website Vitals state.
+- **Evaluation period** – the time range used for evaluation.
+- **Failures to alarm** – the number of failed runs required before the Website Vitals enters the <Badge text="Error" variant="danger"/> status.
+
+When the configured failure threshold is reached, TestCLIX changes the scenario status to <Badge text="Error" variant="danger"/>.
+
+:::note
+When **Evaluation period** and/or **Failures to alarm** settings are changed, the Website Vitals status is not recalculated immediately. The updated configuration is applied on the next Website Vitals run.
+:::
+
+<img src={runsEvaluationPeriod.src} alt="Website Vitals runs in evaluation period" />
+
+For more information, see [Alarm and Notifications](/website-vitals/alarm-notifications).
+
+### Run status
+
+Run status represents the result of a single Website Vitals execution. This is the default filter in the **Website Vitals history** section.
+
+Each run entry includes:
+
+- **Trigger** – how the run started
+- **Executed at** – execution timestamp
+- **Message** – execution details or failure reason
+- **Run status** – execution result, such as <Badge text="Error" variant="danger"/> or <Badge text="Pass" variant="success"/>
+- **Lighthouse metrics** – metric values such as LCP, TBT, CLS, TTI and Lighthouse scores for Performance, Accessibility, Best Practices, and SEO
+
+#### Trigger types
+
+| Trigger                                                                                              | Description                                                                                                                          |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| <img src={bolt.src} alt="Manual trigger" class="status-trigger-icon" style="max-width: 24px"/>       | Started manually by a user.                                                                                                          |
+| <img src={clock.src} alt="Scheduled trigger" class="status-trigger-icon" style="max-width: 24px"/>   | Started automatically by the configured scheduler at a defined interval or time.                                                     |                                                                
+| <img src={commandLine.src} alt="System trigger" class="status-trigger-icon" style="max-width: 24px"/>| Started automatically by TestCLIX as part of an internal system action or background processing.                                     |                   
+
+<img src={runsStatus.src} alt="Runs status" />
+
+### Status change 
+
+Status changes describe transitions between Website Vitals states. This is another filter in **Website Vitals history**.
+
+Examples:
+
+- **Error** → **Acknowledged**
+- **Acknowledged** → **Error**
+- **Error** → **Pass**
+
+Each record contains:
+
+- **Info** – additional context
+- **Executed at** – when the change happened
+- **Message** – transition reason
+- **Status change** – previous and current status
+
+Common messages include:
+
+- **Manually acknowledged**
+- **Test recovered**
+- **Test failed**
+
+<img src={statusChange.src} alt="Website Vitals status change" />
+
+## Manual acknowledgement
+
+When a a Website Vitals test enters the <Badge text="Error" variant="danger"/> status, you can acknowledge the error to indicate that the issue is known and is being investigated.
+
+You can acknowledge an error in one of the following ways:
+
+<Tabs>
+  <TabItem label="Three-dot menu">
+    <Steps>
+
+    1. Locate the Website Vitals test you want to update.
+
+    2. Open the three-dot menu.
+
+    3. Select **Mark error as acknowledged**.
+         <img src={triggerAckThreeDot.src} alt="Trigger acknowledged from the three-dot menu" />
+
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Top action panel">
+    <Steps>
+
+    1. Open the Website Vitals details page.
+
+    2. In the top action panel, click the **Mark error as acknowledged** icon.
+         <img src={triggerAckIcon.src} alt="Trigger acknowledged by icon" />
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+:::caution
+Acknowledging an error resets the current **Evaluation period**.
+
+All runs in the active evaluation window are cleared, including both <Badge text="Error" variant="danger"/> and <Badge text="Pass" variant="success"/> results. Evaluation restarts with the next Website Vitals execution.
+:::
+
+The acknowledgement is recorded in **History** as a status change entry with the message **Manually acknowledged**.
+
+If a later run succeeds, TestCLIX automatically updates the scenario status and adds an entry such as **Test recovered**.
