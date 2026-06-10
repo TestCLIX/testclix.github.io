@@ -2,8 +2,87 @@
 title: Overview
 ---
 
-:::caution
+import { LinkCard, CardGrid } from '@astrojs/starlight/components'
 
-`TODO` Overview Page.
+## Test Real User Journeys in a Cloud Browser
 
-:::
+**Website Scenario** is the most complete way to verify that your website actually works for a real user.
+
+Instead of checking a single response, a scenario replays a full browser journey in the cloud — clicking, typing, scrolling, and navigating — and confirms that each step still behaves and looks the way it should.
+
+You build scenarios with the **[Codeless Recorder](/codeless-recorder/overview)**: interact with a remote browser streamed to your screen, and every action is captured as a replayable step. No scripts to write or maintain.
+
+## When to Use Website Scenario
+
+Choose this test type when a working website means more than "the server responded" — when a user has to be able to complete a flow end to end.
+
+This is a strong fit for:
+
+- login and authentication flows,
+- checkout and payment journeys,
+- form submission and lead capture,
+- multi-step funnels and dashboards,
+- and visual regression checks on critical screens.
+
+## What It Does Well
+
+Website Scenario validates the experience your users actually have, not just the technical response behind it.
+
+- It confirms that complete user journeys still work after every change.
+- It captures each run in the **[Session Player](/session-player/overview)**, so a failure shows you *how* it broke, not just *that* it broke.
+- It verifies the page visually with **[Pixel Comparison](/website-scenario/pixel-comparison)** to catch UI regressions a status code would miss.
+- It stays resilient to invisible code changes through **[Page Structure Flexibility](/website-scenario/page-structure-flexibility)**.
+- It can run on a schedule from multiple locations for continuous monitoring.
+
+## What It Does Not Replace
+
+Website Scenario gives you the deepest signal, but it is heavier than a simple health check.
+
+If you only need a fast, frequent check that a site is reachable and returns the right technical response, use **[Website Availability](/website-availability/overview)**.
+
+If you need to track performance quality and Core Web Vitals over time, use **[Website Vitals](/website-vitals/overview)**.
+
+## Explore Website Scenario
+
+<CardGrid>
+  <LinkCard
+    title="Statuses"
+    description="Understand the run states a scenario can report and what each one means."
+    href="/website-scenario/statuses"
+  />
+  <LinkCard
+    title="Pixel Comparison"
+    description="Catch visual regressions with pixel-by-pixel analysis of the rendered page."
+    href="/website-scenario/pixel-comparison"
+  />
+  <LinkCard
+    title="Performance Audit"
+    description="Monitor loading times and network activity captured during each scenario run."
+    href="/website-scenario/performance-audit"
+  />
+  <LinkCard
+    title="Page Structure Flexibility"
+    description="Keep tests passing through invisible code changes that do not affect the user."
+    href="/website-scenario/page-structure-flexibility"
+  />
+  <LinkCard
+    title="Audit SSL"
+    description="Monitor certificate expiry and TLS configuration alongside the scenario run."
+    href="/website-scenario/audit-ssl"
+  />
+  <LinkCard
+    title="Extra Headers"
+    description="Attach custom HTTP headers per scenario for routing, bot management, or auth."
+    href="/website-scenario/extra-headers"
+  />
+  <LinkCard
+    title="Location"
+    description="Run scenarios from different regions to catch geography-specific issues."
+    href="/website-scenario/location"
+  />
+  <LinkCard
+    title="Alarm and Notifications"
+    description="Configure error evaluation and notifications per test so the right people are alerted."
+    href="/website-scenario/alarm-notifications"
+  />
+</CardGrid>
