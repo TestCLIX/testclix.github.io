@@ -34,9 +34,6 @@ export default defineConfig({
 					badge: { text: 'Guide', variant: 'tip' },
 					items: [
 						{ label: 'Pick a Setup', link: '/quick-start/pick-setup' },
-						{ label: 'Setup Website Scenario', link: '/quick-start/setup-website-scenario' },
-						{ label: 'Setup Website Availability', link: '/quick-start/setup-website-availability' },
-						{ label: 'Setup Website Vitals', link: '/quick-start/setup-website-vitals' },
 					]
 				},
 				{
@@ -115,15 +112,6 @@ export default defineConfig({
 						{ label: 'Alarm and Notifications', link: '/website-vitals/alarm-notifications' },
 						{ label: 'Location', link: '/website-vitals/location' },
 						{ label: 'Metrics', link: '/website-vitals/metrics' },
-					]
-				},
-				{
-					label: 'Use Cases',
-					collapsed: true,
-					items: [
-						{ label: 'Use Case Library', link: '/use-cases/use-case-library' },
-						{ label: 'Ecommerce Login', link: '/use-cases/ecommerce-login' },
-						{ label: 'Ecommerce Shop', link: '/use-cases/ecommerce-shop' },
 					]
 				},
 				{
