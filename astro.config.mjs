@@ -134,7 +134,6 @@ export default defineConfig({
 						{ label: 'Jira', link: '/integration/jira' },
 						{ label: 'Network Monitoring (PRTG)', link: '/integration/network-monitoring' },
 						{ label: 'Slack', link: '/integration/slack' },
-						{ label: 'Slack', link: '/integration/slack' },
 						{ label: 'Telegram', link: '/integration/telegram' },
 						{ label: 'Webhooks', link: '/integration/webhooks' },
 					]
