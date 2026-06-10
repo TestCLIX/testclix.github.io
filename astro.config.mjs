@@ -63,11 +63,9 @@ export default defineConfig({
 							items: [
 								{ label: 'Overview', link: '/codeless-recorder/overview' },
 								{ label: 'Ignored Zones', link: '/codeless-recorder/ignored-zones' },
-								{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
 								{ label: 'Navigation Errors', link: '/codeless-recorder/navigation-errors' },
 								{ label: 'Recorder Modes', link: '/codeless-recorder/recorder-modes' },
 								{ label: 'Replay and Regenerate', link: '/codeless-recorder/replay-and-regenerate' },
-								{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
 								{
 									label: 'Recorder Actions',
 									collapsed: true,

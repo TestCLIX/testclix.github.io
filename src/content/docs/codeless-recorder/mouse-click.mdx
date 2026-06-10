@@ -38,7 +38,7 @@ The recorder builds the XPath using the following priority:
 By default, TestCLIX validates the XPath during playback to confirm the click lands on the intended element. You can disable this validation in two ways:
 
 - **For all click events in a test**  - enable **Ignore page structure** in the test's advanced options. See [Page Structure Flexibility](/website-scenario/page-structure-flexibility) for configuration steps and trade-offs.
-- **For a single event**  - click the event in the [Session Timeline](/codeless-recorder/session-timeline) to enter [Preview mode](/codeless-recorder/recorder-modes#preview). In the preview you will see an **Ignore page structure** toggle (disabled by default). Enable it to skip XPath validation for that specific step.
+- **For a single event**  - click the event in the Session Timeline to enter [Preview mode](/codeless-recorder/recorder-modes#preview). In the preview you will see an **Ignore page structure** toggle (disabled by default). Enable it to skip XPath validation for that specific step.
 
 When XPath validation is disabled the click falls back to pure screen coordinates (X, Y).
 
