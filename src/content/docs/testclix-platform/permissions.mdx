@@ -1,0 +1,447 @@
+---
+title: Permissions
+---
+
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import projectSettings from '../../../assets/permissions/permissions_settings_project.png';
+import projectUsers from '../../../assets/permissions/permissions_users.png';
+import blockedActions from '../../../assets/permissions/blocked_actions.png';
+import inviteUserDialog from '../../../assets/permissions/invite_user_dialog.png';
+import editRole from '../../../assets/permissions/edit_role.png';
+import invitationsTab from '../../../assets/permissions/invitations_tab.png';
+
+export const permYes = <span style={{ color: 'var(--sl-color-green)' }}>✓</span>;
+export const permNo = <span style={{ color: 'var(--sl-color-red)' }}>✗</span>;
+export const permOptional = <span style={{ color: 'var(--sl-color-orange-high)', fontSize: '0.85em' }}>Optional*</span>;
+
+## Introduction
+
+Permissions in **TestCLIX** are assigned **per project**.
+
+A user can have varying access levels depending on the project.
+
+Each project member has:
+
+- **One primary role**: Owner, Admin, Editor, Viewer, or Accountant
+- Optional additional permission - **Billing**
+
+This guide explains:
+
+- What each role can see and do
+- How permissions work
+- How to check your permissions
+- How to invite teammates or update permissions
+
+## Quick Access Overview
+
+| I want to...                | Required role                     |
+|-----------------------------|-----------------------------------|
+| View tests and results      | Viewer                            |
+| Create or edit tests        | Editor                            |
+| Run tests                   | Editor                            |
+| Use Session Player          | Editor                            |
+| Manage users                | Admin                             |
+| Configure integrations      | Admin                             |
+| Access billing and invoices | Accountant or **Billing-enabled** |
+| Full project control        | Owner                             |
+
+## Permission Matrix
+
+| Action                       | Owner     | Admin          | Editor         | Viewer         | Accountant |
+| ---------------------------- | :--------:| :------------: | :------------: | :------------: | :--------: |
+| View tests & workspace       | {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
+| View dashboards & history    | {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
+| Use **Session Player**       | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
+| Create & edit tests          | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
+| Delete tests & directories   | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
+| Run tests (**Execute**)      | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
+| Manage users                 | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
+| Send invitations             | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
+| Configure integrations       | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
+| Change security settings     | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
+| Billing & invoices           | {permYes} | {permOptional} | {permOptional} | {permOptional} | {permYes}  |
+
+\* **Billing** is an additional permission that can be granted to **Admin**, **Editor**, or **Viewer**.
+
+## Project Roles
+
+Each project member has a primary role that defines what they can access and manage in that project.
+
+### Owner
+
+Full access to the project, including workspace, integrations, users, and billing.
+
+**Can:**
+
+- Create, edit, run, and delete tests and directories
+- Use **Session Player** to replay and compare test sessions
+- Manage users and permissions
+- Configure integrations and project settings
+- Access billing, invoices, subscriptions, and shop purchases
+- Promote other users to **Owner**
+
+**Restrictions:**
+
+- An Owner can change or remove their own Owner role only if there is at least one more Owner in the project
+
+### Admin
+
+Manages the project, users, and integrations.
+
+**Can:**
+
+- Create, edit, run, and delete tests and directories
+- Use **Session Player** to replay and compare test sessions
+- Invite users and manage permissions
+- Configure integrations (Jira, Slack, webhooks, API)
+- View integration logs
+- Manage project settings
+
+**Cannot:**
+
+- Assign the **Owner** role
+- Manage billing unless **Billing** permission is granted
+
+### Editor
+
+Works with tests and scenarios but cannot manage users or project-level settings.
+
+**Can:**
+
+- Create, edit, and delete tests and directories
+- Record and modify scenario steps
+- Run tests (**Execute**)
+- Use **Session Player** to replay and compare test sessions
+- Mark test errors as acknowledged
+
+**Cannot:**
+
+- Manage users
+- Change settings other than personal
+
+### Viewer
+
+Read-only access to the workspace and project results.
+
+**Can:**
+
+- Browse directories and tests
+- View history, statistics, dashboards, and search
+
+**Cannot:**
+
+- Use **Session Player**
+- Create or edit tests
+- Run tests
+- Manage users
+- Change settings other than personal
+
+### Accountant
+
+Billing-focused role without access to the test workspace.
+
+**Can:**
+
+- View invoices
+- Manage billing settings
+- Manage subscriptions
+- Use the shop and purchases
+
+**Cannot:**
+
+- Access the workspace
+- View or edit tests
+- Manage users
+
+
+
+## How Blocked Actions Work
+
+Some features may remain visible even if you do not have permission to use them.
+
+Blocked actions:
+
+- Appear **grayed out**
+- Show a **lock icon**
+- Cannot be clicked
+- Display a tooltip on hover:
+
+> "You don't have permission. Contact your Admin."
+
+<img src={blockedActions.src} alt="Blocked action with permission tooltip" />
+
+Actions remain visible so you know the feature exists and may require a higher role.
+
+If you need additional access, contact your project **Owner** or **Admin**.
+
+## Where to See Your Own Permissions
+
+You can check your permissions in the current project from the following locations:
+
+<Tabs>
+   <TabItem label="Settings - Project">
+   <Steps>
+
+   1. Open **Settings** from the left sidebar menu.
+
+   2. Go to the **Project** tab.
+
+   3. In the **Access & permissions** section, find **Your permissions**.
+
+   4. Your role is shown as a badge.
+
+   5. From here, you can also **Leave project** (unless you are the only Owner).
+
+      <img src={projectSettings.src} alt="Your permissions in Settings → Project" />
+   </Steps>
+  </TabItem>
+
+  <TabItem label="Users Page (Admin & Owner)">
+   <Steps>
+
+   1. Open **Users** from the left sidebar menu.
+
+   2. Under **Project overview**, find **Your permissions**.
+
+   3. Your role is shown as a badge.
+
+   4. Hover the badge for a short description of that role.
+
+   5. If you also have **Billing** permission, a separate badge may appear.
+   
+      <img src={projectUsers.src} alt="Your permissions badge on Users page" />
+   
+   </Steps>
+  </TabItem>
+</Tabs>
+
+:::note
+Permissions are assigned per project. When you switch projects, your role and available actions may change.
+:::
+
+## Access to Main Sections
+
+| Section                 | Who can access                                           |
+| ------------------------|----------------------------------------------------------|
+| Dashboard               | All signed-in project members                            |
+| Workspace               | Viewer and above                                         |
+| Search                  | Viewer and above                                         |
+| Users (team management) | Admin and Owner                                          |
+| Shop                    | Accountant and Owner (or anyone with **Billing** enabled)|
+| Settings                | Depends on the tab (see below)                           |
+
+### Settings Tabs
+
+| Tab                             | Who can access                                      |
+| --------------------------------|-----------------------------------------------------|
+| Project, Security               | Everyone                                            |
+| Billing, Invoices, Subscription | Accountant and Owner (or **Billing**-enabled users) |
+| Users, Integrations, API        | Admin and Owner                                     |
+
+## Managing Team Access (Admins and Owners)
+
+Only **Admins** and **Owners** can invite users or change permissions.
+
+Open **Users** from the left sidebar menu.
+
+The page contains two tabs:
+
+| Tab             | Description                                 |
+| ----------------|---------------------------------------------|
+| **Users**       | List of everyone who has joined the project |
+| **Invitations** | Pending invitations not yet accepted        |
+
+<Tabs>
+   <TabItem label="Invite a User">
+   <Steps>
+
+   1. Open **Users** from the left sidebar menu.
+
+   2. Click **Invite user** in the top-right corner.
+
+   3. In the **Invite user** dialog:
+      - Enter the person's **email address**
+      - Select a **role**: Owner, Admin, Editor, Viewer, or Accountant
+      - Optionally enable **Billing** for Admin, Editor, or Viewer
+      - Click **View details** on a role card to see what that role includes
+
+   4. Click **Send invitation**.
+
+      <img src={inviteUserDialog.src} alt="Invite user dialog with role selection" />
+   </Steps>
+
+   :::note
+   The invited person receives an email with a link to join the project.
+   :::
+
+   ### Adding Billing Permission When Inviting
+
+   |Role selected                     | Billing option                                                                     |
+   |----------------------------------|------------------------------------------------------------------------------------|
+   |**Owner**                         | Always included                                                                    |
+   |**Accountant**                    | Always included                                                                    |
+   |**Admin**, **Editor**, **Viewer** | Optional - check **Billing** to also grant shop, invoices, and subscription access |
+
+  </TabItem>
+
+   <TabItem label="Edit Permissions">
+      <Steps>
+
+      1. Open **Users** from the left sidebar menu and go to the **Users** tab.
+
+      2. Find the user in the table.
+
+      3. Click the **Actions** menu (three dots) on their row.
+
+      4. Select **Edit**.
+
+      5. In the **Edit role** dialog:
+         - The email field is read-only
+         - Select a new **role**
+         - Adjust the **Billing** checkbox if applicable
+
+      6. Click **Update**.
+         <img src={editRole.src} alt="Edit role dialog" />
+
+      </Steps>
+
+      Changes take effect immediately. If you edit **your own** role, the page reloads to apply the new permissions.
+
+      ### Restrictions When Editing
+
+      | Situation                              | What happens                                                               |   
+      | ---------------------------------------|----------------------------------------------------------------------------|
+      | You are **Admin** (not Owner)          | You cannot assign the **Owner** role                                       |
+      | You are the **only Owner**             | You cannot edit or remove yourself as Owner                                |
+      | You are **Admin** editing an **Owner** | Edit is blocked                                                            |
+      | You want to remove **yourself**        | Use **Leave project** in **Settings** → **Project**, not **Delete member** |
+
+   </TabItem>
+
+   <TabItem label="Remove a User">
+      <Steps>
+
+      1. Open **Users** from the left sidebar menu and go to the **Users** tab.
+
+      2. Open the **Actions** menu (three dots) for that user.
+
+      3. Select **Delete member**.
+
+      4. Confirm in the dialog.
+
+      </Steps>
+
+      :::note
+      You can remove yourself from the **Users** table or use **Leave project** in **Settings**. This is only possible if you are not the only Owner.
+      :::
+   </TabItem>
+</Tabs>
+
+## Managing Invitations
+
+<Steps>
+
+1. Open **Users** from the left sidebar menu and go to the **Invitations** tab.
+
+    <img src={invitationsTab.src} alt="Invitations tab with pending invitations" />
+
+2. Each pending invitation shows:
+   - Email address
+   - Assigned role (and **Billing** if applicable)
+   - Who sent the invitation and when
+
+3. Click **Cancel** to withdraw an invitation before it is accepted.
+
+</Steps>
+
+The **Invitations** tab shows a badge when invitations are pending.
+
+## Accepting an Invitation
+
+If you receive a project invitation:
+
+<Steps>
+
+1. Open the link from the invitation email.
+
+2. If you are not signed in, click **Sign in to accept** and log in with the invited email.
+
+3. Review the project name and who invited you.
+
+4. Click **Accept invitation**.
+
+5. Click **Go to project** to open the workspace.
+
+</Steps>
+
+:::note
+Expired or invalid invitations display an **Invitation unavailable** message.
+:::
+
+## FAQ
+
+<details>
+<summary>Why can I see a test but not run it?</summary>
+
+You most likely have the **Viewer** role.
+
+Running tests requires **Editor** or higher.
+
+</details>
+
+<details>
+<summary>Why can't I open Session Player?</summary>
+
+You most likely have the **Viewer** role.
+
+**Session Player** requires **Editor** or higher. Ask your project **Owner** or **Admin** to change your role.
+
+</details>
+
+<details>
+<summary>Why can't I open the Users page?</summary>
+
+Managing users requires **Admin** or **Owner** permissions.
+
+You can still view your own role in:
+
+- **Settings → Project**
+- **Users → Project overview** (if visible)
+
+</details>
+
+<details>
+<summary>Why can't I see the Shop as an Admin?</summary>
+
+**Billing** is a separate permission.
+
+Ask your project **Owner** to enable **Billing** for your account.
+
+</details>
+
+<details>
+<summary>Why can't I assign the Owner role?</summary>
+
+Only an existing **Owner** can promote another user to **Owner**.
+
+</details>
+
+<details>
+<summary>Who can change my permissions?</summary>
+
+Your project **Owner** or **Admin**.
+
+If you are **Owner** or **Admin** go to:
+
+**Users → Actions → Edit**
+
+</details>
+
+<details>
+<summary>Do permissions apply across all projects?</summary>
+
+No.
+
+Permissions are assigned **per project**, so your role may change after switching projects.
+
+</details>
