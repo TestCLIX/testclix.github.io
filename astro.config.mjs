@@ -6,7 +6,7 @@ import markdoc from '@astrojs/markdoc';
 import starlightClixThemePlugin from './src/theme/clix-theme/index.ts';
 
 export default defineConfig({
-	site: 'https://testclix.github.io',
+	site: 'https://docs.testclix.com',
 	integrations: [
 		markdoc(),
 		starlight({
@@ -16,6 +16,57 @@ export default defineConfig({
 				replacesTitle: true,
 			},
 			favicon: '/favicon.ico',
+			head: [
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image',
+						content: 'https://docs.testclix.com/social-preview.png',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:type',
+						content: 'image/png',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:width',
+						content: '1200',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:height',
+						content: '588',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image:alt',
+						content: 'TestCLIX Documentation',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'twitter:image',
+						content: 'https://docs.testclix.com/social-preview.png',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'twitter:image:alt',
+						content: 'TestCLIX Documentation',
+					},
+				},
+			],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/TestCLIX/testclix.github.io' }],
 			plugins: [starlightClixThemePlugin()],
 			sidebar: [
