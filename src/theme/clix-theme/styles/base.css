@@ -446,6 +446,7 @@
 
     :is(th, td):not(:where(.not-content *)) {
       border: none;
+      padding: 0.625rem 0.75rem;
     }
 
     th:not(:where(.not-content *)) {
