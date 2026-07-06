@@ -74,11 +74,11 @@ export default defineConfig({
 					label: 'TestCLIX Platform',
 					items: [
 						{ label: 'Overview', link: '/testclix-platform/overview' },
-						{ label: 'Permissions', link: '/testclix-platform/permissions' },
 						{ label: 'Testing Capabilities', link: '/testclix-platform/testing-capabilities' },
 						{ label: 'Schedule Monitoring', link: '/testclix-platform/schedule-monitoring' },
 						{ label: 'Codeless Recorder', link: '/testclix-platform/codeless-recorder' },
 						{ label: 'Session Player', link: '/testclix-platform/session-player' },
+						{ label: 'Project Permissions', link: '/testclix-platform/permissions' },
 					]
 				},
 				{
