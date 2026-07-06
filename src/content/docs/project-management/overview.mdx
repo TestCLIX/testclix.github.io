@@ -1,0 +1,151 @@
+---
+title: Project Management
+---
+
+import { LinkCard, Steps } from '@astrojs/starlight/components';
+import projectSettings from '../../../assets/permissions/permissions_settings_project.png';
+
+## Introduction
+
+Everything in **TestCLIX** happens inside a **project**. Tests, results, schedules, integrations, team members, and billing are all scoped to the project you are currently working in.
+
+A project brings together:
+
+- **Workspace** - directories, tests, and their results
+- **Team** - members, their roles, and pending invitations
+- **Integrations** - [Slack](/integration/slack), [Telegram](/integration/telegram), [Jira](/integration/jira), [webhooks](/integration/webhooks), [email notifications](/integration/emails), and the project [API key](/integration/api)
+- **Billing** - subscription, invoices, and purchases
+
+You can be a member of multiple projects, and your role may be different in each one. See [Roles & Permissions](/project-management/permissions) for what each role can do.
+
+This guide explains:
+
+- How projects are created and switched
+- How to rename a project
+- How to leave a project
+
+## Your First Project
+
+When you sign up, TestCLIX automatically creates a personal workspace project for you, named after your email address (for example, `john workspace`). You are the **Owner** of this project and can rename it at any time.
+
+If you were invited to an existing project instead, see [Accepting an Invitation](/project-management/users-and-invitations#accepting-an-invitation).
+
+## Creating a Project
+
+<Steps>
+
+1. Click **Project** at the top of the left sidebar.
+
+2. In the **Select project** dialog, click **Create project**.
+
+3. Enter a **Project name** (up to 64 characters).
+
+4. Click **Create**.
+
+</Steps>
+
+You become the new project's **Owner**. The project appears in your project list - switch to it from the **Select project** dialog. If it is your only project, it is selected automatically.
+
+:::note
+Each account can create a limited number of projects (5 by default). If you reach the limit, contact us at [clix@testclix.com](mailto:clix@testclix.com) to increase it.
+:::
+
+## Switching Projects
+
+<Steps>
+
+1. Click **Project** at the top of the left sidebar. The currently selected project is shown beneath the label.
+
+2. In the **Select project** dialog, use **Search projects** or browse the **All projects** list. Each entry shows the project name and a shortened **Project ID** - search matches both, which helps when projects share similar names.
+
+3. Click a project to switch to it. The application reloads and opens that project's **Dashboard**.
+
+</Steps>
+
+A few things to know:
+
+- If you are a member of only **one** project, it is selected automatically when you sign in.
+- If you are a member of **several** projects, TestCLIX shows the **Select project** page after sign-in so you can pick one.
+- If you have **no projects at all** (for example, after leaving your last one), the **Select project** page shows an empty state with a **Create** button, so you can always create your first project from there.
+- Your role and available actions may change after switching, because permissions are assigned **per project**.
+
+## Renaming a Project
+
+Renaming requires the **Owner** role.
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu and go to the **Project** tab.
+
+2. In the **Project data** section, edit the **Project name** field (up to 64 characters).
+
+3. Click **Update**.
+
+</Steps>
+
+<img src={projectSettings.src} alt="Settings → Project tab with Project data and Access & permissions sections" />
+
+The **Project ID** shown above the name is read-only and identifies the project internally.
+
+## Leaving a Project
+
+Any member can leave a project, with one exception: the **only Owner** cannot leave.
+
+<Steps>
+
+1. Open **Settings** from the left sidebar menu and go to the **Project** tab.
+
+2. In the **Access & permissions** section, click **Leave project**.
+
+3. Confirm in the dialog.
+
+</Steps>
+
+After leaving, you are redirected to the **Select project** page. To rejoin the project later, you need a new invitation.
+
+:::note
+If you are the only Owner, the **Leave project** button is disabled and the message *"You are the only owner. You cannot leave the project."* is shown. Promote another member to **Owner** first.
+:::
+
+## Deleting a Project
+
+Deleting a project is not available from the portal. If you need a project removed, contact us at [clix@testclix.com](mailto:clix@testclix.com).
+
+## Managing Your Team
+
+<LinkCard
+  title="Users & Invitations"
+  description="Invite teammates, manage pending invitations, and edit or remove project members."
+  href="/project-management/users-and-invitations"
+/>
+
+<LinkCard
+  title="Roles & Permissions"
+  description="What each role (Owner, Admin, Editor, Viewer, Accountant) can see and do."
+  href="/project-management/permissions"
+/>
+
+## FAQ
+
+<details>
+<summary>I reached the project limit. How do I get more?</summary>
+
+Contact us at [clix@testclix.com](mailto:clix@testclix.com) and we will increase your limit.
+
+</details>
+
+<details>
+<summary>Can I rejoin a project after leaving it?</summary>
+
+Yes, but only through a new invitation from that project's **Admin** or **Owner**.
+
+</details>
+
+<details>
+<summary>Do my role and permissions carry over between projects?</summary>
+
+No.
+
+Permissions are assigned **per project**, so your role may change after switching projects.
+
+</details>

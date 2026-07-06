@@ -30,6 +30,10 @@ The Session Player includes the following features:
 - **Event Navigation**: Chronological navigation through recorded events via the [Session Timeline](./session-timeline) to inspect specific application states.
 - **Combine Screens**: Allows merging the current session when in an error state, effectively marking the new version as valid. This is available only in [pixel comparison](../website-scenario/pixel-comparison.mdx). See [Combine Screens](./combine-screens).
 
+:::note
+Replaying sessions is available from the **Viewer** role, but actions that modify the test - such as **Combine Screens** - require **Editor** or higher. See [Roles & Permissions](/project-management/permissions).
+:::
+
 ## Error Handling & Comparison
 
 When a session ends with an **error** status, the player facilitates efficient debugging. The failed session can be compared against the original baseline recording to visually identify what changed on the website, not just that the run failed.

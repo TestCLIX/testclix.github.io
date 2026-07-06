@@ -7,6 +7,9 @@ import starlightClixThemePlugin from './src/theme/clix-theme/index.ts';
 
 export default defineConfig({
 	site: 'https://docs.testclix.com',
+	redirects: {
+		'/testclix-platform/permissions': '/project-management/permissions',
+	},
 	integrations: [
 		markdoc(),
 		starlight({
@@ -78,7 +81,6 @@ export default defineConfig({
 						{ label: 'Schedule Monitoring', link: '/testclix-platform/schedule-monitoring' },
 						{ label: 'Codeless Recorder', link: '/testclix-platform/codeless-recorder' },
 						{ label: 'Session Player', link: '/testclix-platform/session-player' },
-						{ label: 'Project Permissions', link: '/testclix-platform/permissions' },
 					]
 				},
 				{
@@ -86,6 +88,14 @@ export default defineConfig({
 					badge: { text: 'Guide', variant: 'tip' },
 					items: [
 						{ label: 'Pick a Setup', link: '/quick-start/pick-setup' },
+					]
+				},
+				{
+					label: 'Project Management',
+					items: [
+						{ label: 'Overview', link: '/project-management/overview' },
+						{ label: 'Users & Invitations', link: '/project-management/users-and-invitations' },
+						{ label: 'Roles & Permissions', link: '/project-management/permissions' },
 					]
 				},
 				{

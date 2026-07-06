@@ -1,0 +1,236 @@
+---
+title: Users & Invitations
+---
+
+import { LinkCard, Steps } from '@astrojs/starlight/components';
+import inviteUserDialog from '../../../assets/permissions/invite_user_dialog.png';
+import editRole from '../../../assets/permissions/edit_role.png';
+import invitationsTab from '../../../assets/permissions/invitations_tab.png';
+
+## Introduction
+
+Team access in **TestCLIX** is managed on the **Users** page. Only **Admins** and **Owners** can invite users or change permissions.
+
+Open **Users** from the left sidebar menu. The page contains two tabs:
+
+| Tab             | Description                                 |
+| ----------------|---------------------------------------------|
+| **Users**       | List of everyone who has joined the project |
+| **Invitations** | Pending invitations not yet accepted        |
+
+The **Project overview** panel on the left shows the project name, its ID, and your own permissions. In the **Users** tab, each member row shows the **Email** (your own row is marked with *(you)*), **Access** badges with the assigned role, and an **Actions** menu. Expand a row to see who invited that member and when they joined.
+
+For a detailed breakdown of what each role can do, see [Roles & Permissions](/project-management/permissions).
+
+## Inviting a User
+
+<Steps>
+
+1. Open **Users** from the left sidebar menu.
+
+2. Click the **Invite user** button (user-plus icon) in the top-right corner.
+
+3. In the **Invite user** dialog:
+   - Enter the person's **email address**
+   - Select a **role**: Owner, Admin, Editor, Viewer, or Accountant
+   - Optionally enable **Billing** for Admin, Editor, or Viewer
+   - Click **View details** on a role card to see what that role includes
+
+4. Click **Send invitation**.
+
+   <img src={inviteUserDialog.src} alt="Invite user dialog with role selection" />
+
+</Steps>
+
+The invited person receives an email with a link to join the project.
+
+### Invitation Rules
+
+| Rule                    | Details                                                                              |
+| ------------------------|--------------------------------------------------------------------------------------|
+| **Expiry**              | Invitations expire after **7 days**                                                  |
+| **One per email**       | An email address can have only one pending invitation per project                    |
+| **Existing members**    | You cannot invite someone who is already a project member                            |
+| **Email-bound**         | The invitation can only be accepted by the exact email address it was sent to        |
+| **Owner role**          | Only an existing **Owner** can invite someone as **Owner**                           |
+
+### Adding Billing Permission When Inviting
+
+|Role selected                     | Billing option                                                                     |
+|----------------------------------|------------------------------------------------------------------------------------|
+|**Owner**                         | Always included                                                                    |
+|**Accountant**                    | Always included                                                                    |
+|**Admin**, **Editor**, **Viewer** | Optional - check **Billing** to also grant shop, invoices, and subscription access |
+
+## Managing Pending Invitations
+
+<Steps>
+
+1. Open **Users** from the left sidebar menu and go to the **Invitations** tab.
+
+    <img src={invitationsTab.src} alt="Invitations tab with pending invitations" />
+
+2. Each pending invitation shows:
+   - Email address
+   - Assigned role (and **Billing** if applicable)
+   - Who sent the invitation and when
+
+3. Click **Cancel** to withdraw an invitation before it is accepted.
+
+</Steps>
+
+The **Invitations** tab shows a badge when invitations are pending.
+
+:::note
+There is no "resend" option. To send an invitation again (for example, after it expired), **Cancel** the pending one and invite the same email address again.
+:::
+
+## Accepting an Invitation
+
+If you receive a project invitation:
+
+<Steps>
+
+1. Open the link from the invitation email.
+
+2. If you are not signed in, click **Sign in to accept** and log in with the invited email. After signing in, you are returned to the invitation page.
+
+3. Review the project name and who invited you.
+
+4. Click **Accept invitation**. You are taken to the project's **Dashboard** automatically.
+
+</Steps>
+
+:::note
+Expired or invalid invitations display an **Invitation unavailable** message. Ask an **Admin** or **Owner** of the project to invite you again.
+
+If you are already a member of the project, accepting shows *"You are already a user of this project."* - you can simply open the project from the [project switcher](/project-management/overview#switching-projects).
+:::
+
+### If You Don't Have an Account Yet
+
+You can be invited before creating a TestCLIX account. In that case:
+
+<Steps>
+
+1. From the sign-in page, use **Register now** to create an account with the **invited email address**.
+
+2. Confirm your account.
+
+3. Open the **invitation link from the email again** and click **Accept invitation**.
+
+</Steps>
+
+:::caution
+The invitation is bound to the email address it was sent to. Signing in with a different email shows: *"This invitation was sent to a different email address."*
+:::
+
+## Editing Permissions
+
+<Steps>
+
+1. Open **Users** from the left sidebar menu and go to the **Users** tab.
+
+2. Find the user in the table.
+
+3. Click the **Actions** menu (three dots) on their row.
+
+4. Select **Edit**.
+
+5. In the **Edit role** dialog:
+   - The email field is read-only
+   - Select a new **role**
+   - Adjust the **Billing** checkbox if applicable
+
+6. Click **Update**.
+
+   <img src={editRole.src} alt="Edit role dialog" />
+
+</Steps>
+
+Changes take effect immediately. If you edit **your own** role, the page reloads to apply the new permissions.
+
+### Restrictions When Editing
+
+| Situation                              | What happens                                                               |
+| ---------------------------------------|----------------------------------------------------------------------------|
+| You are **Admin** (not Owner)          | You cannot assign the **Owner** role                                       |
+| You are the **only Owner**             | You cannot edit or remove yourself as Owner                                |
+| You are **Admin** editing an **Owner** | Edit is blocked                                                            |
+| You want to remove **yourself**        | Use **Leave project** in **Settings** → **Project**, not **Delete member** |
+
+### Transferring Ownership
+
+There is no separate transfer flow - ownership is handed over by editing roles:
+
+<Steps>
+
+1. As an **Owner**, [edit the permissions](#editing-permissions) of the member who should take over and assign them the **Owner** role.
+
+2. Once the project has more than one Owner, you can change your own role to something lower, or [leave the project](/project-management/overview#leaving-a-project).
+
+</Steps>
+
+## Removing a User
+
+<Steps>
+
+1. Open **Users** from the left sidebar menu and go to the **Users** tab.
+
+2. Open the **Actions** menu (three dots) for that user.
+
+3. Select **Delete member**.
+
+4. Confirm in the dialog.
+
+</Steps>
+
+Removing another **Admin** or an **Owner** requires the **Owner** role.
+
+:::note
+You cannot remove yourself this way - use [Leave project](/project-management/overview#leaving-a-project) in **Settings** → **Project** instead. The last remaining **Owner** cannot be removed.
+:::
+
+## FAQ
+
+<details>
+<summary>The person I invited never received the email. What should I do?</summary>
+
+Ask them to check their spam folder. If the email is missing, go to the **Invitations** tab, **Cancel** the pending invitation, and send a new one.
+
+</details>
+
+<details>
+<summary>Can I change the role on a pending invitation?</summary>
+
+No. **Cancel** the invitation and send a new one with the correct role.
+
+</details>
+
+<details>
+<summary>How long is an invitation valid?</summary>
+
+**7 days**. After that, the link shows **Invitation unavailable** and a new invitation must be sent.
+
+</details>
+
+<details>
+<summary>Why can't I assign the Owner role?</summary>
+
+Only an existing **Owner** can promote another user to **Owner**.
+
+</details>
+
+## Related
+
+<LinkCard
+  title="Roles & Permissions"
+  description="What each role (Owner, Admin, Editor, Viewer, Accountant) can see and do."
+  href="/project-management/permissions"
+/>
+
+<LinkCard
+  title="Project Management Overview"
+  description="Creating, switching, renaming, and leaving projects."
+  href="/project-management/overview"
+/>
