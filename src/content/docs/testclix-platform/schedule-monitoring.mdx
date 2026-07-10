@@ -13,7 +13,7 @@ A broken checkout flow, an expired SSL certificate, or a slow-loading page can g
 Scheduled monitoring ensures your tests run continuously, around the clock, without anyone having to trigger them manually.
 Problems are caught the moment they appear, and your team is notified immediately so they can respond before users are affected.
 
-Whether you need to verify availability every 5 minutes or run a full end-to-end scenario once a day, scheduling turns your tests into an always-on safety net for your application.
+Whether you need to verify availability every minute or run a full end-to-end scenario once a day, scheduling turns your tests into an always-on safety net for your application.
 
 ## How It Works
 
@@ -25,14 +25,63 @@ You choose a frequency when you create the test, and you can change it at any ti
 
 ## Schedule Slots
 
-Each schedule frequency consumes a **slot** from your subscription plan.
-The number of available slots depends on your package.
+Each scheduled test consumes a **slot** from your subscription plan.
+Slots come in two product groups, and each group serves different test types:
+
+- **Visual Monitoring** slots power **Website Scenario** and **Website Vitals** tests.
+  They are purchased individually, one slot per frequency.
+- **Availability Testing** slots power **Website Availability** tests.
+  They are sold in packs of 10 slots.
+
+A slot is tied to a specific frequency - for example, a *Visual Monitoring every 5 Minutes* slot can only schedule a test that runs every 5 minutes.
 
 To check how many slots are in use and how many remain, open **Packet usage** in the right sidebar menu.
 <img src={packetUsage.src} alt="Packet usage view" width="50%" />
 
 When you change a test's schedule, the old slot is released and a new one is consumed.
 Setting a test to **Do not schedule** frees the slot entirely.
+
+## Available Frequencies
+
+The frequencies available depend on the slot group your test type uses.
+
+### Visual Monitoring - Website Scenario & Website Vitals
+
+| Frequency | Interval |
+|-----------|----------|
+| Every 5 min | Runs every 5 minutes |
+| Every 10 min | Runs every 10 minutes |
+| Every 15 min | Runs every 15 minutes |
+| Every 1 hour | Runs every 60 minutes |
+| Every 6 hours | Runs every 6 hours |
+| Every 24 hours | Runs once per day (see [Daily Run Times](#daily-run-times)) |
+| Do not schedule | No automatic execution |
+
+A **Website Scenario** test can use any of these frequencies.
+
+A **Website Vitals** test always runs once per day, so it consumes an *every 24 hours* slot - the same slot type used by daily Website Scenario tests.
+One purchased daily slot can therefore schedule either a daily Scenario or a Vitals test.
+
+### Availability Testing - Website Availability
+
+| Frequency | Interval |
+|-----------|----------|
+| Every 1 min | Runs every minute |
+| Every 5 min | Runs every 5 minutes |
+| Every 6 hours | Runs every 6 hours |
+| Every 24 hours | Runs once per day (see [Daily Run Times](#daily-run-times)) |
+| Do not schedule | No automatic execution |
+
+## Daily Run Times
+
+Tests scheduled with a daily (*every 24 hours*) frequency run at **08:00 UTC** by default.
+
+You can customize this when creating or editing the test:
+
+- **Pick the run time** for each day of the week, in 15-minute steps.
+- **Enable or disable individual weekdays** - for example, run only Monday through Friday.
+
+Times are displayed in the local timezone of the test's execution location, and the dialog offers a **next runs preview** so you can verify the resulting schedule before saving.
 
 ## Manual Execution
 
@@ -66,33 +115,3 @@ You can change the execution location per test to monitor your application from 
   description="Learn how to configure the execution location for Website Scenario tests."
   href="/website-scenario/location"
 />
-
-## Available Frequencies
-
-The frequencies available depend on the test type.
-
-### Website Scenario
-
-| Frequency   | Interval          |
-|-------------|--------------------|
-| Every 5 min | Runs every 5 minutes |
-| Every 10 min | Runs every 10 minutes |
-| Every 15 min | Runs every 15 minutes |
-| Every 1 hour | Runs every 60 minutes |
-| Every 6 hours | Runs every 6 hours |
-| Daily | Runs once per day at 08:00 UTC |
-| Do not schedule | No automatic execution |
-
-### Website Availability
-
-| Frequency   | Interval          |
-|-------------|--------------------|
-| Every 5 min | Runs every 5 minutes |
-| Do not schedule | No automatic execution |
-
-### Website Vitals
-
-| Frequency   | Interval          |
-|-------------|--------------------|
-| Daily | Runs once per day at 11:00 UTC |
-| Do not schedule | No automatic execution |
