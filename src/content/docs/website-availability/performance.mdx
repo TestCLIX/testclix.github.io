@@ -1,0 +1,152 @@
+---
+title: Performance
+---
+
+import { Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import performanceTab from '../../../assets/performance/performance.png';
+import networkSettings from '../../../assets/http/headless_network_settings.png';
+
+## Introduction
+
+The **Performance** feature in **[Website Availability](/website-availability/overview)**
+measures the HTTP response time of every successful check and shows how it changes over time.
+
+It helps you answer questions such as:
+
+- Is my website getting slower over time?
+- How much headroom is left before responses hit the configured request timeout?
+- Did a deployment, migration, or infrastructure change affect response time?
+
+Performance in **TestCLIX** Website Availability is informational.
+It is designed for observation and investigation, not for pass/fail enforcement.
+
+## How It Works
+
+When **Response time** is enabled, **TestCLIX** measures the total duration of each
+availability check — from the moment the request is started until the response is fully received.
+
+The measured time covers the whole request lifecycle:
+
+- DNS resolution
+- TCP connection
+- TLS handshake
+- waiting for the server response
+- downloading the response body
+
+The result is stored as a single value in **milliseconds** for each check run.
+
+Response time is recorded only for **successful** checks.
+Failed checks (wrong status code, SSL problems, timeouts, connection errors) do not produce
+a data point, so the chart always reflects how fast your website responds when it is healthy.
+
+:::note
+Performance data does not mark the test as <Badge text="Error" variant="danger"/> and does not
+fail the check when timings get worse. There is currently no threshold configuration for failing
+based on response time — alarms are still based only on check pass/fail results.
+
+If a response takes longer than the configured **Request timeout**, the check itself fails —
+but that is part of the **[Audit HTTP](/website-availability/audit-http)** validation,
+not the Performance feature.
+:::
+
+## Configuration
+
+Response time measurement is **disabled by default** and can be enabled per test.
+
+<Tabs>
+  <TabItem label="New test" icon="add-document">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Click the **Create** button on the right side.
+
+    3. Select **Website Availability**.
+
+    4. Scroll down to the **Advanced options** section.
+
+    5. Expand the **Network & HTTP Settings** subsection.
+
+       <img src={networkSettings.src} alt="Network & HTTP Settings subsection" />
+
+    6. Set **Response time** to **ON**.
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Editing test" icon="pencil">
+    <Steps>
+
+    1. Navigate to **Workspace** using the left sidebar menu.
+
+    2. Locate the test you want to modify.
+
+    3. Open the test settings using one of the following methods:
+       - On the overview page, click **Edit** next to the **Options** section.
+       - On any page, click the three-dot menu and select **Edit test properties**.
+
+    4. Scroll down to the **Advanced options** section.
+
+    5. Expand the **Network & HTTP Settings** subsection.
+
+       <img src={networkSettings.src} alt="Network & HTTP Settings subsection" />
+
+    6. Set **Response time** to **ON**.
+
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Reporting
+
+### Performance tab
+
+To review response time trends:
+
+<Steps>
+
+1. Navigate to **Workspace** using the left sidebar menu.
+
+2. Open the availability test.
+
+3. At the top navigation in the test view, select **Performance**.
+
+4. Review the **Response time** chart.
+
+   <img src={performanceTab.src} alt="Performance tab showing the response time trend chart" />
+
+</Steps>
+
+The chart contains two lines:
+
+- **Yellow line** — the measured response time of each successful check, in milliseconds.
+- **Gray dashed line** — the configured **Request timeout** (default `5000` ms).
+
+Comparing the two lines shows how much headroom your website has before checks
+start failing due to timeouts. All times on the chart are shown in **UTC**.
+
+:::note
+Trend data requires a **scheduler** to be configured on the test.
+Without recurring runs the chart will not contain enough data points to show meaningful trends.
+:::
+
+If the chart is empty, the page explains why:
+
+- **Response time measurement is disabled** — enable the **Response time** option in the
+  test settings to start collecting data (see [Configuration](#configuration) above).
+- **No response time data yet** — the option is enabled, but no successful check has run yet.
+  Run a manual check or wait for the scheduler to generate data.
+
+### History tab
+
+The **History** tab also shows the measured **Response time** for each individual run,
+next to its status and message. Use it to inspect the exact value of a specific check
+rather than the overall trend.
+
+## Beyond Response Time
+
+Response time is a single end-to-end measurement of the HTTP check.
+If you need browser-level performance quality metrics — such as Largest Contentful Paint,
+layout stability, or Lighthouse scores — use **[Website Vitals](/website-vitals/overview)**.
+
+For a full network waterfall of a browser journey, use the
+**[Performance Audit](/website-scenario/performance-audit)** in Website Scenario.

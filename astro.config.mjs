@@ -161,6 +161,7 @@ export default defineConfig({
 						{ label: 'Extra Headers', link: '/website-availability/extra-headers' },
 						{ label: 'Alarm and Notifications', link: '/website-availability/alarm-notifications' },
 						{ label: 'Location', link: '/website-availability/location' },
+						{ label: 'Performance', link: '/website-availability/performance' },
 					]
 				},
 				{
