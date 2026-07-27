@@ -1,0 +1,124 @@
+---
+title: Duplicate a Website Availability
+---
+
+import { Steps, LinkCard, CardGrid } from '@astrojs/starlight/components';
+import duplicateAvailability from '../../../assets/duplicate/duplicate_availability.png';
+
+
+## Overview
+
+**Duplicate** creates a brand-new [Website Availability](/website-availability/overview) test from an existing one, copying its configuration so you don't have to set it up again. The duplicate is a new, independent test - it starts with a clean run history and never affects the check you copied from.
+
+Duplicating a check is useful when you want to:
+
+- Reuse a working setup for a similar endpoint or environment.
+- Create a **staging** copy of a **production** check (or the other way around).
+- Monitor the same URL from a different [location](/website-availability/location).
+- Adjust schedule or headers without touching the original.
+
+## What Gets Copied
+
+- **The full check configuration** - target URL, expected status, [HTTP](/website-availability/audit-http) and [SSL](/website-availability/audit-ssl) audits, [extra headers](/website-availability/extra-headers), [location](/website-availability/location), and schedule.
+
+:::note
+Website Availability is a non-visual test, so there is **no recorded session** to copy - only the configuration is duplicated.
+:::
+
+## What Is Not Copied
+
+The duplicate is a **new, independent test** and inherits no history from the source:
+
+- No past results, statuses, or trends.
+- No triggered [alarms or notification history](/website-availability/alarm-notifications).
+
+## What You Can Change While Duplicating
+
+Anything you leave untouched is inherited from the source check.
+
+| Setting              | Required? | Notes                                                                        |
+|----------------------|-----------|------------------------------------------------------------------------------|
+| **Name**             | Yes       | Up to **32 characters**.                                                     |
+| **Parent directory** | No        | Where the duplicate is placed. Defaults to the source's directory.           |
+| **Location**         | No        | Run the duplicate from a different [region](/website-availability/location). |
+| **Schedule**         | No        | Turn scheduled monitoring on or off for the duplicate.                       |
+
+## How to Duplicate a Website Availability
+
+<Steps>
+
+1. Find the Website Availability you want to copy in your workspace.
+
+2. Open the three-dot menu and choose **Duplicate website availability**.
+
+3. In the **Duplicate website availability** dialog, review the **Name**. It is prefilled with a default based on the source - edit it if you want.
+
+   > Default: *"Homepage (copy)"* (for a source check named *Homepage*)
+
+4. *(Optional)* Adjust **Parent directory**, **Location**, or **Schedule**. 
+
+5. Click **Duplicate**. TestCLIX creates the new test and opens it, ready to run.
+
+   <img src={duplicateAvailability.src} alt="Duplicate website availability configuration"/>
+
+</Steps>
+
+### Validation rules
+
+- The **Name** is prefilled with **_&lt;source name&gt;_ (copy)**. You can keep it or replace it.
+- **Name is required** and limited to **32 characters**. If the default name would exceed 32 characters, it is trimmed to fit - shorten it further if you like.
+  > *"Name is required."*
+  > *"Name must be 32 characters or fewer."*
+
+:::note
+Duplicating requires **write access** to the project. If the option is missing or disabled, your role may be read-only - see [Roles & Permissions](/project-management/permissions).
+:::
+
+## Error Handling
+
+| What happened                | What you see                                                     | What to do                                                                         |
+|------------------------------|------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| **Name missing or too long** | *"Name is required."* / *"Name must be 32 characters or fewer."* | Enter a name of 32 characters or fewer.                                            |
+| **No write permission**      | The **Duplicate** action is unavailable.                         | Request write access - see [Roles & Permissions](/project-management/permissions). |
+
+## Best Practices
+
+- **Name for context, not just uniqueness.** With only 32 characters, favor short, meaningful names like `Homepage – EU` or `API health (staging)`.
+- **Inherit by default, override on purpose.** Change a setting only when the duplicate genuinely needs to differ.
+- **Change location for regional copies.** Duplicating per region is the cleanest way to check the same endpoint from multiple places.
+
+## Related
+
+<CardGrid>
+  <LinkCard
+    title="Location"
+    description="Run a duplicated check from a different region."
+    href="/website-availability/location"
+  />
+  <LinkCard
+    title="Alarm and Notifications"
+    description="Configure how a duplicated check evaluates errors and alerts."
+    href="/website-availability/alarm-notifications"
+  />
+  <LinkCard
+    title="Roles & Permissions"
+    description="See which roles can create and duplicate tests."
+    href="/project-management/permissions"
+  />
+</CardGrid>
+
+## FAQ
+
+<details>
+<summary>Does duplicating affect the original Website Availability?</summary>
+
+No. The duplicate is fully independent. Changing or deleting it never affects the source, and vice versa.
+
+</details>
+
+<details>
+<summary>Will the duplicate include past results?</summary>
+
+No. A duplicate starts with a clean history and builds its own results from its first run.
+
+</details>

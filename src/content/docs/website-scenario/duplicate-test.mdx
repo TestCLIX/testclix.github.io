@@ -1,0 +1,149 @@
+---
+title: Duplicate a Scenario
+---
+
+import { Steps, LinkCard, CardGrid } from '@astrojs/starlight/components';
+import duplicateScenario from '../../../assets/duplicate/duplicate_scenario.png';
+
+## Overview
+
+**Duplicate** creates a brand-new [Website Scenario](/website-scenario/overview) from an existing one, copying its configuration and **recorded session** so you don't have to record it again. The duplicate is a new, independent scenario - it starts with a clean run history and never affects the scenario you copied from.
+
+Duplicating a scenario is useful when you want to:
+
+- Reuse a working flow for a similar page, environment, or region.
+- Create a **staging** copy of a **production** scenario (or the other way around).
+- Experiment with schedule, or location changes without touching the original.
+- Use a known-good recording as the starting point for a new flow.
+
+## What Gets Copied
+
+- **The full scenario configuration** - target, evaluation rules, audits, headers, [location](/website-scenario/location), schedule, and so on.
+- **The recorded session** - the duplicate starts with the same recorded browser flow and reference screens as the source, so it's ready to run immediately.
+
+### Recording behavior 
+
+TestCLIX duplicates the recording attached to the scenario's **current, saved version** only.
+
+- If a **re-recording is in progress** on the source (for example, someone is editing or regenerating it in the [Codeless Recorder](/codeless-recorder/overview)), that unsaved work is **not** copied. The duplicate always takes the last saved recording, never in-progress changes.
+- This keeps duplicates predictable: you get exactly what the source scenario looks like right now, not a half-finished edit.
+
+## What Is Not Copied
+
+The duplicate is a **new, independent scenario**  and inherits no history from the source:
+
+- No past results, statuses, or trends.
+- No [Session Player](/session-player/overview) recordings from previous runs.
+- No triggered [alarms or notification history](/website-scenario/alarm-notifications).
+
+## What You Can Change While Duplicating
+
+Anything you leave untouched is inherited from the source scenario.
+
+| Setting              | Required? | Notes                                                                    |
+|----------------------|-----------|--------------------------------------------------------------------------|
+| **Name**             | Yes       | Up to **32 characters**.                                                 |
+| **Parent directory** | No        | Where the duplicate is placed. Defaults to the source's directory.       |
+| **Location**         | No        | Run the duplicate from a different [region](/website-scenario/location). |
+| **Schedule**         | No        | Turn scheduled monitoring on or off for the duplicate.                   |
+
+
+## How to Duplicate a Scenario
+
+<Steps>
+
+1. Find the scenario you want to copy in your workspace.
+
+2. Open the three-dot menu and choose **Duplicate scenario**.
+
+3. In the **Duplicate scenario** dialog, review the **Name**. It is prefilled with a default based on the source - edit it if you want.
+
+   > Default: *"Checkout (copy)"* (for a source scenario named *Checkout*)
+
+4. *(Optional)* Adjust **Parent directory**, **Location**, **Schedule**. 
+
+5. Click **Duplicate**. TestCLIX creates the new scenario and opens it, ready to run.
+   
+   <img src={duplicateScenario.src} alt="Duplicate scenario configuration"/>
+
+</Steps>
+
+### Validation rules
+
+- The **Name** is prefilled with **_&lt;source name&gt;_ (copy)**. You can keep it or replace it.
+- **Name is required** and limited to **32 characters**. If the default name would exceed 32 characters, it is trimmed to fit - shorten it further if you like.
+  > *"Name is required."*
+  > *"Name must be 32 characters or fewer."*
+
+:::note
+Duplicating requires **write access** to the project. If the option is missing or disabled, your role may be read-only - see [Roles & Permissions](/project-management/permissions).
+:::
+
+## Edge Cases & Behavior
+
+- **Scenario with no recording** - the duplicate is created from the configuration alone. There is no recording to copy, and no error is shown.
+- **Re-recording in progress on the source** - in-progress work is ignored; the duplicate uses the last saved recording. (See [Recording behavior](#recording-behavior).)
+- **Recording copy fails** - the new scenario is still created, but its recording could not be copied. TestCLIX tells you which scenario was created so you can fix it rather than losing your work (see [Error Handling](#error-handling)).
+- **Read-only role** - the **Duplicating** action is hidden or disabled. Ask a project **Admin** for write access.
+
+## Error Handling
+
+| What happened                | What you see                                                                                                                  | What to do                                                                                                                                                                                |
+|------------------------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Name missing or too long** | *"Name is required."* / *"Name must be 32 characters or fewer."*                                                              | Enter a name of 32 characters or fewer.                                                                                                                                                   |
+| **No write permission**      | The **Duplicate** action is unavailable.                                                                                      | Request write access - see [Roles & Permissions](/project-management/permissions).                                                                                                        |
+| **Recording copy failed**    | *"The scenario was created, but its recording could not be copied. Open the new test to re-record it."*                       | Open the created duplicate and regenerate the recording in the [Codeless Recorder](/codeless-recorder/replay-and-regenerate). Do **not** duplicate again - that would create a duplicate. |
+
+:::caution
+If a recording copy fails, the duplicate **already exists** with its configuration intact. Fix the recording on that scenario - don't repeat the duplicate, or you'll end up with two copies.
+:::
+
+## Best Practices
+
+- **Name for context, not just uniqueness.** With only 32 characters, favor short, meaningful names like `Checkout – EU` or `Login (staging)`.
+- **Inherit by default, override on purpose.** Change a setting only when the duplicate genuinely needs to differ.
+- **Change location for regional copies.** Duplicating per region is the cleanest way to monitor the same flow from multiple places.
+- **Verify visual duplicates once.** After duplicating, run the scenario once to confirm the copied recording still matches the target before relying on it.
+
+## Related
+
+<CardGrid>
+  <LinkCard
+    title="Codeless Recorder"
+    description="Re-record or regenerate a duplicated scenario's session."
+    href="/codeless-recorder/overview"
+  />
+  <LinkCard
+    title="Location"
+    description="Run a duplicated scenario from a different region."
+    href="/website-scenario/location"
+  />
+  <LinkCard
+    title="Roles & Permissions"
+    description="See which roles can create and duplicate scenarios."
+    href="/project-management/permissions"
+  />
+</CardGrid>
+
+## FAQ
+
+<details>
+<summary>Does duplicating affect the original scenario?</summary>
+
+No. The duplicate is fully independent. Changing or deleting it never affects the source, and vice versa.
+
+</details>
+
+<details>
+<summary>Will the duplicate include past results and Session Player recordings?</summary>
+
+No. A duplicate starts with a clean history and builds its own results from its first run.
+
+</details>
+
+<details>
+<summary>Someone was editing the recording when I duplicated. Which version did I get?</summary>
+
+The last **saved** recording. In-progress re-recordings are never copied into a duplicate.
+
+</details>

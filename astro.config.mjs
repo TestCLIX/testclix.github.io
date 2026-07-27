@@ -102,6 +102,7 @@ export default defineConfig({
 					label: 'Website Scenario',
 					items: [
 						{ label: 'Overview', link: '/website-scenario/overview' },
+						{ label: 'Duplicate a Scenario', link: '/website-scenario/duplicate-test' },
 						{ label: 'Statuses', link: '/website-scenario/statuses' },
 						{ label: 'Audit SSL', link: '/website-scenario/audit-ssl' },
 						{ label: 'Extra Headers', link: '/website-scenario/extra-headers' },
@@ -155,6 +156,7 @@ export default defineConfig({
 					label: 'Website Availability',
 					items: [
 						{ label: 'Overview', link: '/website-availability/overview' },
+						{ label: 'Duplicate a Website Availability', link: '/website-availability/duplicate-test' },
 						{ label: 'Statuses', link: '/website-availability/statuses' },
 						{ label: 'Audit HTTP', link: '/website-availability/audit-http' },
 						{ label: 'Audit SSL', link: '/website-availability/audit-ssl' },
@@ -168,6 +170,7 @@ export default defineConfig({
 					label: 'Website Vitals',
 					items: [
 						{ label: 'Overview', link: '/website-vitals/overview' },
+						{ label: 'Duplicate a Website Vitals ', link: '/website-vitals/duplicate-test' },
 						{ label: 'Statuses', link: '/website-vitals/statuses' },
 						{ label: 'Extra Headers', link: '/website-vitals/extra-headers' },
 						{ label: 'Alarm and Notifications', link: '/website-vitals/alarm-notifications' },
