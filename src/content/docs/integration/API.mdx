@@ -55,14 +55,15 @@ To manage your API key:
     2. Navigate to **Your API Key**.
 </Steps>
 
+The **Your API Key** panel adapts to whether a key already exists:
+
+- **No API Key generated** - shows the message *"No API Key has been generated"* and a **Generate API Key** button.
+- **API Key exists** - shows the API URL, the masked API key, and the **Refresh API Key** and **Delete API Key** buttons.
+
 <Tabs>
-  <TabItem label="No API Key Generated">
+  <TabItem label="Generate">
 
     When accessing the API section for the first time, no key is available.
-    - Message: **"No API Key has been generated"**
-    - Button: **Generate API Key**
-
-    #### Generate a New API Key
 
     <Steps>
 
@@ -81,35 +82,49 @@ To manage your API key:
     Store it securely and never expose it in public repositories.
     :::
   </TabItem>
-  <TabItem label="API Key Already Exists">
-    If an **API key** has already been generated, the panel displays:
+  <TabItem label="Refresh">
 
-        - API URL
+    If your API key has been compromised or needs to be rotated:
 
-        - Masked API Key
+    <Steps>
 
-        - **Refresh API Key** button
+    1. Click the **Refresh API Key** button.
 
-  #### Refreshing the API Key
+    2. Confirm the action.
 
-  If your API key has been compromised or needs to be rotated:
+    3. A new **API key** is generated.
 
-  <Steps>
+    4. Update all external systems using the old key.
+      ![Refresh API key view](../../../assets/api/delete_refresh_api_key.png)
+    </Steps>
 
-  1. Click the Refresh API key button.
+    :::note
+    Refreshing the **API key** immediately invalidates the previous key.
+    All integrations using the old key will stop working until updated.
+    :::
+  </TabItem>
+  <TabItem label="Delete">
 
-  2. Confirm the action.
+    If you no longer need API access for this project, you can permanently delete the key:
 
-  3. A new **API key** is generated.
+    <Steps>
 
-  4. Update all external systems using the old key.
-    ![Refresh API key view](../../../assets/api/refresh_api_key.png)
-  </Steps>
+    1. Click the **Delete API Key** button.
 
-  :::note
-  Refreshing the **API key** immediately invalidates the previous key.
-  All integrations using the old key will stop working until updated.
-  :::
+    2. In the confirmation dialog, review the message:
+       *"Are you sure you want to delete this API key? After this action, the current API key will no longer work."*
+
+    3. Click **Delete** to confirm.
+
+    4. The **API key** is removed, and the panel returns to the **No API Key generated** state.
+      ![Delete API key view](../../../assets/api/delete_refresh_api_key.png)
+    </Steps>
+
+    :::caution
+    Deleting the **API key** takes effect immediately and cannot be undone.
+    All integrations using this key will stop working right away.
+    To restore access, generate a new **API key** and update your external systems.
+    :::
   </TabItem>
 </Tabs>
 
@@ -236,7 +251,7 @@ curl -X POST https://api.testclix.com/v1/api/execute/{test_id} -H "x-api-key: {Y
 }
 ```
 
-##### 403 Response — Execution Limit Exceeded
+##### 403 Response - Execution Limit Exceeded
 
 ```json
 {
