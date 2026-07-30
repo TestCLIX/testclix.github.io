@@ -138,6 +138,8 @@ Available endpoints.
 | `GET`         | `/v1/api/status/details`   | Get test details      | None           | 200          |
 | `GET`         | `/v1/api/status/{test_id}` | Get test status by ID | test_id(string)| 200, 404     |
 | `POST`        | `/v1/api/execute/{test_id}`| Execute test by ID    | test_id(string)| 200, 403, 404|
+| `GET`         | `/v1/api/history/{test_id}`| Get run history by ID | test_id(string)| 200          |
+| `GET`         | `/v1/api/har/{test_id}`    | Download run HAR file | test_id(string)| 302, 404     |
 
 ### Get Test Status
 
@@ -274,4 +276,145 @@ curl -X POST https://api.testclix.com/v1/api/execute/{test_id} -H "x-api-key: {Y
 | <Badge text="200" variant="success"/>| Success                   | 
 | <Badge text="403" variant="danger"/> | Execution limit exceeded  |
 | <Badge text="404" variant="danger"/> | Test doesn't exist        |
+
+### Get Run History
+
+`GET /v1/api/history/{test_id}`
+
+Returns the run history of a specific test, newest first.
+
+#### Path Parameter
+
+| Name        | Type       | Description  |
+|-------------|------------|--------------|
+| test_id     | string     | Test ID  |
+
+#### Query Parameters
+
+All query parameters are optional.
+
+| Name            | Type   | Description                                     |
+|-----------------|--------|-------------------------------------------------|
+| limit           | number | Maximum number of items to return (default: 100)|
+| last_created_at | string | Pagination cursor - pass the `last_key` value from the previous response |
+| status          | string | Only return runs with this status               |
+| test_version    | string | Only return runs of this test version           |
+| created_at      | string | Only return entries whose timestamp starts with this prefix (e.g. `2026-07`) |
+| type            | string | `run` returns only test runs; `test_status` returns only status-change entries |
+
+#### Example Request
+
+```bash
+curl https://api.testclix.com/v1/api/history/{test_id} -H "x-api-key: {YOUR_API_KEY}"
+```
+
+##### 200 Response
+
+```json
+{
+  "count": 2,
+  "items": [
+    {
+      "created_at": "2026-07-30T09:15:12",
+      "status": "pass",
+      "message": "",
+      "test_version": "3",
+      "trigger": "scheduler",
+      "har_file": "USER#0451…/01GDZYY7EMI1&07GD8QUVVINJDI/2c9a….har"
+    },
+    {
+      "created_at": "2026-07-30T08:15:09",
+      "status": "error",
+      "message": "Timeout while loading page",
+      "test_version": "3",
+      "trigger": "scheduler",
+      "har_file": ""
+    }
+  ],
+  "last_key": "2026-07-30T08:15:09"
+}
+```
+
+The fields present on each item depend on the test type (for example,
+**Website Vitals** runs include `vitals_results`).
+
+A non-empty `har_file` means the run has a HAR file available - use the
+item's `created_at` with the [HAR endpoint](#download-har-file) to
+download it.
+
+`last_key` is only present when more items are available. Pass it as
+`last_created_at` in the next request to fetch the next page.
+
+An unknown test ID returns an empty list (`"count": 0`).
+
+### Download HAR File
+
+`GET /v1/api/har/{test_id}`
+
+Downloads the HAR file recorded by a run of a specific test.
+HAR files are only recorded for
+**[Website Scenario](/website-scenario/overview)** tests with
+**[Performance Audit](/website-scenario/performance-audit)** enabled.
+Other test types never produce HAR files.
+
+By default the newest run with a HAR file is used. Pass `created_at`
+to download the HAR file of a specific run.
+
+The endpoint responds with a **302 redirect** to a signed download URL
+that is valid for **10 minutes**. Use `curl -L` (or your HTTP client's
+follow-redirects option) to download the file in one step.
+
+#### Path Parameter
+
+| Name        | Type       | Description  |
+|-------------|------------|--------------|
+| test_id     | string     | Test ID  |
+
+#### Query Parameter
+
+| Name        | Type       | Description  |
+|-------------|------------|--------------|
+| created_at  | string     | Optional. Run timestamp, as returned by the [run history endpoint](#get-run-history) |
+
+#### Example Request
+
+```bash
+curl -L https://api.testclix.com/v1/api/har/{test_id} -H "x-api-key: {YOUR_API_KEY}" -o run.har
+```
+
+##### 404 Responses
+
+```json
+{
+  "message": "No run with a HAR file"
+}
+```
+
+```json
+{
+  "message": "Run doesn't exist"
+}
+```
+
+```json
+{
+  "message": "Run has no HAR file"
+}
+```
+
+```json
+{
+  "message": "HAR file has expired"
+}
+```
+
+HAR files are removed after **30 days** - see
+[HAR File Retention](/website-scenario/performance-audit#har-file-retention).
+
+#### HTTP Status Code Summary
+
+| Code                                 | Meaning                                        | 
+|--------------------------------------|------------------------------------------------|
+| <Badge text="302" variant="success"/>| Redirect to the signed HAR download URL        | 
+| <Badge text="404" variant="danger"/> | No matching run, no HAR file, or HAR expired   |
 
