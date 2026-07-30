@@ -213,6 +213,29 @@ curl https://api.testclix.com/v1/api/status/{test_id} -H "x-api-key: {YOUR_API_K
 }
 ```
 
+For **[Website Vitals](/website-vitals/overview)** tests the response
+also includes the measured metrics of the newest run:
+
+```json
+{
+  "test_id": "01GDZYY7EMI1&07GD8QUVVINJDI",
+  "status": "pass",
+  "vitals": {
+    "LCP": 1843.2,
+    "TBT": 120.0,
+    "CLS": 0.04,
+    "performance": 92.0,
+    "accessibility": 100.0,
+    "bestPractices": 95.0,
+    "SEO": 100.0,
+    "TTI": 2100.5
+  }
+}
+```
+
+The `vitals` object is omitted until the test has at least one run
+with results.
+
 ##### 404 Response
 
 ```json
