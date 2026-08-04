@@ -194,7 +194,7 @@ Returns status of a specific test.
 
 | Name        | Type       | Description  |
 |-------------|------------|--------------|
-| test_id     | string     | Test ID  |
+| test_id     | string     | Test ID      |
 
 #### Example Request
 
@@ -215,7 +215,7 @@ curl https://api.testclix.com/v1/api/status/{test_id} -H "x-api-key: {YOUR_API_K
 
 ```json
 {
-  "message": "Scenario doesn't exists"
+  "message": "Test doesn't exist"
 }
 ```
 
@@ -232,7 +232,7 @@ The limit of executions is defined by your Test Execution package.
 
 | Name        | Type       | Description  |
 |-------------|------------|--------------|
-| test_id     | string     | Test ID  |
+| test_id     | string     | Test ID      |
 
 
 
@@ -263,7 +263,7 @@ curl -X POST https://api.testclix.com/v1/api/execute/{test_id} -H "x-api-key: {Y
 
 ```json
 {
-  "message": "Scenario doesn't exists"
+  "message": "Test doesn't exist"
 }
 ```
 
