@@ -213,8 +213,11 @@ curl https://api.testclix.com/v1/api/status/{test_id} -H "x-api-key: {YOUR_API_K
 }
 ```
 
-For **[Website Vitals](/website-vitals/overview)** tests the response
-also includes the measured metrics of the newest run:
+##### 200 Response — Website Vitals Test
+
+For **[Website Vitals](/website-vitals/overview)** tests, the response also
+includes a `vitals` object with the metrics measured by the most recent run
+that produced results:
 
 ```json
 {
@@ -233,8 +236,24 @@ also includes the measured metrics of the newest run:
 }
 ```
 
-The `vitals` object is omitted until the test has at least one run
-with results.
+| Field | Unit |
+| --- | --- |
+| `LCP` | milliseconds |
+| `TBT` | milliseconds |
+| `CLS` | score |
+| `TTI` | milliseconds |
+| `performance` | score (0–100) |
+| `accessibility` | score (0–100) |
+| `bestPractices` | score (0–100) |
+| `SEO` | score (0–100) |
+
+See **[Website Vitals Metrics](/website-vitals/metrics)** for what each
+metric measures and how thresholds are configured.
+
+:::note
+The `vitals` object is omitted if the test has not yet completed a run that
+produced vitals results.
+:::
 
 ##### 404 Response
 
