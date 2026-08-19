@@ -140,6 +140,8 @@ Available endpoints.
 | `POST`        | `/v1/api/execute/{test_id}`| Execute test by ID    | test_id(string)| 200, 403, 404|
 | `GET`         | `/v1/api/history/{test_id}`| Get run history by ID | test_id(string)| 200          |
 | `GET`         | `/v1/api/har/{test_id}`    | Download run HAR file | test_id(string)| 302, 404     |
+| `GET`         | `/v1/api/secret`           | List secrets          | None           | 200          |
+| `PATCH`       | `/v1/api/secret/{secret_id}`| Update secret        | secret_id(string)| 200, 400, 404, 415|
 
 ### Get Test Status
 
@@ -460,3 +462,127 @@ HAR files are removed after **30 days** - see
 | <Badge text="302" variant="success"/>| Redirect to the signed HAR download URL        | 
 | <Badge text="404" variant="danger"/> | No matching run, no HAR file, or HAR expired   |
 
+### List Secrets
+
+`GET /v1/api/secret`
+
+Returns the secrets stored in the project the API key belongs to.
+Only metadata is returned - **secret values are never exposed** by the
+API. Use the `secret_id` with the [update endpoint](#update-secret)
+to rotate a value.
+
+#### Example Request
+
+```bash
+curl https://api.testclix.com/v1/api/secret -H "x-api-key: {YOUR_API_KEY}"
+```
+
+##### 200 Response
+
+```json
+{
+  "count": 2,
+  "items": [
+    {
+      "secret_id": "01K2M4X9QZlABCDEFGHJKMNPQR",
+      "name": "STAGING_API_TOKEN",
+      "created_at": "2026-03-20T09:26:13",
+      "updated_at": "2026-08-01T07:00:02"
+    },
+    {
+      "secret_id": "01K2M4YB3ZlSTUVWXYZ23456789",
+      "name": "LOGIN_PASSWORD",
+      "created_at": "2026-04-02T11:41:55",
+      "updated_at": "2026-04-02T11:41:55"
+    }
+  ]
+}
+```
+
+A project without secrets returns an empty list (`"count": 0`).
+
+### Update Secret
+
+`PATCH /v1/api/secret/{secret_id}`
+
+Updates a secret's value and/or name. Tests that reference the secret
+pick up the new value on their next run, so this endpoint can be used
+to automate secret rotation - for example from the pipeline that
+rotates the credential itself.
+
+#### Path Parameter
+
+| Name        | Type       | Description  |
+|-------------|------------|--------------|
+| secret_id   | string     | Secret ID, as returned by the [list endpoint](#list-secrets) |
+
+#### Request Body
+
+Send `Content-Type: application/json`. At least one field is required.
+
+| Name   | Type   | Description                                |
+|--------|--------|--------------------------------------------|
+| value  | string | New secret value (1-4096 characters)       |
+| name   | string | New secret name (1-128 characters)         |
+
+#### Example Request
+
+```bash
+curl -X PATCH https://api.testclix.com/v1/api/secret/{secret_id} \
+  -H "x-api-key: {YOUR_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{"value": "{NEW_SECRET_VALUE}"}'
+```
+
+##### 200 Response
+
+```json
+{
+  "secret_id": "01K2M4X9QZlABCDEFGHJKMNPQR",
+  "name": "STAGING_API_TOKEN",
+  "updated_at": "2026-08-19T10:15:42"
+}
+```
+
+##### 400 Response
+
+```json
+{
+  "message": "Invalid request body"
+}
+```
+
+Returned when the body is not a JSON object with at least one of
+`name` / `value`, contains unknown fields, empty strings, or values
+over the length limits.
+
+##### 404 Response
+
+```json
+{
+  "message": "Secret not found"
+}
+```
+
+Secrets belong to a project - a `secret_id` from another project
+returns **404**.
+
+##### 415 Response
+
+Returned when the request is sent without
+`Content-Type: application/json`.
+
+```json
+{
+  "message": "Invalid request body"
+}
+```
+
+#### HTTP Status Code Summary
+
+| Code                                 | Meaning                                  |
+|--------------------------------------|------------------------------------------|
+| <Badge text="200" variant="success"/>| Secret updated                           |
+| <Badge text="400" variant="danger"/> | Invalid request body                     |
+| <Badge text="404" variant="danger"/> | No secret with this ID in the project    |
+| <Badge text="415" variant="danger"/> | Missing or non-JSON `Content-Type`       |
