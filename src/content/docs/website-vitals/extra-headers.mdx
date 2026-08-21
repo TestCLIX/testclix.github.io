@@ -33,6 +33,25 @@ Header names and values are fully customizable.
 `Authorization` headers are supported and can be used for endpoints that require authentication.
 You can also use headers like `Accept-Language` to test localized responses for different language preferences.
 
+## Text and Secret Values
+
+Each header value has a **source**, chosen in the dropdown next to the value. New rows start on **Text**.
+
+- **Text** - the value you type, stored as plain text in the test configuration. Printable ASCII
+  only, up to 4096 characters. The eye toggle only hides the value on screen - it does not make it a secret.
+- **Secret** - a reference to a **stored [secret](/secrets/overview)**, picked from a searchable list.
+  The value stays out of the test configuration - it is resolved on the server at run time and is
+  never shown in the portal.
+
+Header names are always plain text, up to 128 characters.
+
+**Secret** is the recommended option for `Authorization` headers, bot-management values, and anything else
+you would not want readable in the test. Rotating the value then means editing one secret instead of
+every test that uses it.
+
+See **[Secrets in Extra Headers](/secrets/extra-headers)** for the full walkthrough, including what to do
+when a header shows **"Secret deleted"**.
+
 ## Configuration
 
 <Tabs>
@@ -51,7 +70,8 @@ You can also use headers like `Accept-Language` to test localized responses for 
 
     6. Click the **+** button next to the **Extra headers** field to add a new header row.
 
-    7. Provide the header **name** and **value**.
+    7. Provide the header **name**, then set the value's source to **Text** or **Secret** and
+       enter the value or pick the stored secret.
 
        Both can be chosen freely.
        If you use bot management or firewall rules, values must exactly match your external configuration (for example, in Cloudflare).
@@ -79,7 +99,8 @@ You can also use headers like `Accept-Language` to test localized responses for 
 
     6. Click the **+** button next to the **Extra headers** field to add a new header row.
 
-    7. Provide the header **name** and **value**.
+    7. Provide the header **name**, then set the value's source to **Text** or **Secret** and
+       enter the value or pick the stored secret.
 
        Both can be chosen freely.
        If you use bot management or firewall rules, values must exactly match your external configuration (for example, in Cloudflare).

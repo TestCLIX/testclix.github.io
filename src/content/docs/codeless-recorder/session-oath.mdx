@@ -2,8 +2,9 @@
 title: Authentication (OATH)
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps, LinkCard } from '@astrojs/starlight/components';
 import oathImg from '../../../assets/codeless-recorder/oath.png';
+import oathSecretDropdown from '../../../assets/codeless-recorder/oath_secret_dropdown.png';
 
 <img src={oathImg.src} alt="OATH authentication dialog in the recorder" />
 
@@ -19,14 +20,19 @@ The generated code is pasted into whichever input field is currently active on t
 2. **Click on the TOTP input field** on the page so it receives focus.
 3. In the toolbox, select **Add OATH**. If it is not visible, open **More actions**.
 4. Choose the key source:
-   - **Text** - enter the Base32-encoded TOTP key directly.
-   - **Secret** - select a secret stored in the current project. You can create one from the same picker if needed.
+   - **Text** - enter the Base32-encoded TOTP key directly. The key is masked by default - use the show/hide toggle to check what you typed.
+   - **Secret** - select a secret stored in the current project. You can create one from the same picker if needed. See [Using a stored secret](#using-a-stored-secret).
 5. Enter or select the TOTP key.
 6. Click **Submit**.
 
 </Steps>
 
-The recorder generates a fresh code from the key, types it into the active input field, and adds an Authentication event to the timeline.
+The recorder generates a fresh code from the key, types it into the active input field, and adds an Authentication event to the timeline. If you entered the key as **Text**, the key itself is stored with the event - it is not added to the project's secrets. If you picked a stored secret, only the reference to it is stored.
+
+:::tip
+In the narrow recorder panel, the source dropdown may show only its icon rather than the **Text** or
+**Secret** label.
+:::
 
 ## How it works
 
@@ -35,10 +41,59 @@ During monitoring, TestCLIX generates a new TOTP code using the selected key and
 Only the TOTP key source is stored - never the generated code itself. A text key is saved with the recording. A project secret is referenced by its stored secret ID and resolved when the scenario runs. Each run produces a fresh code valid for that moment.
 
 :::caution
-When you use the Text source, the TOTP key is stored inside the recording. Prefer a project Secret when the key should be managed centrally and rotated without recording it again.
+When you use the Text source, the TOTP key is stored inside the recording. Prefer a [project secret](#using-a-stored-secret) when the key should be managed centrally and rotated without recording it again.
 :::
 
-To change the key used by an existing Authentication event, select it in the [Session Timeline](/codeless-recorder/session-timeline), choose a new Text or Secret value in [Event Preview](/codeless-recorder/event-preview), and click **Save secret**.
+## Using a stored secret
+
+Instead of entering the key as **Text**, you can set the source to **Secret** and point the OATH
+step at a [secret](/secrets/overview) stored in the project. The key is then held in project settings rather than in the scenario, and it is
+resolved on the server at run time - the recorder never displays it.
+
+This is worth doing when:
+
+- the same MFA account is used by more than one scenario
+- you rotate the key and do not want to re-record every scenario that uses it
+- you would rather not have the key readable inside the recording
+
+The picker is searchable and lists the project's stored secrets. If the secret does not exist yet,
+you can create it without leaving the recorder - see below.
+
+<img src={oathSecretDropdown.src} alt="OATH panel with the source dropdown set to Secret and the secret picker open, showing 'Create secret' above the list of stored secrets" style={{ maxHeight: '500px', width: 'auto' }} />
+
+### Create a secret from the picker
+
+At the top of the secret list is a **Create secret** entry. It opens the **Secrets** dialog, where
+you add the secret with the same form as on the [Secrets settings tab](/secrets/manage-secrets#add-a-secret).
+
+Once you save it, the new secret is **selected in the OATH step automatically** - you do not have to
+pick it from the list again.
+
+:::note
+Stored values are write-only and cannot be viewed after saving, so keep your own copy of the TOTP
+key. To change it later, [replace the value](/secrets/manage-secrets#edit-an-existing-secret) on the
+**Secrets** tab in **Settings**.
+:::
+
+## How the step shows its secret
+
+Once recorded, an OATH step that uses a stored secret displays the secret's name as
+`Name: <secret name>` on the step card and in the timeline status bar.
+
+If the secret has since been deleted, the step shows **"Secret deleted"** in red instead. To repair
+it, [change the secret on the step](/codeless-recorder/change-step-secret).
+
+:::note
+An OATH step whose key was entered as **Text** shows no secret name, because there is no stored
+secret to reference. This is expected and not an error.
+:::
+
+## Changing the key later
+
+You do not have to re-record an OATH step to change the key it authenticates with. Select the event
+in the [Session Timeline](/codeless-recorder/session-timeline), choose a new **Text** or **Secret**
+value in [Event Preview](/codeless-recorder/event-preview), and click **Save secret** - see
+[Change a Step's Secret](/codeless-recorder/change-step-secret#oath-steps).
 
 ## Best used for
 
@@ -50,8 +105,8 @@ To change the key used by an existing Authentication event, select it in the [Se
 
 | Error | Meaning | What to do |
 |-------|---------|------------|
-| **Error generating token** | The secret is invalid or incorrectly formatted. | Verify the TOTP secret is a valid Base32-encoded key from your authentication provider. |
-| **Secret deleted** | The recorded event references a project secret that no longer exists. | Select another stored secret or enter a valid Text key in Event Preview. |
+| **Error generating token** | The secret is invalid or incorrectly formatted. | Verify the TOTP secret is a valid Base32-encoded key from your authentication provider. If the step uses a stored secret, check that the stored value is the key itself and not a generated code. |
+| **Secret deleted** | The recorded event references a project secret that no longer exists. | Select another stored secret or enter a valid Text key in Event Preview. See [Change a Step's Secret](/codeless-recorder/change-step-secret). |
 
 ## Caveats
 
@@ -62,3 +117,17 @@ Only time-based one-time passwords (TOTP) are supported. Event-based one-time pa
 - Make sure the target input field is focused before adding the OATH step. The generated code is typed into whichever field currently has focus.
 - The system clock on the playback environment must be accurate. TOTP codes are valid only within a short time window (typically 30 seconds), so clock drift can cause codes to be rejected.
 - If the application rejects a code that was already used within the same time window, playback may fail. This can happen when a scenario is replayed very quickly after a previous run.
+
+## Related
+
+<LinkCard
+  title="Secrets"
+  description="Store reusable values in the project and reference them instead of typing them in plain text."
+  href="/secrets/overview"
+/>
+
+<LinkCard
+  title="Insert Secret"
+  description="Type the value of a stored secret into the focused field while recording."
+  href="/codeless-recorder/insert-secret"
+/>

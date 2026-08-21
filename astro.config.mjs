@@ -101,6 +101,15 @@ export default defineConfig({
 					]
 				},
 				{
+					label: 'Secrets',
+					items: [
+						{ label: 'Overview', link: '/secrets/overview' },
+						{ label: 'Manage Secrets', link: '/secrets/manage-secrets' },
+						{ label: 'Secrets in Extra Headers', link: '/secrets/extra-headers' },
+						{ label: 'Troubleshooting', link: '/secrets/troubleshooting' },
+					]
+				},
+				{
 					label: 'Website Scenario',
 					items: [
 						{ label: 'Overview', link: '/website-scenario/overview' },
@@ -140,9 +149,11 @@ export default defineConfig({
 									items: [
 										{ label: 'AI Assistant', link: '/codeless-recorder/ai-assistant' },
 										{ label: 'Authentication (OATH)', link: '/codeless-recorder/session-oath' },
+										{ label: "Change a Step's Secret", link: '/codeless-recorder/change-step-secret' },
 										{ label: 'Text Paste', link: '/codeless-recorder/text-paste' },
 										{ label: 'Compare Screen Fragment', link: '/codeless-recorder/image-checker' },
 										{ label: 'History Navigation', link: '/codeless-recorder/history-navigation' },
+										{ label: 'Insert Secret', link: '/codeless-recorder/insert-secret' },
 										{ label: 'Masked Fields', link: '/codeless-recorder/masked-fields' },
 										{ label: 'Mouse Left Click', link: '/codeless-recorder/mouse-click' },
 										{ label: 'Mouse Hover', link: '/codeless-recorder/mouse-hover' },

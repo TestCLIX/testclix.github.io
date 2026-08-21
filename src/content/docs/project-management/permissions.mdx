@@ -38,6 +38,7 @@ To invite teammates or update their permissions, see [Users & Invitations](/proj
 | Replay sessions in Session Player  | Viewer                            |
 | Create or edit tests               | Editor                            |
 | Run tests                          | Editor                            |
+| Add, edit or delete **Secrets**    | Editor                            |
 | Modify tests from Session Player   | Editor                            |
 | Manage users                       | Admin                             |
 | Configure integrations             | Admin                             |
@@ -96,8 +97,10 @@ Permissions are assigned per project. When you switch projects, your role and av
 | View tests & workspace       | {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
 | View dashboards & history    | {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
 | Replay in **Session Player** | {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
+| View **Secrets** (names only)| {permYes} | {permYes}      | {permYes}      | {permYes}      | {permNo}   |
 | Create & edit tests          | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
 | Delete tests & directories   | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
+| Manage **Secrets**           | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
 | Run tests (**Execute**)      | {permYes} | {permYes}      | {permYes}      | {permNo}       | {permNo}   |
 | Manage users                 | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
 | Send invitations             | {permYes} | {permYes}      | {permNo}       | {permNo}       | {permNo}   |
@@ -240,13 +243,16 @@ If you need additional access, contact your project **Owner** or **Admin**.
 
 ### Settings Tabs
 
-| Tab                                              | Who can access                                      |
-| -------------------------------------------------|-----------------------------------------------------|
-| Project, Security                                | Everyone                                            |
-| Billing data, Subscriptions, Invoices            | Accountant and Owner (or **Billing**-enabled users) |
-| Notifications, Your API Key, Webhook, Integrations | Admin and Owner                                   |
+| Tab                                                | Who can access                                                             |
+| ---------------------------------------------------|----------------------------------------------------------------------------|
+| Project, Security                                  | Everyone                                                                   |
+| Secrets                                            | Viewer and above - adding, renaming, and deleting require Editor or higher |
+| Billing data, Subscriptions, Invoices              | Accountant and Owner (or **Billing**-enabled users)                        |
+| Notifications, Your API Key, Webhook, Integrations | Admin and Owner                                                            |
 
-All of these settings apply to the **currently selected project**. For configuration details, see the integration guides: [API](/integration/api), [Webhooks](/integration/webhooks), [Emails](/integration/emails), [Slack](/integration/slack), [Telegram](/integration/telegram), and [Jira](/integration/jira).
+All of these settings apply to the **currently selected project**. For configuration details, see the integration guides: [API](/integration/api), [Webhooks](/integration/webhooks), [Emails](/integration/emails), [Slack](/integration/slack), [Telegram](/integration/telegram), and [Jira](/integration/jira), and for stored values see [Secrets](/secrets/overview).
+
+The **Secrets** tab is available from the **Viewer** role upwards. Viewers can open it and see the names of stored secrets, but adding, renaming, and deleting require the **Editor** role or higher - for a Viewer those controls are locked in the usual way described in [How Blocked Actions Work](#how-blocked-actions-work).
 
 ## Managing Team Access
 
