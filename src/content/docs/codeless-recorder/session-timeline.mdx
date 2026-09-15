@@ -1,10 +1,45 @@
 ---
 title: Session Timeline
-draft: true
 ---
 
+The Session Timeline appears at the bottom of the recorder and contains every recorded action in chronological order. It is used to review events, open [Event Preview](/codeless-recorder/event-preview), replay the scenario to a selected point, and remove steps.
+
+## Timeline events
+
+Each event displays its position, type, details, and - in Detailed mode - the captured screen. Click an event to open its Preview. Hover over an event to see a larger summary without leaving Live mode.
+
+Events after the current session position are dimmed. Before you can continue recording from an earlier point, TestCLIX must replay the scenario to that position.
+
+## Detailed and Compact layouts
+
+Use **Change timeline mode** at the bottom of the toolbox to choose:
+
+- **Detailed** - larger event cards with screenshots and event details.
+- **Compact** - smaller cards that fit more events on screen.
+
+The selected layout changes only how the timeline is displayed. It does not modify the recorded scenario.
+
+## Replaying to a position
+
+The vertical handler marks the browser's current position in the scenario. Drag it to a slot between events to replay the session to that point.
+
+You can also hover over a slot, open its actions menu, and choose **Replay session to this point**. See [Replay and Regenerate](/codeless-recorder/replay-and-regenerate) for the difference between moving forward and replaying from an earlier position.
+
+## Removing events
+
+In Detailed mode, hover over an event and use the delete button to remove only that event.
+
+To remove a step together with every step after it, open the actions menu in the slot before that event and choose **Delete all further events**.
+
+If the removed range reaches the current browser position, TestCLIX offers two choices:
+
+- **Delete and Replay** - remove the events and rebuild the browser state using the remaining timeline.
+- **Delete Only** - remove the events without replaying immediately.
+
 :::caution
-
-`TODO` Session Timeline Page.
-
+Removing steps can break later actions that depend on the deleted page state. Review the remaining scenario before saving.
 :::
+
+## Navigating a long timeline
+
+Use the arrows in the timeline footer or scroll horizontally to move through a long recording. The footer shows the current position, total number of events, and a summary of the current event. The timeline automatically follows newly recorded and replayed steps.

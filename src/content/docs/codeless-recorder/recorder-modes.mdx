@@ -8,80 +8,84 @@ import regenerateImg from '../../../assets/codeless-recorder/regenerate.png';
 import replayImg from '../../../assets/codeless-recorder/replay.png';
 import previewImg from '../../../assets/codeless-recorder/preview.png';
 
-The recorder status bar sits at the top of the recorder window and tells you what the recorder is doing right now. The status changes automatically as you interact with the recorder.
+The status badge in the toolbar above the [Live Screen](/codeless-recorder/live-screen) tells you how the recorder currently responds to input. Its label and colour change automatically as you record, preview, or replay a scenario.
 
-At any given moment the recorder is in one of several statuses — **Live**, **Preview**, **Replay**, **Regenerate**, or **Loading**. Each status determines what actions are available to you and how the recorder responds to input. For example, in Live you can interact with the page and record new steps, while in Preview you can review what was already captured, modify historic actions, or add ignored zones. Some statuses like Replay and Regenerate block all user input until their process completes.
-
-The status bar displays the current status on the right side along with an icon, and shows a short description of what is happening on the left. Watching the status bar is the quickest way to understand why the recorder is or is not responding to your actions.
+The header separately shows whether you are **Recording** a new scenario or **Editing** an existing one.
 
 ## Status indicators
 
-### Loading
+### Connecting
 
-Shown while the recorder session is being set up. You will see a cloud download icon and the label **Loading** with the message *Initializing recorder*. No actions are available until initialization completes.
+Shown while TestCLIX establishes the remote browser connection and waits for the first live frame. Recording actions are unavailable until the connection is ready.
 
 ### Live (focused)
 
-<img src={liveImg.src} alt="Live status bar with red dot indicating active recording" />
+<img src={liveImg.src} alt="Live status badge showing that the recorder is ready for input" />
 
-The main recording state. A **pulsing red dot** appears next to the **Live** label with the message *Recording scenario steps*. The browser is streamed in real time and every interaction you make is captured into the timeline.
+The main recording state. A green **Live** badge means that the remote browser is ready and scenario steps are being captured.
 
 In this state you can:
 
-- Interact with the page - click, hover, type, scroll, navigate.
+- Interact with the page - click, type, scroll, and select values.
+- Add a [Mouse Hover](/codeless-recorder/mouse-hover) step.
 - Add verification steps such as [Compare Screen Fragment](/codeless-recorder/image-checker), [AI Assistant](/codeless-recorder/ai-assistant), or [Screenshots](/codeless-recorder/screenshots).
+- Add a [Text Checker](/codeless-recorder/text-checker).
 - Add [pauses](/codeless-recorder/pauses) and [masked fields](/codeless-recorder/masked-fields).
-- Run [Replay and Regenerate](/codeless-recorder/replay-and-regenerate) on the timeline.
-- Delete timeline events.
+- Run [Replay and Regenerate](/codeless-recorder/replay-and-regenerate).
+- Review and remove events in the [Session Timeline](/codeless-recorder/session-timeline).
 
-While in Live the recorder can switch between several interaction modes. Each mode changes how the canvas responds to your mouse — instead of recording regular page interactions, the recorder temporarily expects a different kind of input such as drawing a selection area or clicking elements for inspection. The mode switches automatically when you activate a feature that requires it and returns to the default once you finish.
+While in Live, the recorder can temporarily switch how the canvas handles input:
 
-- **Recorder** (default) - clicks, hovers, typing, and scrolling are captured as timeline events. The sidebar shows the Session Timeline.
-- **Selection** - activated when you start a [Compare Screen Fragment](/codeless-recorder/image-checker), [AI Assistant](/codeless-recorder/ai-assistant), or [Movie Checker](/codeless-recorder/movie-checker) step. Draw a rectangle on the canvas to define the region of interest.
-- **Inspection** - activated when you open [Masked Fields](/codeless-recorder/masked-fields). Click page elements to select them for masking.
-- **Ignored Zones** - activated when you configure [Ignored Zones](/codeless-recorder/ignored-zones). Draw rectangles on the canvas to mark areas that should be excluded from screen comparisons.
+- **Recorder** (default) - clicks, typing, selections, and scrolling are captured as timeline events.
+- **Hover** - records a pointer position without clicking.
+- **Text Checker** - selects an element and captures the text that should be verified.
+- **Selection** - lets you draw a region for Compare Screen Fragment, AI Assistant, or Movie Checker.
+- **Inspect** - lets you select elements for Masked Fields.
+- **Mask editor** - lets you draw or adjust Ignored Zones on a previewed event.
 
-### Live (unfocused)
+### Needs focus
 
-<img src={liveNoFocusImg.src} alt="Live status bar with gray dot indicating recorder has no focus" />
+<img src={liveNoFocusImg.src} alt="Needs focus status badge shown when the pointer is outside the recorder" />
 
-When your mouse leaves the recorder area, the red dot turns into a **static gray dot**. The label stays **Live** but the message changes to *Recording in progress but recorder has no focus. Hover recorder area to resume*.
-
-The recording session is still active - hover back over the recorder area to return to the focused state. This indicator helps you notice when clicks might not be captured because the recorder does not have focus.
+When the pointer leaves the recorded browser, the badge changes to **Needs focus**. The session remains active, but live input is not captured. Move the pointer back over the Live Screen to return to **Live**.
 
 ### Replay
 
-<img src={replayImg.src} alt="Replay status bar with forward icon indicating session replay in progress" />
+<img src={replayImg.src} alt="Replay status and current replay step" />
 
-Displayed while the recorder replays the session after you trigger a replay. A forward icon appears next to the **Replay** label with the message *Currently the recorder plays the session, before it finishes all user actions are blocked*. All interactions are blocked until the replay completes.
+Displayed while the recorder replays captured steps. The toolbar also shows the current step. All user actions are blocked until replay completes.
 
 ### Regenerate
 
-<img src={regenerateImg.src} alt="Regenerate status bar with forward icon indicating timeline regeneration in progress" />
+<img src={regenerateImg.src} alt="Regenerate status and current regeneration step" />
 
-Displayed while the recorder regenerates the timeline. A forward icon appears next to the **Regenerate** label with the message *Recorder is regenerating the timeline. All actions are blocked until the process is finished.* Like Replay, all interactions are blocked until the process is finished.
+Displayed while the recorder rebuilds reference screens for the timeline. The toolbar shows the current step, and all user actions are blocked until regeneration completes.
 
 ### Preview
 
-<img src={previewImg.src} alt="Preview status bar with eye icon indicating step preview mode" />
+<img src={previewImg.src} alt="Preview status for a selected timeline event" />
 
-Shown when you click an event in the Session Timeline. An eye icon appears next to the **Preview** label and the message shows which step you are viewing: *You are currently viewing step N*.
+Shown when you select an event in the Session Timeline. The toolbar identifies the selected step, the canvas shows its stored screen, and the contextual panel displays event details.
 
 In Preview you can:
 
-- View the screenshot captured at the time of each event.
-- Edit event settings - for example, toggle **Ignore page structure** on a single [mouse click](/codeless-recorder/mouse-click) event.
-- Set or adjust [ignored zones](/codeless-recorder/ignored-zones) on an event.
+- View the screenshot captured for the event.
+- Review event properties.
+- Edit supported settings, such as **Ignore page structure** for a mouse click.
+- Set or adjust [Ignored Zones](/codeless-recorder/ignored-zones).
+- Update the expected value of a [Text Checker](/codeless-recorder/text-checker).
 
-You cannot interact with the page or add new events while in Preview.
+You cannot interact with the live page or add new events while in Preview.
 
 ## Switching between statuses
 
 | From | To | How |
 |------|------|-----|
-| Loading | Live | Automatic - once initialization finishes |
-| Live | Preview | Click any event in the Session Timeline |
-| Preview | Live | Click the **Live** button |
+| Connecting | Live | Automatic - once the first live frame is available |
+| Live | Preview | Select an event in the Session Timeline |
+| Preview | Live | Close Event Preview or select the active event again |
 | Live | Replay | Trigger a [replay](/codeless-recorder/replay-and-regenerate) |
 | Live | Regenerate | Trigger a [regenerate](/codeless-recorder/replay-and-regenerate) |
 | Replay / Regenerate | Live | Automatic - once the process finishes |
+
+If a tool contains unfinished work, switching away from it opens a confirmation before that progress is discarded.

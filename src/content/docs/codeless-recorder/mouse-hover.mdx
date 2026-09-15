@@ -1,0 +1,32 @@
+---
+title: Mouse Hover
+---
+
+import hoverImg from '../../../assets/codeless-recorder/hover.png';
+
+<img src={hoverImg.src} alt="Mouse Hover target confirmation in the recorder" />
+
+Mouse Hover records moving the pointer to a specific position without clicking. Use it for elements that react when the pointer is placed over them, such as menus, tooltips, charts, and controls that appear only on hover.
+
+## How to add a hover step
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. Choose **Mouse hover** from the toolbox, then click the target position on the live screen.
+3. Review the selected coordinates in the contextual panel and click **Confirm**.
+
+You can also right-click the target position and choose **Mouse hover**. In that case, the recorder uses the position where the context menu was opened and asks you to confirm it.
+
+The new Mouse Hover event appears in the [Session Timeline](/codeless-recorder/session-timeline). During replay, TestCLIX moves the pointer to the stored coordinates without sending a click.
+
+## Best used for
+
+- Opening dropdown menus that respond to hover
+- Displaying tooltips or contextual controls
+- Activating hover states before taking a [screenshot](/codeless-recorder/screenshots) or adding a check
+- Moving the pointer away from content that it currently covers
+
+## Caveats
+
+- Hover uses screen coordinates, so large layout changes can move the target away from the recorded position.
+- If an animation or menu needs time to appear, add a [pause](/codeless-recorder/pauses) after the hover step.
+- On touch-oriented pages, hovering may have no effect because the interface is designed for taps instead of pointer movement.

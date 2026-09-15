@@ -17,24 +17,28 @@ The generated code is pasted into whichever input field is currently active on t
 
 1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
 2. **Click on the TOTP input field** on the page so it receives focus.
-3. In the toolbox below the recording zone, click the **...** menu.
-4. Select **OATH**.
-5. Enter the TOTP secret key (the Base32-encoded key from your authentication provider).
+3. In the toolbox, select **Add OATH**. If it is not visible, open **More actions**.
+4. Choose the key source:
+   - **Text** - enter the Base32-encoded TOTP key directly.
+   - **Secret** - select a secret stored in the current project. You can create one from the same picker if needed.
+5. Enter or select the TOTP key.
 6. Click **Submit**.
 
 </Steps>
 
-The recorder generates a fresh code from the secret, types it into the active input field, and stores the secret in the timeline.
+The recorder generates a fresh code from the key, types it into the active input field, and adds an Authentication event to the timeline.
 
 ## How it works
 
-During monitoring, TestCLIX regenerates a new TOTP code using the stored secret and the current time. Because TOTP codes are time-based and deterministic, this produces a valid code for the current time window without any manual input.
+During monitoring, TestCLIX generates a new TOTP code using the selected key and the current time. Because TOTP codes are time-based and deterministic, this produces a valid code for the current time window without any manual input.
 
-Only the secret is stored - never the generated code itself. Each run produces a fresh code valid for that moment.
+Only the TOTP key source is stored - never the generated code itself. A text key is saved with the recording. A project secret is referenced by its stored secret ID and resolved when the scenario runs. Each run produces a fresh code valid for that moment.
 
 :::caution
-The TOTP secret is stored inside the recording. Treat recorded scenarios that include OATH steps as sensitive, just as you would treat the secret itself.
+When you use the Text source, the TOTP key is stored inside the recording. Prefer a project Secret when the key should be managed centrally and rotated without recording it again.
 :::
+
+To change the key used by an existing Authentication event, select it in the [Session Timeline](/codeless-recorder/session-timeline), choose a new Text or Secret value in [Event Preview](/codeless-recorder/event-preview), and click **Save secret**.
 
 ## Best used for
 
@@ -47,6 +51,7 @@ The TOTP secret is stored inside the recording. Treat recorded scenarios that in
 | Error | Meaning | What to do |
 |-------|---------|------------|
 | **Error generating token** | The secret is invalid or incorrectly formatted. | Verify the TOTP secret is a valid Base32-encoded key from your authentication provider. |
+| **Secret deleted** | The recorded event references a project secret that no longer exists. | Select another stored secret or enter a valid Text key in Event Preview. |
 
 ## Caveats
 

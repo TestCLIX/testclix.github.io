@@ -1,0 +1,38 @@
+---
+title: Text Checker
+---
+
+import textCheckerImg from '../../../assets/codeless-recorder/text_checker.png';
+
+<img src={textCheckerImg.src} alt="Text Checker approval panel in the recorder" />
+
+Text Checker verifies the text of a selected page element during every scenario run. It is useful when the content matters more than the exact visual appearance of the element.
+
+## How to add a Text Checker
+
+1. In the recorder, make sure you are in [Live mode](/codeless-recorder/recorder-modes#live-focused).
+2. Choose **Add text checker** from the toolbox, then click the element whose text you want to verify.
+3. Review the captured value in the **Text to verify** field. You can correct or replace it before saving the step.
+4. Click **Approve**.
+
+You can also right-click the target element and choose **Text checker**. The recorder reads the text at that position and opens the same approval panel.
+
+The approved value is stored in a Text Checker event on the [Session Timeline](/codeless-recorder/session-timeline).
+
+## Editing the expected text
+
+Select the Text Checker event in the timeline to open [Event Preview](/codeless-recorder/event-preview). Update the expected value and click **Save text**. The new value is used by future replays and monitoring runs.
+
+## Best used for
+
+- Headings, labels, prices, and status messages
+- Confirming that a result or confirmation message is displayed
+- Checking content where colours and layout are not important
+
+For checks that need to understand meaning rather than match a stored value, use [AI Assistant](/codeless-recorder/ai-assistant). For visual matching, use [Compare Screen Fragment](/codeless-recorder/image-checker).
+
+## Caveats
+
+- Dynamic values such as dates, counters, order numbers, or personalised names may change between runs and should not be checked as fixed text.
+- Select the smallest stable element that contains the value you need. Selecting a large container can include unrelated text.
+- If the content loads asynchronously, add a [pause](/codeless-recorder/pauses) before the Text Checker step.

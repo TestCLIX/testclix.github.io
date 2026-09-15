@@ -2,8 +2,42 @@
 title: Event Preview
 ---
 
-:::caution
+Event Preview lets you inspect a recorded event and the browser state captured for that step. Open it by selecting an event in the [Session Timeline](/codeless-recorder/session-timeline).
 
-`TODO` Event Preview Page.
+The recorder changes its status to **Preview**, displays the stored screenshot on the main canvas, and opens event details in the contextual panel. Live interaction is paused until you close the preview.
 
+## Event information
+
+The panel displays information relevant to the selected event, such as:
+
+- screen coordinates and mouse action;
+- typed text or special key;
+- scroll position or distance;
+- selected value;
+- pause duration;
+- prompt or checked text;
+- XPath and page-structure settings;
+- the size of a selected screen region.
+
+The exact fields depend on the event type.
+
+## Editing an event
+
+Some event types expose additional settings in Preview:
+
+- **Mouse Click** - enable or disable **Ignore page structure** for that event.
+- **Text Checker** - update the expected text and click **Save text**.
+- **Authentication (OATH)** - change the text key or stored secret used by the event.
+- **Ignored Zones** - add, move, resize, hide, select, or remove zones associated with the event.
+
+Changes made to ignored zones are not applied until you click **Save ignored zones**.
+
+## Returning to Live mode
+
+Close the contextual panel or select the active event again to leave Preview. The recorder returns to Live mode and resumes the remote browser session.
+
+If you try to leave while an unfinished selection or unsaved ignored-zone edit is active, TestCLIX asks whether you want to discard that progress.
+
+:::note
+Preview shows the screen stored with the event. To capture fresh screens for the complete scenario, use [Regenerate Timeline](/codeless-recorder/replay-and-regenerate#regenerate).
 :::

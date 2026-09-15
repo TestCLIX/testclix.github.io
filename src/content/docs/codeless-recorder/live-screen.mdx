@@ -1,10 +1,49 @@
 ---
 title: Live Screen
-draft: true
 ---
 
-:::caution
+The Live Screen displays the remote browser used to record a Website Scenario. Actions performed on this screen are sent to the browser and added to the [Session Timeline](/codeless-recorder/session-timeline).
 
-`TODO` Live Screen Page.
+## Screen layout
 
+The recorder is divided into four main areas:
+
+- **Header** - shows the scenario name and whether you are recording a new scenario or editing an existing one. Use it to save or close the recorder.
+- **Toolbox** - provides recording actions and checks. Hover over a tool to see a short explanation. If there is not enough vertical space, additional tools appear under **More actions**.
+- **Live Screen** - shows the streamed browser and accepts clicks, typing, scrolling, selections, and right-click actions.
+- **Contextual panel** - opens on the right when a tool or timeline event needs additional input. It can be collapsed when you need more room.
+
+The timeline is displayed along the bottom of the recorder.
+
+## Page toolbar
+
+The toolbar above the live screen contains:
+
+- **Go back** - records browser back navigation. See [History Navigation](/codeless-recorder/history-navigation).
+- **Recorder status** - shows whether the recorder is Live, needs focus, is displaying a Preview, or is running another operation.
+- **Current page** - shows the current domain. Click it to copy the full page URL.
+- **Zoom controls** - zoom out, reset to the fitted view, zoom in, or switch to native **1:1** pixels.
+
+During Replay or Regenerate, the centre of the toolbar shows the active operation and its current step.
+
+## Zooming and moving the view
+
+Use **-** and **+** to change zoom between 25% and 400%. Click the percentage to return to the fitted view.
+
+You can also hold **Ctrl** on Windows/Linux or **Command** on macOS and use the mouse wheel to zoom around the pointer position. When the page is enlarged, drag it with the middle mouse button to inspect content outside the visible area. A minimap appears while you are moving the enlarged view.
+
+The **1:1** button displays the browser at native pixel size. Click it again to restore the previous zoom.
+
+:::note
+The vertical scrollbar beside the browser scrolls the recorded web page. It is different from panning the enlarged recorder view.
 :::
+
+## Focus and available actions
+
+The live browser records input only while the recorder is in Live mode and has focus. Move the pointer back over the browser when the status changes to **Needs focus**.
+
+Right-click the live screen to open commonly used actions at the selected position. The same actions are also available from the toolbox. Tools that need a live browser are disabled during Preview, Replay, Regenerate, and loading.
+
+## Viewport
+
+The Live Screen uses the resolution or mobile device configured for the scenario. Screenshots, coordinates, selections, and ignored zones are recorded against that viewport, so changing it can affect existing steps.

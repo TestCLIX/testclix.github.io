@@ -130,6 +130,9 @@ export default defineConfig({
 								{ label: 'Ignored Zones', link: '/codeless-recorder/ignored-zones' },
 								{ label: 'Navigation Errors', link: '/codeless-recorder/navigation-errors' },
 								{ label: 'Recorder Modes', link: '/codeless-recorder/recorder-modes' },
+								{ label: 'Live Screen', link: '/codeless-recorder/live-screen' },
+								{ label: 'Session Timeline', link: '/codeless-recorder/session-timeline' },
+								{ label: 'Event Preview', link: '/codeless-recorder/event-preview' },
 								{ label: 'Replay and Regenerate', link: '/codeless-recorder/replay-and-regenerate' },
 								{
 									label: 'Recorder Actions',
@@ -142,11 +145,13 @@ export default defineConfig({
 										{ label: 'History Navigation', link: '/codeless-recorder/history-navigation' },
 										{ label: 'Masked Fields', link: '/codeless-recorder/masked-fields' },
 										{ label: 'Mouse Left Click', link: '/codeless-recorder/mouse-click' },
+										{ label: 'Mouse Hover', link: '/codeless-recorder/mouse-hover' },
 										{ label: 'Movie Checker', link: '/codeless-recorder/movie-checker' },
 										{ label: 'Pauses', link: '/codeless-recorder/pauses' },
 										{ label: 'Screenshots', link: '/codeless-recorder/screenshots' },
 										{ label: 'Scroll', link: '/codeless-recorder/scroll' },
 										{ label: 'Typing and Special Keys', link: '/codeless-recorder/typing-and-special-keys' },
+										{ label: 'Text Checker', link: '/codeless-recorder/text-checker' },
 									]
 								},
 							]
