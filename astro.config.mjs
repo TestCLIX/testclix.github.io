@@ -15,7 +15,9 @@ export default defineConfig({
 		starlight({
 			title: 'TestCLIX Docs',
 			logo: {
-				src: './src/assets/testclix_logo.svg',
+				dark: './src/assets/no_desc_logo_horizontal_dark.svg',
+				light: './src/assets/no_desc_logo_horizontal_light.svg',
+				alt: 'TestCLIX',
 				replacesTitle: true,
 			},
 			favicon: '/favicon.ico',
