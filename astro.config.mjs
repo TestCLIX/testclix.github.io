@@ -192,7 +192,6 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', link: '/secrets/overview' },
 						{ label: 'Manage Secrets', link: '/secrets/manage-secrets' },
-						{ label: 'Secrets in Extra Headers', link: '/secrets/extra-headers' },
 						{ label: 'Troubleshooting', link: '/secrets/troubleshooting' },
 					]
 				},

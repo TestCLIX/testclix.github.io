@@ -2,7 +2,7 @@
 title: Extra headers
 ---
 
-import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Tabs, TabItem, Steps, LinkCard } from '@astrojs/starlight/components';
 import cfExtraHeaders from '../../../assets/cloudflare/cf_extra_headers.png';
 
 ## Introduction
@@ -40,22 +40,45 @@ Combining location and headers can help validate regional and language-specific 
 
 ## Text and Secret Values
 
-Each header value has a **source**, chosen in the dropdown next to the value. New rows start on **Text**.
+Each header value has a **source**: **Text**, a value you type in, or **Secret**, a reference to a
+stored [secret](/secrets/overview). The source dropdown next to the value offers both, listed as
+**Secret** and **Text**. A new row always starts on **Text**.
 
-- **Text** - the value you type, stored as plain text in the scenario configuration. Printable ASCII
-  only, up to 4096 characters. The eye toggle only hides the value on screen - it does not make it a secret.
-- **Secret** - a reference to a **stored [secret](/secrets/overview)**, picked from a searchable list.
-  The value stays out of the scenario configuration - it is resolved on the server at run time and is
-  never shown in the portal.
+Referencing a stored secret keeps tokens and bot-management values out of the scenario configuration,
+and lets you rotate the value in one place instead of editing every scenario that uses it.
 
-Header names are always plain text, up to 128 characters.
+### Text
 
-**Secret** is the recommended option for `Authorization` headers, bot-management values, and anything else
-you would not want readable in the scenario. Rotating the value then means editing one secret instead
-of every scenario that uses it.
+The value you type is sent exactly as you entered it, and it is **stored as plain text** in the
+scenario configuration.
 
-See **[Secrets in Extra Headers](/secrets/extra-headers)** for the full walkthrough, including what to do
-when a header shows **"Secret deleted"**.
+The eye toggle (**Hide value**) next to the field only hides the value on your screen. It does not
+encrypt it or turn it into a secret.
+
+A Text value must follow these rules:
+
+- **Printable ASCII characters only.** Anything else shows the error *"Invalid header value"*.
+- **Up to 4096 characters.** A longer value shows the error *"Max length is …"* with the limit.
+
+### Secret
+
+You pick a stored secret from a searchable list of the project's secrets. The row stores a
+**reference** to the secret, not its value. The value never passes through the form.
+
+The real value is resolved **on the server at run time** and attached to the request. It is never
+shown in the portal, so anyone who can open the scenario sees only the name of the secret being used.
+
+Before you start, the secret has to exist in the project. See [Manage Secrets](/secrets/manage-secrets#add-a-secret).
+
+:::caution
+Hiding a Text value does **not** protect it. If a header carries a token, a password, or a
+bot-management value, use the **Secret** source instead.
+:::
+
+:::note
+The header **name** is always plain text, up to 128 characters. Only the header **value** can
+reference a secret.
+:::
 
 ## Configuration
 
@@ -116,3 +139,107 @@ when a header shows **"Secret deleted"**.
     </Steps>
   </TabItem>
 </Tabs>
+
+## Switching Between Text and Secret
+
+You can change the source of any header row at any time, using the source dropdown:
+
+- **Text to Secret** - set the source to **Secret** and pick a stored secret from the list.
+- **Secret to Text** - set the source to **Text** and type the value. You cannot copy the value out
+  of the secret first, because stored values are never displayed, so you need the value from your
+  own records.
+
+## How Headers Appear on the Overview
+
+The scenario overview page lists the configured extra headers, with an icon and a pill showing which
+source each one uses:
+
+| Source     | What you see                                                                                |
+|------------|---------------------------------------------------------------------------------------------|
+| **Text**   | A text icon, a **Text** pill, and the value masked as `••••••••`. Use the eye to reveal it. |
+| **Secret** | A key icon, the name of the referenced secret, and a **Secret** pill. The value is never shown. |
+
+If the referenced secret has been deleted, the row shows **"Secret deleted"** instead of the
+secret's name.
+
+## When the Referenced Secret Is Deleted
+
+If the secret a header points at has since been deleted, the picker displays **"Secret deleted"**
+in red italic where the secret's name would normally be, and the error
+
+> "Secret no longer exists"
+
+appears beneath it as soon as the dialog opens - you do not have to touch the field to trigger it.
+
+The row is marked invalid and the scenario **cannot be saved** until you pick a replacement secret
+from the list, or switch the source to **Text** and enter the value.
+
+Existing scenarios that already reference the deleted secret keep running until they fail, and show a
+**Deleted secret** banner on the scenario details page. For the full recovery steps, see
+[Troubleshooting](/secrets/troubleshooting).
+
+## Related
+
+<LinkCard
+  title="Secrets"
+  description="What secrets are, how they are stored, limits, and permissions."
+  href="/secrets/overview"
+/>
+
+<LinkCard
+  title="Manage Secrets"
+  description="Add a secret, rename it, replace its value, or delete it."
+  href="/secrets/manage-secrets"
+/>
+
+<LinkCard
+  title="Troubleshooting"
+  description="Fix 'Secret deleted' errors, deleted-secret banners, and broken steps in the player timeline."
+  href="/secrets/troubleshooting"
+/>
+
+## FAQ
+
+<details>
+<summary>Can I see which value a header will actually send?</summary>
+
+For a **Text** header, yes - use the eye toggle in the form or on the scenario overview page.
+
+For a **Secret** header, no. The value is resolved on the server at run time and is never shown in
+the portal. The scenario configuration shows only the name of the referenced secret.
+
+</details>
+
+<details>
+<summary>I hid a Text value with the eye toggle. Is it secret now?</summary>
+
+No.
+
+The eye toggle only hides the value on your screen. The value is still stored as plain text in the
+scenario configuration. To keep it out of the configuration, store it as a secret and set the header's
+source to **Secret**.
+
+</details>
+
+<details>
+<summary>The secret list is empty. What now?</summary>
+
+The project has no secrets yet. Add one on the **Secrets** tab in **Settings** - see
+[Manage Secrets](/secrets/manage-secrets#add-a-secret).
+
+</details>
+
+<details>
+<summary>Why does my Text value show "Invalid header value"?</summary>
+
+Header values accept printable ASCII characters only. Remove any non-ASCII characters (such as
+accented letters or emoji) and control characters such as line breaks.
+
+</details>
+
+<details>
+<summary>Can the header name reference a secret too?</summary>
+
+No. Only the header value can be a secret reference.
+
+</details>
