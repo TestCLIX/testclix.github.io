@@ -101,15 +101,6 @@ export default defineConfig({
 					]
 				},
 				{
-					label: 'Secrets',
-					items: [
-						{ label: 'Overview', link: '/secrets/overview' },
-						{ label: 'Manage Secrets', link: '/secrets/manage-secrets' },
-						{ label: 'Secrets in Extra Headers', link: '/secrets/extra-headers' },
-						{ label: 'Troubleshooting', link: '/secrets/troubleshooting' },
-					]
-				},
-				{
 					label: 'Website Scenario',
 					items: [
 						{ label: 'Overview', link: '/website-scenario/overview' },
@@ -194,6 +185,15 @@ export default defineConfig({
 						{ label: 'Alarm and Notifications', link: '/website-vitals/alarm-notifications' },
 						{ label: 'Location', link: '/website-vitals/location' },
 						{ label: 'Metrics', link: '/website-vitals/metrics' },
+					]
+				},
+				{
+					label: 'Secrets',
+					items: [
+						{ label: 'Overview', link: '/secrets/overview' },
+						{ label: 'Manage Secrets', link: '/secrets/manage-secrets' },
+						{ label: 'Secrets in Extra Headers', link: '/secrets/extra-headers' },
+						{ label: 'Troubleshooting', link: '/secrets/troubleshooting' },
 					]
 				},
 				{
